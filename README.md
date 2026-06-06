@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Cloudinary
+
+Set these environment variables to serve and manage images from Cloudinary:
+
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
+
+Upload files through `POST /api/cloudinary/upload` with a `FormData` body containing `file` and optional `folder`.
+Delete files through `DELETE /api/cloudinary/delete` with JSON `{ "publicId": "..." }`.
+
 ## Getting Started
 
 First, run the development server:

@@ -208,34 +208,46 @@ export const cloudServices = [
   "GitHub Actions",
 ];
 
+const cloudinaryCloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const cloudinaryPlaceholder =
+  "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' viewBox='0 0 1200 900'%3E%3Crect width='1200' height='900' fill='%2308162f'/%3E%3Ctext x='600' y='430' fill='%23e2e8f0' font-family='Arial, sans-serif' font-size='44' text-anchor='middle'%3ECertification image pending Cloudinary setup%3C/text%3E%3Ctext x='600' y='490' fill='%2394a3b8' font-family='Arial, sans-serif' font-size='24' text-anchor='middle'%3ESet NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME%3C/text%3E%3C/svg%3E";
+
+function cloudinaryCertificate(publicId: string) {
+  if (!cloudinaryCloudName) {
+    return cloudinaryPlaceholder;
+  }
+
+  return `https://res.cloudinary.com/${cloudinaryCloudName}/image/upload/f_auto,q_auto/${publicId}`;
+}
+
 export const certifications = [
   {
     title: "AI-Foundation Associate",
     issuer: "Issuer",
     date: "2026",
     credentialId: "AIF-001",
-    image: "/certificates/AI-Foundation-Associate-eCertificate_page-0001 (1).jpg",
+    image: cloudinaryCertificate("certificates/AI-Foundation-Associate-eCertificate_page-0001 (1).jpg"),
   },
   {
     title: "AI Data Science Professional",
     issuer: "Issuer",
     date: "2026",
     credentialId: "AIDS-002",
-    image: "/certificates/AI-Data-Science-Professional-eCertificate_page-0001 (1).jpg",
+    image: cloudinaryCertificate("certificates/AI-Data-Science-Professional-eCertificate_page-0001 (1).jpg"),
   },
   {
     title: "Generative AI Professional",
     issuer: "Issuer",
     date: "2026",
     credentialId: "GAI-003",
-    image: "/certificates/AI-Genarative AI Professional_page-0001.jpg",
+    image: cloudinaryCertificate("certificates/AI-Genarative AI Professional_page-0001.jpg"),
   },
   {
     title: "AI Vector Professional",
     issuer: "Issuer",
     date: "2026",
     credentialId: "AVP-004",
-    image: "/certificates/AI-Vector-Professional-eCertificate_page-0001 (1).jpg",
+    image: cloudinaryCertificate("certificates/AI-Vector-Professional-eCertificate_page-0001 (1).jpg"),
   },
 ];
 
