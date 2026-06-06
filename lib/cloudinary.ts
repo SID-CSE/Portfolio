@@ -1,0 +1,93 @@
+import crypto from "node:crypto";
+
+type CloudinaryUploadResult = {
+  asset_id: string;
+  public_id: string;
+  secure_url: string;
+  width: number;
+  height: number;
+  format: string;
+  bytes: number;
+};
+
+function getCloudinaryConfig() {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    return null;
+  }
+
+  return { cloudName, apiKey, apiSecret };
+}
+
+function buildSignature(params: Record<string, string>, apiSecret: string) {
+  const signatureBase = Object.entries(params)
+    .sort(([leftKey], [rightKey]) => leftKey.localeCompare(rightKey))
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+
+  return crypto.createHash("sha1").update(`${signatureBase}${apiSecret}`).digest("hex");
+}
+
+export async function uploadToCloudinary(file: File, folder = "portfolio") {
+  const config = getCloudinaryConfig();
+
+  if (!config) {
+    throw new Error("Missing Cloudinary credentials.");
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const publicId = file.name.replace(/\.[^.]+$/, "");
+  const signature = buildSignature({ folder, public_id: publicId, timestamp }, config.apiSecret);
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("api_key", config.apiKey);
+  formData.append("timestamp", timestamp);
+  formData.append("folder", folder);
+  formData.append("public_id", publicId);
+  formData.append("signature", signature);
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText);
+  }
+
+  return (await response.json()) as CloudinaryUploadResult;
+}
+
+export async function deleteFromCloudinary(publicId: string) {
+  const config = getCloudinaryConfig();
+
+  if (!config) {
+    throw new Error("Missing Cloudinary credentials.");
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const signature = buildSignature({ public_id: publicId, timestamp }, config.apiSecret);
+
+  const formData = new FormData();
+  formData.append("public_id", publicId);
+  formData.append("api_key", config.apiKey);
+  formData.append("timestamp", timestamp);
+  formData.append("signature", signature);
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/destroy`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText);
+  }
+
+  return response.json() as Promise<{ result: string }>;
+}
