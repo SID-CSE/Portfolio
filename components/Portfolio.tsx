@@ -106,9 +106,9 @@ function NavBar({ active, onDownloadResume }: { active: string; onDownloadResume
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
             {navigationItems.slice(0, 6).map((item) => (
-              <a key={item.href} href={item.href} className={`rounded-full border px-3 py-2 text-xs tracking-[0.08em] transition ${active === item.href.slice(1) ? "border-indigo-400/60 bg-indigo-400/15 text-white" : "border-white/10 bg-white/5 text-slate-300 hover:border-indigo-400/40 hover:bg-white/10 hover:text-white"}`}>
+              <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} whileHover={{ scale: 1.03 }} className={`rounded-full border px-3 py-2 text-xs tracking-[0.08em] transition ${active === item.href.slice(1) ? "border-indigo-400/60 bg-indigo-400/15 text-white" : "border-white/10 bg-white/5 text-slate-300 hover:border-indigo-400/40 hover:bg-white/10 hover:text-white"}`}>
                 {item.label}
-              </a>
+              </motion.a>
             ))}
             <button
               type="button"
@@ -124,9 +124,9 @@ function NavBar({ active, onDownloadResume }: { active: string; onDownloadResume
       <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/8 bg-[#050816]/80 px-3 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto grid max-w-7xl grid-cols-4 gap-2 sm:grid-cols-6">
           {navigationItems.slice(0, 12).map((item) => (
-            <a key={item.href} href={item.href} className={`rounded-2xl px-2 py-2 text-center text-[10px] tracking-[0.08em] transition ${active === item.href.slice(1) ? "bg-indigo-400/20 text-white" : "text-slate-300/70 hover:bg-white/5 hover:text-white"}`}>
+            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} whileHover={{ scale: 1.02 }} className={`rounded-2xl px-2 py-2 text-center text-[10px] tracking-[0.08em] transition ${active === item.href.slice(1) ? "bg-indigo-400/20 text-white" : "text-slate-300/70 hover:bg-white/5 hover:text-white"}`}>
               {item.label}
-            </a>
+            </motion.a>
           ))}
         </div>
       </nav>
