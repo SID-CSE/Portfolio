@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# local env overrides
+.env.local
+.env.local.*
 
 # vercel
 .vercel
@@ -39,3 +42,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+
+# build / cache
+.cache/
+dist/
+build/
+.parcel-cache/
+
+# temporary uploads and assets
+/public/uploads/
+
+# lockfiles for alternative package managers
+.pnp.cjs
+.pnp.js
+
