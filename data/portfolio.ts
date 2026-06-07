@@ -306,8 +306,17 @@ export const experience = [
 ];
 
 export const socials = [
-  { label: "GitHub", href: "https://github.com" },
-  { label: "LinkedIn", href: "https://linkedin.com" },
-  { label: "Twitter", href: "https://twitter.com" },
-  { label: "Email", href: "mailto:siddharth@example.com" },
+  { label: "GitHub", href: "https://github.com/siddharthkumar" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/siddharth-kumar" },
+  { label: "Twitter", href: "https://twitter.com/siddharthkumar" },
+  { label: "Email", href: "mailto:siddharth.kumar@example.com" },
 ];
+
+export const personal = {
+  name: "Siddharth Kumar",
+  status: "3rd Year CSE Student (moving into final year)",
+  cgpa: "9.05",
+  headline: "Full Stack Developer | AI/ML Engineer | Cloud & DevOps Enthusiast",
+  summary:
+    "I build production-minded applications across the stack, with a focus on AI/ML, cloud delivery, and scalable systems. I enjoy turning ideas into deployable systems and writing clear documentation so teams can move quickly.",
+};
