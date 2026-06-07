@@ -14,29 +14,29 @@ export const navigationItems = [
 ];
 
 export const heroRoles = [
-  "Full Stack Engineer",
-  "AI/ML Builder",
-  "Cloud Systems Designer",
+  "Full Stack Developer",
+  "AI/ML Engineer",
+  "Cloud & DevOps Enthusiast",
   "Product-minded Problem Solver",
 ];
 
 export const heroFocusAreas = [
-  "Shipping production-grade web apps",
-  "Designing reliable cloud backends",
-  "Building ML demos and data pipelines",
-  "Turning ideas into polished systems",
+  "Shipping production-grade web applications",
+  "Designing and deploying cloud-native backends",
+  "Building ML prototypes and inference demos",
+  "End-to-end product engineering and deployment",
 ];
 
 export const heroStats = [
-  { value: "12+", label: "portfolio sections" },
+  { value: "5", label: "featured projects" },
   { value: "4", label: "core disciplines" },
-  { value: "95+", label: "lighthouse target" },
+  { value: "9.05", label: "CGPA" },
 ];
 
 export const aboutStats = [
-  { value: "08", label: "projects shipped" },
-  { value: "16", label: "technologies used" },
-  { value: "03", label: "cloud architectures" },
+  { value: "05", label: "projects completed" },
+  { value: "12+", label: "technologies" },
+  { value: "03", label: "internships & labs" },
 ];
 
 export const philosophy = [
@@ -66,95 +66,80 @@ export const skillCategories = [
   {
     label: "Frontend",
     accent: "from-indigo-500/80 to-cyan-400/80",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Streamlit", "HTML/CSS"],
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
   },
   {
     label: "Backend",
     accent: "from-emerald-500/80 to-teal-400/80",
-    skills: ["Python", "FastAPI", "REST APIs", "Node.js", "WebSockets", "Celery"],
+    skills: ["Python", "FastAPI", "Flask", "REST APIs", "Node.js"],
   },
   {
     label: "Databases",
     accent: "from-sky-500/80 to-blue-400/80",
-    skills: ["PostgreSQL", "Redis", "MongoDB", "SQLAlchemy", "Vector DBs"],
+    skills: ["PostgreSQL", "MySQL", "Redis", "MongoDB"],
   },
   {
     label: "AI / ML",
     accent: "from-fuchsia-500/80 to-pink-400/80",
-    skills: ["PyTorch", "scikit-learn", "LangChain", "HuggingFace", "OpenAI API", "Pandas / NumPy"],
+    skills: ["Machine Learning", "scikit-learn", "XGBoost", "Pandas", "NumPy"],
   },
   {
     label: "Cloud",
     accent: "from-amber-500/80 to-orange-400/80",
-    skills: ["AWS EC2", "AWS S3", "AWS Lambda", "AWS RDS", "GCP Basics", "Vercel"],
+    skills: ["AWS", "Cloud fundamentals", "Vercel", "Cloudinary"],
   },
   {
     label: "DevOps",
     accent: "from-violet-500/80 to-purple-400/80",
-    skills: ["Docker", "GitHub Actions", "Nginx", "Linux", "Terraform basics"],
+    skills: ["Docker", "GitHub Actions", "CI/CD", "Linux"],
   },
 ];
 
 export const projectCards = [
   {
-    name: "Adaptive Ops Dashboard",
-    problem:
-      "Small teams needed one place to monitor service health, deployment status, and customer issues without juggling three tools.",
-    architecture:
-      "Next.js dashboard, FastAPI aggregator, PostgreSQL event store, Redis cache, and webhook-driven alerts.",
-    stack: ["Next.js", "FastAPI", "PostgreSQL", "Redis", "Docker", "GitHub Actions"],
-    challenges: [
-      "Normalized noisy event streams into a single operational timeline.",
-      "Kept the dashboard responsive during bursty webhook traffic.",
-      "Structured alerts so teams could act without alert fatigue.",
-    ],
-    impact: ["45% faster incident triage", "<300ms cached dashboard loads", "Single view for 5 data sources"],
-    links: { github: "https://github.com", live: "https://vercel.com" },
+    name: "Employee Salary Prediction System",
+    problem: "Predict employee salaries using regression and data-driven feature engineering.",
+    architecture: "Data preprocessing → Feature engineering → XGBoost model → Streamlit demo for exploration",
+    stack: ["Python", "XGBoost", "scikit-learn", "Pandas", "Streamlit"],
+    challenges: ["Careful feature engineering to reduce bias", "Model evaluation and validation", "Interactive demo for stakeholders"],
+    impact: ["Improved salary estimation accuracy for HR use-cases", "Demo-ready analytics interface"],
+    links: { github: "https://github.com/your-repo/employee-salary-prediction", live: "#" },
   },
   {
-    name: "DocFlow AI Assistant",
-    problem:
-      "Manual document search slowed support and onboarding because answers were trapped across PDFs, notes, and internal docs.",
-    architecture:
-      "RAG pipeline with chunking, embeddings, vector search, inference API, and a Streamlit demo for evaluation.",
-    stack: ["Python", "LangChain", "OpenAI API", "Vector DBs", "Streamlit", "AWS S3"],
-    challenges: [
-      "Balanced retrieval quality against latency for interactive Q&A.",
-      "Kept citations traceable so the model output stayed trustworthy.",
-      "Added fallback answers when retrieval confidence was low.",
-    ],
-    impact: ["72% faster answer lookup", "92% citation accuracy", "Demo-ready in 3 environments"],
-    links: { github: "https://github.com", live: "https://streamlit.io" },
+    name: "Remote Farm Animal Monitoring System",
+    problem: "Provide remote monitoring and real-time tracking for livestock using IoT sensors and edge devices.",
+    architecture: "Raspberry Pi sensors → MQTT / REST ingestion → Lightweight backend → Dashboard",
+    stack: ["Raspberry Pi", "Python", "IoT Sensors"],
+    challenges: ["Edge reliability", "Sensor calibration", "Real-time telemetry"],
+    impact: ["Reduced response time for animal health events", "Remote monitoring for farmers"],
+    links: { github: "https://github.com/your-repo/farm-monitor", live: "#" },
   },
   {
-    name: "Cloud Cost Control Plane",
-    problem:
-      "A growing cloud bill made it hard to see which services were overspending and which workloads could be optimized safely.",
-    architecture:
-      "Usage ingest jobs, rule engine, optimization suggestions, and a topology viewer for infra decisions.",
-    stack: ["AWS", "Terraform", "Docker", "Nginx", "GitHub Actions", "PostgreSQL"],
-    challenges: [
-      "Grouped usage data into actionable signals instead of raw graphs.",
-      "Kept optimization suggestions explainable for non-DevOps stakeholders.",
-      "Separated read-heavy analytics from operational data paths.",
-    ],
-    impact: ["18% projected monthly cost reduction", "2-minute environment audits", "Reusable for 3 service tiers"],
-    links: { github: "https://github.com", live: "https://aws.amazon.com" },
+    name: "Recon Automation Toolkit",
+    problem: "Automate reconnaissance tasks for ethical pentesting and information gathering.",
+    architecture: "CLI and scripted utilities for scanning, enumeration, and report generation",
+    stack: ["Python", "Networking", "Security Automation"],
+    challenges: ["Safe network scanning practices", "Efficient data collection", "Modular tooling"],
+    impact: ["Faster reconnaissance for security assessments", "Reusable automation modules"],
+    links: { github: "https://github.com/your-repo/recon-toolkit", live: "#" },
   },
   {
-    name: "Realtime Learning Tracker",
-    problem:
-      "Students needed a clearer way to track progress, deadlines, and revision cycles across multiple courses.",
-    architecture:
-      "Realtime updates, optimistic UI, backend jobs for reminders, and analytics for completion trends.",
-    stack: ["React", "Node.js", "WebSockets", "MongoDB", "Redis", "Docker"],
-    challenges: [
-      "Kept live updates consistent across browser sessions.",
-      "Minimized state drift in collaborative interactions.",
-      "Designed for mobile-first usage and quick daily check-ins.",
-    ],
-    impact: ["90% sync reliability", "Sub-second live updates", "Higher daily engagement"],
-    links: { github: "https://github.com", live: "https://vercel.com" },
+    name: "ZENSHOP E-Commerce Platform",
+    problem: "Course project to build a full-stack e-commerce platform with order management and product catalog.",
+    architecture: "Frontend → API → Relational DB → Auth & payments (demo)",
+    stack: ["Full Stack", "Relational DB"],
+    challenges: ["Requirements-driven design", "Transaction integrity", "User flows"],
+    impact: ["End-to-end e-commerce demo", "Course-grade project"],
+    links: { github: "https://github.com/your-repo/zenshop", live: "#" },
+  },
+  {
+    name: "University Library Management System",
+    problem: "Capstone for managing library resources, book tracking, and student operations.",
+    architecture: "CRUD interfaces → Backend services → Database schemas",
+    stack: ["Full Stack", "Database Management"],
+    challenges: ["Data modeling", "User-role management", "Search and indexing"],
+    impact: ["Streamlined library workflows", "Capstone deliverable"],
+    links: { github: "https://github.com/your-repo/library-system", live: "#" },
   },
 ];
 
@@ -274,33 +259,30 @@ export const writings = [
 
 export const experience = [
   {
-    role: "Full Stack Engineer",
-    org: "Independent Projects",
-    dates: "2024 - Present",
+    role: "Cybersecurity Intern",
+    org: "Independent Internship",
+    dates: "2022",
     bullets: [
-      "Built portfolio-grade products with measurable performance and deployability in mind.",
-      "Turned rough ideas into polished interfaces, APIs, and deployable cloud flows.",
-      "Documented architecture decisions so future changes stay low-risk.",
+      "Completed a cybersecurity internship and gained practical exposure to automation and reconnaissance.",
+      "Built small tooling for scanning and vulnerability verification.",
     ],
   },
   {
-    role: "AI/ML Builder",
-    org: "Personal Labs",
-    dates: "2023 - Present",
+    role: "Infosys Springboard Virtual Intern",
+    org: "Infosys Springboard",
+    dates: "2023",
     bullets: [
-      "Experimented with retrieval, classification, and inference demos across practical use cases.",
-      "Balanced accuracy, latency, and explainability in model-backed apps.",
-      "Shipped Streamlit proofs of concept and production-style API integrations.",
+      "Selected for and completed the Infosys Springboard virtual internship program.",
+      "Worked on guided assignments emphasizing software engineering fundamentals.",
     ],
   },
   {
-    role: "Cloud Engineer",
-    org: "Systems Practice",
-    dates: "2023 - Present",
+    role: "Student Projects & Labs",
+    org: "University",
+    dates: "2021 - Present",
     bullets: [
-      "Designed Docker-first delivery flows and cloud-friendly service boundaries.",
-      "Mapped infrastructure decisions into cost, reliability, and scaling trade-offs.",
-      "Kept delivery pipelines simple enough to maintain under pressure.",
+      "Built full-stack projects, IoT demos, and ML prototypes as part of coursework and personal labs.",
+      "Focused on deployable, testable deliverables with clear documentation.",
     ],
   },
 ];
@@ -308,7 +290,6 @@ export const experience = [
 export const socials = [
   { label: "GitHub", href: "https://github.com/siddharthkumar" },
   { label: "LinkedIn", href: "https://linkedin.com/in/siddharth-kumar" },
-  { label: "Twitter", href: "https://twitter.com/siddharthkumar" },
   { label: "Email", href: "mailto:siddharth.kumar@example.com" },
 ];
 
