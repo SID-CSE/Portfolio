@@ -283,10 +283,6 @@ function ProjectCard({ project }: { project: (typeof projectCards)[number] }) {
                     {project.challenges.map((challenge) => <li key={challenge}>• {challenge}</li>)}
                   </ul>
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Detail panel</p>
-                  <p className="mt-3 text-sm leading-7 text-slate-200/90">This expandable area can hold a live architecture walk-through, decisions, screenshots, or a short video demo.</p>
-                </div>
               </div>
             </motion.div>
           ) : null}
