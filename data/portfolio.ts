@@ -63,85 +63,261 @@ export const philosophy = [
 ];
 
 export const skillCategories = [
-  {
-    label: "Frontend",
-    accent: "from-indigo-500/80 to-cyan-400/80",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
-  },
-  {
-    label: "Backend",
-    accent: "from-emerald-500/80 to-teal-400/80",
-    skills: ["Python", "FastAPI", "Flask", "REST APIs", "Node.js"],
-  },
-  {
-    label: "Databases",
-    accent: "from-sky-500/80 to-blue-400/80",
-    skills: ["PostgreSQL", "MySQL", "Redis", "MongoDB"],
-  },
-  {
-    label: "AI / ML",
-    accent: "from-fuchsia-500/80 to-pink-400/80",
-    skills: ["Machine Learning", "scikit-learn", "XGBoost", "Pandas", "NumPy"],
-  },
-  {
-    label: "Cloud",
-    accent: "from-amber-500/80 to-orange-400/80",
-    skills: ["AWS", "Cloud fundamentals", "Vercel", "Cloudinary"],
-  },
-  {
-    label: "DevOps",
-    accent: "from-violet-500/80 to-purple-400/80",
-    skills: ["Docker", "GitHub Actions", "CI/CD", "Linux"],
-  },
+{
+label: "Frontend",
+accent: "from-indigo-500/80 to-cyan-400/80",
+skills: [
+"React.js",
+"Next.js",
+"JavaScript",
+"TypeScript",
+"Tailwind CSS",
+"HTML5",
+"CSS3",
+"Vite",
+"Responsive Design"
+],
+},
+
+{
+label: "Backend",
+accent: "from-emerald-500/80 to-teal-400/80",
+skills: [
+"Python",
+"Java",
+"Spring Boot",
+"Django",
+"Django REST Framework",
+"FastAPI",
+"Flask",
+"REST APIs",
+"JWT Authentication"
+],
+},
+
+{
+label: "Databases",
+accent: "from-sky-500/80 to-blue-400/80",
+skills: [
+"MySQL",
+"PostgreSQL",
+"Database Design",
+"SQL",
+"ER Modeling"
+],
+},
+
+{
+label: "AI / ML",
+accent: "from-fuchsia-500/80 to-pink-400/80",
+skills: [
+"Machine Learning",
+"Scikit-Learn",
+"XGBoost",
+"Pandas",
+"NumPy",
+"Data Analytics",
+"Feature Engineering",
+"Model Evaluation"
+],
+},
+
+{
+label: "Cloud & DevOps",
+accent: "from-amber-500/80 to-orange-400/80",
+skills: [
+"AWS",
+"Cloudinary",
+"Docker",
+"GitHub Actions",
+"CI/CD",
+"Linux",
+"Vercel",
+"Git",
+"GitHub"
+],
+},
+
+{
+label: "Cybersecurity",
+accent: "from-violet-500/80 to-purple-400/80",
+skills: [
+"Network Scanning",
+"Nmap",
+"OSINT",
+"Reconnaissance",
+"Security Automation",
+"Kali Linux",
+"Web Pentesting Fundamentals"
+],
+},
 ];
 
+
 export const projectCards = [
-  {
-    name: "Employee Salary Prediction System",
-    problem: "Predict employee salaries using regression and data-driven feature engineering.",
-    architecture: "Data preprocessing → Feature engineering → XGBoost model → Streamlit demo for exploration",
-    stack: ["Python", "XGBoost", "scikit-learn", "Pandas", "Streamlit"],
-    challenges: ["Careful feature engineering to reduce bias", "Model evaluation and validation", "Interactive demo for stakeholders"],
-    impact: ["Improved salary estimation accuracy for HR use-cases", "Demo-ready analytics interface"],
-    links: { github: "https://github.com/your-repo/employee-salary-prediction", live: "#" },
-  },
-  {
-    name: "Remote Farm Animal Monitoring System",
-    problem: "Provide remote monitoring and real-time tracking for livestock using IoT sensors and edge devices.",
-    architecture: "Raspberry Pi sensors → MQTT / REST ingestion → Lightweight backend → Dashboard",
-    stack: ["Raspberry Pi", "Python", "IoT Sensors"],
-    challenges: ["Edge reliability", "Sensor calibration", "Real-time telemetry"],
-    impact: ["Reduced response time for animal health events", "Remote monitoring for farmers"],
-    links: { github: "https://github.com/your-repo/farm-monitor", live: "#" },
-  },
-  {
-    name: "Recon Automation Toolkit",
-    problem: "Automate reconnaissance tasks for ethical pentesting and information gathering.",
-    architecture: "CLI and scripted utilities for scanning, enumeration, and report generation",
-    stack: ["Python", "Networking", "Security Automation"],
-    challenges: ["Safe network scanning practices", "Efficient data collection", "Modular tooling"],
-    impact: ["Faster reconnaissance for security assessments", "Reusable automation modules"],
-    links: { github: "https://github.com/your-repo/recon-toolkit", live: "#" },
-  },
-  {
-    name: "ZENSHOP E-Commerce Platform",
-    problem: "Course project to build a full-stack e-commerce platform with order management and product catalog.",
-    architecture: "Frontend → API → Relational DB → Auth & payments (demo)",
-    stack: ["Full Stack", "Relational DB"],
-    challenges: ["Requirements-driven design", "Transaction integrity", "User flows"],
-    impact: ["End-to-end e-commerce demo", "Course-grade project"],
-    links: { github: "https://github.com/your-repo/zenshop", live: "#" },
-  },
-  {
-    name: "University Library Management System",
-    problem: "Capstone for managing library resources, book tracking, and student operations.",
-    architecture: "CRUD interfaces → Backend services → Database schemas",
-    stack: ["Full Stack", "Database Management"],
-    challenges: ["Data modeling", "User-role management", "Search and indexing"],
-    impact: ["Streamlined library workflows", "Capstone deliverable"],
-    links: { github: "https://github.com/your-repo/library-system", live: "#" },
-  },
+{
+name: "Contify CMS",
+
+problem:
+"Developed an enterprise-grade Content Management System (CMS) that streamlines project requests, proposal management, task assignment, content review, stakeholder approvals, and team collaboration through a structured role-based workflow.",
+
+architecture:
+"React Frontend → Spring Boot REST APIs → JWT Authentication → MySQL Database → Cloudinary Media Storage → Workflow & Notification Engine",
+
+stack: [
+"React",
+"Spring Boot",
+"Java",
+"MySQL",
+"Cloudinary",
+"JWT",
+"REST APIs",
+"Git",
+],
+
+challenges: [
+"Implementing role-based access control for Admins, Editors, and Stakeholders",
+"Designing complex project and task lifecycle workflows",
+"Building secure JWT authentication and authorization",
+"Managing media uploads and storage through Cloudinary",
+"Managing real-time notifications, messaging, and content approvals"
+],
+
+impact: [
+"Automated end-to-end content management workflows",
+"Improved collaboration between stakeholders and content teams",
+"Enabled secure cloud-based media storage and asset management",
+"Streamlined project tracking and approval processes",
+"Delivered a scalable enterprise-ready CMS solution"
+],
+
+links: {
+github: "https://github.com/SID-CSE/CMS_Project",
+live: "#"
+}
+
+
+},
+
+{
+name: "Taskera (TalentLink)",
+problem:
+"Built a professional freelancing and talent matchmaking platform that connects clients with freelancers, enabling secure project proposals, contract management, communication, and project delivery workflows.",
+
+architecture:
+  "React Frontend → Django REST APIs → JWT/OAuth Authentication → PostgreSQL Database → Messaging & Notification Services",
+
+stack: [
+  "React.js",
+  "Django",
+  "Django REST Framework",
+  "PostgreSQL",
+  "JWT",
+  "OAuth2",
+  "Git",
+  "Figma"
+],
+
+challenges: [
+  "Implementing role-based access control for Clients and Freelancers",
+  "Designing secure proposal and contract management workflows",
+  "Building real-time messaging and notification systems",
+  "Creating advanced search and filtering capabilities"
+],
+
+impact: [
+  "Delivered a complete freelance marketplace platform",
+  "Enabled end-to-end project lifecycle management",
+  "Improved user engagement through communication features",
+  "Successfully presented the project to the Infosys Jury Panel"
+],
+
+links: {
+  github: "https://github.com/springboardmentor182c-t/talentlink",
+  live: "#"
+}
+
+},
+
+{
+name: "SmartPay4 - Employee Salary Prediction",
+problem:
+"Developed a machine learning-powered salary prediction platform that estimates employee salaries based on demographic, educational, and professional attributes using advanced regression models.",
+
+architecture:
+  "Streamlit Frontend → Data Processing Pipeline → Feature Engineering → XGBoost Regression Model → Prediction Engine",
+
+stack: [
+  "Python",
+  "XGBoost",
+  "Scikit-Learn",
+  "Pandas",
+  "NumPy",
+  "Streamlit",
+  "Machine Learning"
+],
+
+challenges: [
+  "Building a robust preprocessing and feature engineering pipeline",
+  "Handling categorical and numerical feature transformations",
+  "Optimizing model performance and prediction accuracy",
+  "Supporting both single-user and batch salary predictions"
+],
+
+impact: [
+  "Achieved high prediction accuracy using XGBoost regression",
+  "Enabled bulk salary predictions through CSV uploads",
+  "Provided visual analytics and model performance insights",
+  "Successfully deployed as a live machine learning application"
+],
+
+links: {
+  github: "https://github.com/SID-CSE/Internship-Project---IBM-Skillsbuild-Edunet-Foundation-AICTE.git",
+  live: "https://smartpay4.streamlit.app/"
+}
+
+},
+
+{
+name: "Recon Automation for Web Pentesting",
+problem:
+"Developed a Python-based reconnaissance and automation toolkit to support ethical hacking, network scanning, information gathering, and penetration testing activities.",
+
+architecture:
+  "CLI Interface → Scanning & Enumeration Modules → Information Gathering Engine → Report Generation Utilities",
+
+stack: [
+  "Python",
+  "Nmap",
+  "Networking",
+  "Cybersecurity",
+  "OSINT",
+  "Kali Linux",
+  "Automation"
+],
+
+challenges: [
+  "Developing modular reconnaissance and scanning utilities",
+  "Implementing multi-threaded port scanning techniques",
+  "Integrating various information gathering tools into a unified framework",
+  "Ensuring usability across multiple pentesting workflows"
+],
+
+impact: [
+  "Automated repetitive reconnaissance tasks for security assessments",
+  "Improved efficiency of network and web application testing",
+  "Consolidated multiple security utilities into a single toolkit",
+  "Demonstrated practical cybersecurity automation expertise"
+],
+
+links: {
+  github: "YOUR_GITHUB_LINK",
+  live: "#"
+}
+
+}
 ];
+
 
 export const systemDesignTabs = [
   {
