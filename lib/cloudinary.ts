@@ -91,3 +91,48 @@ export async function deleteFromCloudinary(publicId: string) {
 
   return response.json() as Promise<{ result: string }>;
 }
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+export const cdn = (path: string) => {
+  if (!cloudName) {
+    return "data:image/svg+xml;charset=UTF-8,";
+  }
+
+  return `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${path}`;
+};
+
+export const cloudinaryAssets = {
+  architectures: {
+    cms: cdn("cms_niblgs.png"),
+    taskera: cdn("taskera_wnaqi6.png"),
+
+    smartpay4:
+      cdn("smartpay4_rk4aod.png"),
+
+    recon:
+      cdn("recon_cz1iha.png"),
+  },
+  certificates: {
+    oracleGenerativeAI:
+      cdn("AI-Genarative_AI_Professional_page-0001_z1unjy.jpg"),
+
+    oracleVectorSearch:
+      cdn("AI-Vector-Professional-eCertificate_page-0001_1_bh5tce.jpg"),
+
+    oracleDataScience:
+      cdn("AI-Data-Science-Professional-eCertificate_page-0001_1_m3vrkw.jpg"),
+    
+    oracleAIFoundation:
+      cdn("AI-Foundation-Associate-eCertificate_page-0001_1_l9wdc2.jpg"),
+
+    NPTELFoundationML:
+      cdn("e-Certificate_Mathematical_Foundation_for_Machine_Learning_page-0001_hjiq55.jpg"),
+
+    NPTELNeuralNetworks:
+      cdn("e-Certificate_Neural_Networks_for_Computer_Vision_and_Natural_Language_Processing_page-0001_az3d4m.jpg"),
+
+    NPTELML:
+      cdn("e-Certificate_Machine_Learning_for_Enginering_and_Science_Applications_page-0001_okj8zv.jpg"),
+  },
+
+}
