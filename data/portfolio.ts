@@ -1,3 +1,5 @@
+import { cloudinaryAssets } from "@/lib/cloudinary";
+import { cdn } from "@/lib/cloudinary";
 export const navigationItems = [
   { label: "Hero", href: "#hero" },
   { label: "About", href: "#about" },
@@ -155,167 +157,137 @@ skills: [
 
 
 export const projectCards = [
-{
-name: "Contify CMS",
+  {
+    name: "Contify CMS",
+    problem: "Developed an enterprise-grade Content Management System (CMS) that streamlines project requests, proposal management, task assignment, content review, stakeholder approvals, and team collaboration through a structured role-based workflow.",
+    architecture: "React Frontend → Spring Boot REST APIs → JWT Authentication → MySQL Database → Cloudinary Media Storage → Workflow & Notification Engine",
+    stack: [
+      "React",
+      "Spring Boot",
+      "Java",
+      "MySQL",
+      "Cloudinary",
+      "JWT",
+      "REST APIs",
+      "Git",
+    ],
+    challenges: [
+      "Implementing role-based access control for Admins, Editors, and Stakeholders",
+      "Designing complex project and task lifecycle workflows",
+      "Building secure JWT authentication and authorization",
+      "Managing media uploads and storage through Cloudinary",
+      "Managing real-time notifications, messaging, and content approvals"
+    ],
+    impact: [
+      "Automated end-to-end content management workflows",
+      "Improved collaboration between stakeholders and content teams",
+      "Enabled secure cloud-based media storage and asset management",
+      "Streamlined project tracking and approval processes",
+      "Delivered a scalable enterprise-ready CMS solution"
+    ],
+    links: {
+      github: "https://github.com/SID-CSE/CMS_Project",
+      live: "#",
+    },
+    image: cloudinaryAssets.architectures.cms,
+  },
 
-problem:
-"Developed an enterprise-grade Content Management System (CMS) that streamlines project requests, proposal management, task assignment, content review, stakeholder approvals, and team collaboration through a structured role-based workflow.",
+  {
+    name: "Taskera (TalentLink)",
+    problem: "Built a professional freelancing and talent matchmaking platform that connects clients with freelancers, enabling secure project proposals, contract management, communication, and project delivery workflows.",
+    architecture: "React Frontend → Django REST APIs → JWT/OAuth Authentication → PostgreSQL Database → Messaging & Notification Services",
+    stack: [
+      "React.js",
+      "Django",
+      "Django REST Framework",
+      "PostgreSQL",
+      "JWT",
+      "OAuth2",
+      "Git",
+      "Figma"
+    ],
+    challenges: [
+      "Implementing role-based access control for Clients and Freelancers",
+      "Designing secure proposal and contract management workflows",
+      "Building real-time messaging and notification systems",
+      "Creating advanced search and filtering capabilities"
+    ],
+    impact: [
+      "Delivered a complete freelance marketplace platform",
+      "Enabled end-to-end project lifecycle management",
+      "Improved user engagement through communication features",
+      "Successfully presented the project to the Infosys Jury Panel"
+    ],
+    links: {
+      github: "https://github.com/springboardmentor182c-t/talentlink",
+      live: "#",
+    },
+    image: cloudinaryAssets.architectures.taskera,
+  },
 
-architecture:
-"React Frontend → Spring Boot REST APIs → JWT Authentication → MySQL Database → Cloudinary Media Storage → Workflow & Notification Engine",
+  {
+    name: "SmartPay4 - Employee Salary Prediction",
+    problem: "Developed a machine learning-powered salary prediction platform that estimates employee salaries based on demographic, educational, and professional attributes using advanced regression models.",
+    architecture: "Streamlit Frontend → Data Processing Pipeline → Feature Engineering → XGBoost Regression Model → Prediction Engine",
+    stack: [
+      "Python",
+      "XGBoost",
+      "Scikit-Learn",
+      "Pandas",
+      "NumPy",
+      "Streamlit",
+      "Machine Learning"
+    ],
+    challenges: [
+      "Building a robust preprocessing and feature engineering pipeline",
+      "Handling categorical and numerical feature transformations",
+      "Optimizing model performance and prediction accuracy",
+      "Supporting both single-user and batch salary predictions"
+    ],
+    impact: [
+      "Achieved high prediction accuracy using XGBoost regression",
+      "Enabled bulk salary predictions through CSV uploads",
+      "Provided visual analytics and model performance insights",
+      "Successfully deployed as a live machine learning application"
+    ],
+    links: {
+      github: "https://github.com/SID-CSE/Internship-Project---IBM-Skillsbuild-Edunet-Foundation-AICTE.git",
+      live: "https://smartpay4.streamlit.app/",
+    },
+    image: cloudinaryAssets.architectures.smartpay4,
+  },
 
-stack: [
-"React",
-"Spring Boot",
-"Java",
-"MySQL",
-"Cloudinary",
-"JWT",
-"REST APIs",
-"Git",
-],
-
-challenges: [
-"Implementing role-based access control for Admins, Editors, and Stakeholders",
-"Designing complex project and task lifecycle workflows",
-"Building secure JWT authentication and authorization",
-"Managing media uploads and storage through Cloudinary",
-"Managing real-time notifications, messaging, and content approvals"
-],
-
-impact: [
-"Automated end-to-end content management workflows",
-"Improved collaboration between stakeholders and content teams",
-"Enabled secure cloud-based media storage and asset management",
-"Streamlined project tracking and approval processes",
-"Delivered a scalable enterprise-ready CMS solution"
-],
-
-links: {
-github: "https://github.com/SID-CSE/CMS_Project",
-live: "#"
-}
-
-
-},
-
-{
-name: "Taskera (TalentLink)",
-problem:
-"Built a professional freelancing and talent matchmaking platform that connects clients with freelancers, enabling secure project proposals, contract management, communication, and project delivery workflows.",
-
-architecture:
-  "React Frontend → Django REST APIs → JWT/OAuth Authentication → PostgreSQL Database → Messaging & Notification Services",
-
-stack: [
-  "React.js",
-  "Django",
-  "Django REST Framework",
-  "PostgreSQL",
-  "JWT",
-  "OAuth2",
-  "Git",
-  "Figma"
-],
-
-challenges: [
-  "Implementing role-based access control for Clients and Freelancers",
-  "Designing secure proposal and contract management workflows",
-  "Building real-time messaging and notification systems",
-  "Creating advanced search and filtering capabilities"
-],
-
-impact: [
-  "Delivered a complete freelance marketplace platform",
-  "Enabled end-to-end project lifecycle management",
-  "Improved user engagement through communication features",
-  "Successfully presented the project to the Infosys Jury Panel"
-],
-
-links: {
-  github: "https://github.com/springboardmentor182c-t/talentlink",
-  live: "#"
-}
-
-},
-
-{
-name: "SmartPay4 - Employee Salary Prediction",
-problem:
-"Developed a machine learning-powered salary prediction platform that estimates employee salaries based on demographic, educational, and professional attributes using advanced regression models.",
-
-architecture:
-  "Streamlit Frontend → Data Processing Pipeline → Feature Engineering → XGBoost Regression Model → Prediction Engine",
-
-stack: [
-  "Python",
-  "XGBoost",
-  "Scikit-Learn",
-  "Pandas",
-  "NumPy",
-  "Streamlit",
-  "Machine Learning"
-],
-
-challenges: [
-  "Building a robust preprocessing and feature engineering pipeline",
-  "Handling categorical and numerical feature transformations",
-  "Optimizing model performance and prediction accuracy",
-  "Supporting both single-user and batch salary predictions"
-],
-
-impact: [
-  "Achieved high prediction accuracy using XGBoost regression",
-  "Enabled bulk salary predictions through CSV uploads",
-  "Provided visual analytics and model performance insights",
-  "Successfully deployed as a live machine learning application"
-],
-
-links: {
-  github: "https://github.com/SID-CSE/Internship-Project---IBM-Skillsbuild-Edunet-Foundation-AICTE.git",
-  live: "https://smartpay4.streamlit.app/"
-}
-
-},
-
-{
-name: "Recon Automation for Web Pentesting",
-problem:
-"Developed a Python-based reconnaissance and automation toolkit to support ethical hacking, network scanning, information gathering, and penetration testing activities.",
-
-architecture:
-  "CLI Interface → Scanning & Enumeration Modules → Information Gathering Engine → Report Generation Utilities",
-
-stack: [
-  "Python",
-  "Nmap",
-  "Networking",
-  "Cybersecurity",
-  "OSINT",
-  "Kali Linux",
-  "Automation"
-],
-
-challenges: [
-  "Developing modular reconnaissance and scanning utilities",
-  "Implementing multi-threaded port scanning techniques",
-  "Integrating various information gathering tools into a unified framework",
-  "Ensuring usability across multiple pentesting workflows"
-],
-
-impact: [
-  "Automated repetitive reconnaissance tasks for security assessments",
-  "Improved efficiency of network and web application testing",
-  "Consolidated multiple security utilities into a single toolkit",
-  "Demonstrated practical cybersecurity automation expertise"
-],
-
-links: {
-  github: "YOUR_GITHUB_LINK",
-  live: "#"
-}
-
-}
+  {
+    name: "Recon Automation for Web Pentesting",
+    problem: "Developed a Python-based reconnaissance and automation toolkit to support ethical hacking, network scanning, information gathering, and penetration testing activities.",
+    architecture: "CLI Interface → Scanning & Enumeration Modules → Information Gathering Engine → Report Generation Utilities",
+    stack: [
+      "Python",
+      "Nmap",
+      "Networking",
+      "Cybersecurity",
+      "OSINT",
+      "Kali Linux",
+      "Automation"
+    ],
+    challenges: [
+      "Developing modular reconnaissance and scanning utilities",
+      "Implementing multi-threaded port scanning techniques",
+      "Integrating various information gathering tools into a unified framework",
+      "Ensuring usability across multiple pentesting workflows"
+    ],
+    impact: [
+      "Automated repetitive reconnaissance tasks for security assessments",
+      "Improved efficiency of network and web application testing",
+      "Consolidated multiple security utilities into a single toolkit",
+      "Demonstrated practical cybersecurity automation expertise"
+    ],
+    links: {
+      github: "https://github.com/SID-CSE/Cyber-Security_Ethical-Hacking---Mentorship-Intern.git",
+      live: "#",
+    },
+    image: cloudinaryAssets.architectures.recon,
+  }
 ];
 
 
@@ -369,46 +341,55 @@ export const cloudServices = [
   "GitHub Actions",
 ];
 
-const cloudinaryCloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-const cloudinaryPlaceholder =
-  "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' viewBox='0 0 1200 900'%3E%3Crect width='1200' height='900' fill='%2308162f'/%3E%3Ctext x='600' y='430' fill='%23e2e8f0' font-family='Arial, sans-serif' font-size='44' text-anchor='middle'%3ECertification image pending Cloudinary setup%3C/text%3E%3Ctext x='600' y='490' fill='%2394a3b8' font-family='Arial, sans-serif' font-size='24' text-anchor='middle'%3ESet NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME%3C/text%3E%3C/svg%3E";
-
-function cloudinaryCertificate(publicId: string) {
-  if (!cloudinaryCloudName) {
-    return cloudinaryPlaceholder;
-  }
-
-  return `https://res.cloudinary.com/${cloudinaryCloudName}/image/upload/f_auto,q_auto/${publicId}`;
-}
-
 export const certifications = [
+    {
+    title: "Mathematical Foundation for Machine Learning",
+    issuer: "NPTEL - IIsc Bangalore",
+    date: "2026",
+    credentialId: "NPTEL26CS02S1350203259",
+    image: cloudinaryAssets.certificates.NPTELFoundationML,
+  },
+  {
+    title: "Neural Networks for Computer Vision and Natural Language Processing",
+    issuer: "NPTEL - IIT Guwahati",
+    date: "2026",
+    credentialId: "NPTEL26CS04S1450203597",
+    image: cloudinaryAssets.certificates.NPTELNeuralNetworks,
+  },
+  {
+    title: "Machine Learning for Engineering and Science Applications",
+    issuer: "NPTEL - IIT Madras",
+    date: "2026",
+    credentialId: "NPTEL26CS76S450205504",
+    image: cloudinaryAssets.certificates.NPTELML,
+  },
   {
     title: "AI-Foundation Associate",
-    issuer: "Issuer",
-    date: "2026",
-    credentialId: "AIF-001",
-    image: cloudinaryCertificate("certificates/AI-Foundation-Associate-eCertificate_page-0001 (1).jpg"),
+    issuer: "Oracle University",
+    date: "2025",
+    credentialId: "323291120OCI25AICFA",
+    image: cloudinaryAssets.certificates.oracleAIFoundation,
   },
   {
     title: "AI Data Science Professional",
-    issuer: "Issuer",
-    date: "2026",
-    credentialId: "AIDS-002",
-    image: cloudinaryCertificate("certificates/AI-Data-Science-Professional-eCertificate_page-0001 (1).jpg"),
+    issuer: "Oracle University",
+    date: "2025",
+    credentialId: "323291120OCI25DSOCP",
+    image: cloudinaryAssets.certificates.oracleDataScience,
   },
   {
     title: "Generative AI Professional",
-    issuer: "Issuer",
-    date: "2026",
-    credentialId: "GAI-003",
-    image: cloudinaryCertificate("certificates/AI-Genarative AI Professional_page-0001.jpg"),
+    issuer: "Oracle University",
+    date: "2025",
+    credentialId: "323291120OCI25GAIOCP",
+    image: cloudinaryAssets.certificates.oracleGenerativeAI,
   },
   {
     title: "AI Vector Professional",
-    issuer: "Issuer",
-    date: "2026",
-    credentialId: "AVP-004",
-    image: cloudinaryCertificate("certificates/AI-Vector-Professional-eCertificate_page-0001 (1).jpg"),
+    issuer: "Oracle University",
+    date: "2025",
+    credentialId: "323291120DB23AIOCP",
+    image: cloudinaryAssets.certificates.oracleVectorSearch,
   },
 ];
 
@@ -464,9 +445,9 @@ export const experience = [
 ];
 
 export const socials = [
-  { label: "GitHub", href: "https://github.com/siddharthkumar" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/siddharth-kumar" },
-  { label: "Email", href: "mailto:siddharth.kumar@example.com" },
+  { label: "GitHub", href: "https://github.com/SID-CSE" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/siddharthkumaryo" },
+  { label: "Email", href: "mailto:siddharthkumaryo@gmail.com" },
 ];
 
 export const personal = {

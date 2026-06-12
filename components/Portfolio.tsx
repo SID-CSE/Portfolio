@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ClickableImage from "@/components/ClickableImage";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { FaDownload, FaEye, FaShareAlt } from "react-icons/fa";
 import {
   aboutStats,
   certifications,
@@ -27,8 +29,25 @@ const sectionVariants = {
   show: { opacity: 1, y: 0 },
 };
 
-function GlassCard({ className = "", children }: { className?: string; children: React.ReactNode }) {
-  return <div className={`glass-card rounded-3xl ${className}`}>{children}</div>;
+const CLOUDINARY_RESUME_URL = "https://res.cloudinary.com/dn37tck9g/raw/upload/Siddharth_Kumar_Resume_zi82vf.docx";
+const RESUME_FILE_NAME = "Siddharth-Kumar-Resume.docx";
+const RESUME_VIEW_URL = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(CLOUDINARY_RESUME_URL)}`;
+
+function GlassCard({
+  className = "",
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className={`glass-card rounded-3xl ${className}`}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 }
 
 function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
@@ -95,7 +114,7 @@ function SectionShell({ id, children }: { id: string; children: React.ReactNode 
   );
 }
 
-function NavBar({ active, onDownloadResume }: { active: string; onDownloadResume: () => void }) {
+function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloadResume, onShareResume }: { active: string; resumeMenuOpen: boolean; onResumeClick: () => void; onViewResume: () => void; onDownloadResume: () => void; onShareResume: () => void }) {
   return (
     <>
       <header className="sticky top-0 z-50 hidden border-b border-white/8 bg-[#050816]/70 backdrop-blur-xl lg:block">
@@ -110,13 +129,33 @@ function NavBar({ active, onDownloadResume }: { active: string; onDownloadResume
                 {item.label}
               </motion.a>
             ))}
-            <button
-              type="button"
-              onClick={onDownloadResume}
-              className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-4 py-2 text-xs font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-            >
-              Download Resume
-            </button>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={onResumeClick}
+                className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-4 py-2 text-xs font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+              >
+                Resume
+              </button>
+              <AnimatePresence>
+                {resumeMenuOpen && (
+                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="absolute right-0 mt-2 w-48 rounded-2xl border border-white/10 bg-slate-900/95 backdrop-blur-xl overflow-hidden">
+                    <button type="button" onClick={onViewResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
+                      <FaEye className="text-cyan-300" />
+                      View Resume
+                    </button>
+                    <button type="button" onClick={onShareResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
+                      <FaShareAlt className="text-cyan-300" />
+                      Share Resume
+                    </button>
+                    <button type="button" onClick={onDownloadResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10">
+                      <FaDownload className="text-cyan-300" />
+                      Download Resume
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </nav>
       </header>
@@ -138,36 +177,6 @@ function DiagramFrame({ children }: { children: React.ReactNode }) {
   return <div className="glass-card overflow-hidden rounded-3xl p-4">{children}</div>;
 }
 
-function ArchDiagram() {
-  return (
-    <svg viewBox="0 0 880 360" className="h-auto w-full" role="img" aria-label="Architecture diagram">
-      <defs>
-        <linearGradient id="archGradient" x1="0" x2="1">
-          <stop offset="0%" stopColor="#818cf8" />
-          <stop offset="100%" stopColor="#22d3ee" />
-        </linearGradient>
-        <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L7,3 z" fill="#22d3ee" />
-        </marker>
-      </defs>
-      <rect x="20" y="20" width="840" height="320" rx="28" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" />
-      <rect x="54" y="60" width="140" height="64" rx="18" fill="rgba(129,140,248,0.16)" stroke="url(#archGradient)" />
-      <text x="124" y="95" textAnchor="middle" fill="#f8fafc" fontSize="18">Client</text>
-      <rect x="250" y="60" width="150" height="64" rx="18" fill="rgba(34,211,238,0.14)" stroke="url(#archGradient)" />
-      <text x="325" y="95" textAnchor="middle" fill="#f8fafc" fontSize="18">Next.js UI</text>
-      <rect x="458" y="60" width="150" height="64" rx="18" fill="rgba(192,132,252,0.12)" stroke="url(#archGradient)" />
-      <text x="533" y="95" textAnchor="middle" fill="#f8fafc" fontSize="18">API Layer</text>
-      <rect x="666" y="60" width="140" height="64" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.16)" />
-      <text x="736" y="95" textAnchor="middle" fill="#f8fafc" fontSize="18">Data Store</text>
-      <path d="M194 92 H250" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#arrow)" />
-      <path d="M400 92 H458" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#arrow)" />
-      <path d="M608 92 H666" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#arrow)" />
-      <rect x="130" y="190" width="620" height="88" rx="22" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" />
-      <text x="440" y="224" textAnchor="middle" fill="#e2e8f0" fontSize="19">Background jobs, observability, and third-party integrations</text>
-      <text x="440" y="252" textAnchor="middle" fill="#94a3b8" fontSize="14">Queues · Webhooks · Caching · Metrics · Alerts</text>
-    </svg>
-  );
-}
 
 function CloudDiagram() {
   return (
@@ -222,10 +231,11 @@ function MLPipeline() {
   );
 }
 
-function ProjectCard({ project }: { project: (typeof projectCards)[number] }) {
+function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards)[number]; onSelectImage: (image: string) => void }) {
   const [open, setOpen] = useState(false);
 
   return (
+    
     <GlassCard className="overflow-hidden p-6 transition hover:-translate-y-1">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
@@ -257,7 +267,17 @@ function ProjectCard({ project }: { project: (typeof projectCards)[number] }) {
             </div>
           </div>
           <DiagramFrame>
-            <ArchDiagram />
+            {project.image ? (
+                <ClickableImage
+                  src={project.image}
+                  alt={`${project.name} Architecture`}
+                  onClick={onSelectImage}
+                />
+            ) : (
+              <div className="flex items-center justify-center p-4">
+                <p className="text-slate-400">No architecture diagram available.</p>
+              </div>
+            )}
           </DiagramFrame>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/8 pt-4">
@@ -357,6 +377,21 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero");
   const [selectedSkillCategory, setSelectedSkillCategory] = useState(skillCategories[0].label);
   const [selectedDesignTab, setSelectedDesignTab] = useState(systemDesignTabs[0].id);
+  const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
+  const certificateRef = useRef<HTMLDivElement>(null);
+  const [gallery, setGallery] = useState<string[]>([]);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+
+  useEffect(() => {
+  if (!certificateRef.current) return;
+
+  const container = certificateRef.current;
+
+  container.scrollLeft =
+    (container.scrollWidth - container.clientWidth) / 2;
+}, []);
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -378,34 +413,45 @@ export default function Portfolio() {
   const currentSkills = useMemo(() => skillCategories.find((item) => item.label === selectedSkillCategory) ?? skillCategories[0], [selectedSkillCategory]);
   const activeDesignTab = useMemo(() => systemDesignTabs.find((item) => item.id === selectedDesignTab) ?? systemDesignTabs[0], [selectedDesignTab]);
 
-  function downloadResume() {
-    const resume = [
-      "Siddharth Kumar",
-      "Full Stack · AI/ML · Cloud Engineer",
-      "",
-      "Selected capabilities:",
-      "- Next.js, TypeScript, Tailwind CSS, Framer Motion",
-      "- Python, FastAPI, REST APIs, Streamlit",
-      "- PostgreSQL, Redis, Docker, GitHub Actions, AWS",
-      "",
-      "Portfolio highlights:",
-      "- Architecture-first personal brand site",
-      "- AI/ML demo surfaces and cloud diagrams",
-      "- Clear documentation and contact workflows",
-    ].join("\n");
+  function viewResume() {
+    window.open(RESUME_VIEW_URL, "_blank", "noopener,noreferrer");
+    setResumeMenuOpen(false);
+  }
 
-    const blob = new Blob([resume], { type: "text/plain;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
+  function openGallery(images: string[], index: number) {
+  setGallery(images);
+  setActiveIndex(index);
+  }
+
+  function downloadResume() {
     const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "Siddharth-Kumar-Resume.txt";
+    anchor.href = CLOUDINARY_RESUME_URL;
+    anchor.download = RESUME_FILE_NAME;
     anchor.click();
-    window.URL.revokeObjectURL(url);
+    setResumeMenuOpen(false);
+  }
+
+  function shareResume() {
+    if (navigator.share) {
+      navigator.share({
+        title: "Siddharth Kumar - Resume",
+        text: "Check out my resume",
+        url: CLOUDINARY_RESUME_URL,
+      }).catch((err) => console.log("Error sharing:", err));
+    } else {
+      navigator.clipboard.writeText(CLOUDINARY_RESUME_URL);
+      alert("Resume link copied to clipboard!");
+    }
+    setResumeMenuOpen(false);
+  }
+
+  function handleResumeClick() {
+    setResumeMenuOpen(!resumeMenuOpen);
   }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent text-white">
-      <NavBar active={activeSection} onDownloadResume={downloadResume} />
+      <NavBar active={activeSection} resumeMenuOpen={resumeMenuOpen} onResumeClick={handleResumeClick} onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="mesh-orb absolute -left-30 -top-10 h-72 w-72 rounded-full bg-indigo-500/30 blur-3xl" />
         <div className="mesh-orb absolute -right-20 top-35 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
@@ -433,7 +479,27 @@ export default function Portfolio() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <a href="#projects" className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-5 py-3 text-sm font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01]">View Projects</a>
-                <button type="button" onClick={downloadResume} className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/10">Download Resume</button>
+                <div className="relative">
+                  <button type="button" onClick={handleResumeClick} className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/10">Resume</button>
+                  <AnimatePresence>
+                    {resumeMenuOpen && (
+                      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="absolute left-0 mt-2 w-48 rounded-2xl border border-white/10 bg-slate-900/95 backdrop-blur-xl overflow-hidden z-50">
+                        <button type="button" onClick={viewResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
+                          <FaEye className="text-cyan-300" />
+                          View Resume
+                        </button>
+                        <button type="button" onClick={shareResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
+                          <FaShareAlt className="text-cyan-300" />
+                          Share Resume
+                        </button>
+                        <button type="button" onClick={downloadResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10">
+                          <FaDownload className="text-cyan-300" />
+                          Download Resume
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">{heroFocusAreas.map((area) => <Pill key={area}>{area}</Pill>)}</div>
               <div className="grid gap-4 sm:grid-cols-3">{heroStats.map((stat) => <StatCard key={stat.label} value={stat.value} label={stat.label} />)}</div>
@@ -446,9 +512,6 @@ export default function Portfolio() {
                   <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Focus areas</p>
                   <div className="mt-4 grid gap-3">{heroFocusAreas.map((item) => <div key={item} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100/90">{item}</div>)}</div>
                 </div>
-                <DiagramFrame>
-                  <ArchDiagram />
-                </DiagramFrame>
               </div>
             </GlassCard>
           </div>
@@ -496,7 +559,7 @@ export default function Portfolio() {
 
         <SectionShell id="projects">
           <SectionHeading eyebrow="04. Featured Projects" title="Every project card carries the full anatomy." description="Each card exposes the problem, architecture, stack, challenges, impact, and links, which is the kind of detail that makes a portfolio feel senior instead of decorative." />
-          <div className="mt-8 grid gap-6">{projectCards.map((project) => <ProjectCard key={project.name} project={project} />)}</div>
+          <div className="mt-8 grid gap-6">{projectCards.map((project) => <ProjectCard key={project.name} project={project} onSelectImage={(image) => openGallery([image],0)} />)}</div>
         </SectionShell>
 
         <SectionShell id="system-design">
@@ -505,7 +568,6 @@ export default function Portfolio() {
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2">{systemDesignTabs.map((tab) => <button key={tab.id} type="button" onClick={() => setSelectedDesignTab(tab.id)} className={`rounded-full px-4 py-2 text-sm transition ${activeDesignTab.id === tab.id ? "bg-white/10 text-white" : "border border-white/10 bg-white/5 text-slate-300/80 hover:bg-white/10 hover:text-white"}`}>{tab.label}</button>)}</div>
               <GlassCard className="p-6"><p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">{activeDesignTab.title}</p><p className="mt-3 text-sm leading-7 text-slate-200/90">{activeDesignTab.content}</p></GlassCard>
-              <DiagramFrame><ArchDiagram /></DiagramFrame>
             </div>
           </div>
         </SectionShell>
@@ -543,18 +605,68 @@ export default function Portfolio() {
 
         <SectionShell id="certifications">
           <SectionHeading eyebrow="08. Certifications" title="Credential cards that feel like part of the system, not an afterthought." description="Each certificate card can show issuer, date, credential ID, and a verification link, which keeps the section recruiter-friendly." />
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">{certifications.map((cert) => (
-            <GlassCard key={cert.credentialId} className="overflow-hidden p-4">
-              <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-white/10 bg-black/20">
-                <Image src={cert.image} alt={cert.title} fill className="object-cover" />
-              </div>
-              <div className="mt-4 space-y-2">
-                <p className="text-base font-medium text-white">{cert.title}</p>
-                <p className="text-sm text-slate-300/80">{cert.issuer}</p>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{cert.date} · {cert.credentialId}</p>
-              </div>
-            </GlassCard>
-          ))}</div>
+          <motion.div
+  ref={certificateRef}
+  drag="x"
+  dragConstraints={{ left: -2000, right: 0 }}
+  dragElastic={0.05}
+  className="
+    mt-8
+    flex
+    gap-6
+    overflow-x-auto
+    scroll-smooth
+    pb-4
+    px-[30vw]
+    no-scrollbar
+  "
+>
+  {certifications.map((cert, index) => (
+    <GlassCard
+      key={cert.credentialId}
+      className="
+        min-w-[350px]
+        max-w-[350px]
+        flex-shrink-0
+        overflow-hidden
+        p-4
+        snap-center
+        cursor-pointer
+        transition
+        hover:scale-[1.02]
+      "
+      onClick={() =>
+        openGallery(
+          certifications.map((c) => c.image),
+          index
+        )
+      }
+    >
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+        <Image
+          src={cert.image}
+          alt={cert.title}
+          fill
+          className="object-cover transition duration-300 hover:scale-105"
+        />
+      </div>
+
+      <div className="mt-4 space-y-2">
+        <p className="text-base font-medium text-white">
+          {cert.title}
+        </p>
+
+        <p className="text-sm text-slate-300/80">
+          {cert.issuer}
+        </p>
+
+        <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
+          {cert.date} · {cert.credentialId}
+        </p>
+      </div>
+    </GlassCard>
+  ))}
+</motion.div>
         </SectionShell>
 
         <SectionShell id="writing">
@@ -599,6 +711,69 @@ export default function Portfolio() {
           </div>
         </SectionShell>
       </main>
+
+      <AnimatePresence>
+        {activeIndex !== null && (
+          <motion.div
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-black/90"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveIndex(null)}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex((prev) =>
+                  prev !== null
+                    ? prev > 0
+                      ? prev - 1
+                      : gallery.length - 1
+                    : 0
+                );
+              }}
+              className="absolute left-5 z-10 text-5xl text-white"
+            >
+              ❮
+            </button>
+
+            <div
+              className="relative h-[85vh] w-[90vw]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={gallery[activeIndex]}
+                alt="Certificate"
+                fill
+                className="object-contain"
+              />
+            </div>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex((prev) =>
+                  prev !== null
+                    ? prev < gallery.length - 1
+                      ? prev + 1
+                      : 0
+                    : 0
+                );
+              }}
+              className="absolute right-5 z-10 text-5xl text-white"
+            >
+              ❯
+            </button>
+
+            <button
+              onClick={() => setActiveIndex(null)}
+              className="absolute top-5 right-5 rounded-lg bg-white/10 px-4 py-2 text-white"
+            >
+              Close
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {!reducedMotion ? <div aria-hidden className="pointer-events-none fixed inset-0 opacity-20 [background:radial-gradient(circle_at_center,transparent_0,transparent_58%,rgba(255,255,255,0.03)_100%)]" /> : null}
     </div>
