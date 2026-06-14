@@ -452,9 +452,45 @@ export const socials = [
 
 export const personal = {
   name: "Siddharth Kumar",
-  status: "3rd Year CSE Student (moving into final year)",
+  status: "Final-year Computer Science Engineering student",
   cgpa: "9.05",
   headline: "Full Stack Developer | AI/ML Engineer | Cloud & DevOps Enthusiast",
   summary:
     "I build production-minded applications across the stack, with a focus on AI/ML, cloud delivery, and scalable systems. I enjoy turning ideas into deployable systems and writing clear documentation so teams can move quickly.",
+};
+
+export const aboutContent = {
+  heroHeadline: "AI/ML Enthusiast | Computer Science Engineer | Problem Solver",
+  heroDescription: "Building intelligent solutions through Artificial Intelligence, Machine Learning, Data Analytics, and Cloud Technologies. Passionate about transforming data into insights and developing scalable applications that solve real-world challenges.",
+
+  mainBio: "I'm Siddharth Kumar, a final-year Computer Science Engineering student with a strong passion for Artificial Intelligence, Machine Learning, Data Science, and Cloud Computing. I enjoy transforming complex problems into intelligent, scalable, and impactful solutions through technology.",
+
+  journeyDescription: "My academic journey and hands-on experience have equipped me with a solid foundation in Python, Machine Learning, Data Analytics, Database Management Systems, Operating Systems, Computer Networks, and Object-Oriented Programming. Through multiple internships and industry-oriented projects, I have gained practical experience in developing AI-powered applications, predictive models, web solutions, and cloud-based systems.",
+
+  achievements: "I have successfully completed AI/ML-focused internships and earned elite certifications in Machine Learning, Neural Networks, and Mathematical Foundations of AI. My project portfolio includes solutions in Employee Salary Prediction, Content Management Systems, IoT-based Monitoring Systems, Library Management Systems, and Intelligent Data Analytics Applications.",
+
+  vision: "I am continuously exploring emerging technologies, improving my problem-solving abilities through coding platforms, and building projects that create real-world impact. My goal is to contribute to innovative teams where I can leverage AI and software engineering to develop meaningful technology solutions while continuously learning and growing as an engineer.",
+
+  specializations: [
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Data Science",
+    "Cloud Computing"
+  ],
+
+  coreSkills: [
+    "Python",
+    "SQL",
+    "Machine Learning",
+    "Data Analytics",
+    "DBMS",
+    "Operating Systems",
+    "Computer Networks",
+    "Git & GitHub",
+    "Web Development"
+  ],
+
+  currentFocus: "Building AI-driven applications, strengthening Data Science expertise, and preparing for Software Engineering & AI/ML roles.",
+
+  photoUrl: "https://res.cloudinary.com/dn37tck9g/image/upload/v1781461279/Profile_Picture_wmrgtk.jpg", // User will replace with their Cloudinary URL
 };
