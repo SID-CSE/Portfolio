@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ClickableImage from "@/components/ClickableImage";
+import AboutSection from "@/components/About";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FaDownload, FaEye, FaShareAlt } from "react-icons/fa";
 import {
@@ -517,17 +518,7 @@ export default function Portfolio() {
           </div>
         </SectionShell>
 
-        <SectionShell id="about">
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-            <SectionHeading eyebrow="01. About" title="A builder story framed around systems, not slogans." description="This section gives recruiters, founders, and collaborators the short version: what you build, how you think, and why your portfolio should feel like an engineered product." />
-            <div className="space-y-5">
-              <GlassCard className="p-6">
-                <p className="text-sm leading-7 text-slate-200/90">I build production-minded applications across the stack: clean interfaces, reliable APIs, data-first workflows, and cloud delivery that can survive real traffic. The goal is not just to show projects, but to show how those projects are designed, measured, and operated.</p>
-              </GlassCard>
-              <div className="grid gap-4 md:grid-cols-3">{aboutStats.map((stat) => <StatCard key={stat.label} value={stat.value} label={stat.label} />)}</div>
-            </div>
-          </div>
-        </SectionShell>
+        <AboutSection />
 
         <SectionShell id="philosophy">
           <SectionHeading eyebrow="02. Engineering Philosophy" title="A small set of principles that keeps the work sharp." description="These pillars frame how I make decisions when code, product, and operations start pulling in different directions." />
