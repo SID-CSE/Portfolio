@@ -12,6 +12,8 @@
 	--accent: #818cf8;
 	--accent-2: #22d3ee;
 	--accent-3: #c084fc;
+	--font-inter: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 * {
@@ -67,95 +69,15 @@ body::before {
 	font-family: var(--font-mono), monospace;
 }
 
-.mesh-orb {
-	filter: blur(20px);
-	opacity: 0.85;
-}
-
 .section-shell {
 	scroll-margin-top: 96px;
+	transition: scroll-margin-top 0.2s ease;
 }
 
-/* HUD / Futuristic OS additions (Phase 1) */
-:root {
-	--hud-accent-1: #0ea5e9; /* electric blue */
-	--hud-accent-2: #8b5cf6; /* purple */
-	--hud-glow: 0 6px 30px rgba(14,165,233,0.14);
-}
-
-.hud-boot {
-	position: fixed;
-	inset: 0;
-	display: grid;
-	place-items: center;
-	background: radial-gradient(circle at center, rgba(8,12,24,0.8), rgba(4,6,12,0.95));
-	z-index: 9999;
-	color: var(--foreground);
-}
-
-.boot-logo {
-	display: inline-block;
-	padding: 2rem;
-	border-radius: 1rem;
-	background: linear-gradient(135deg, rgba(129,140,248,0.08), rgba(34,211,238,0.06));
-	box-shadow: var(--hud-glow);
-	border: 1px solid rgba(255,255,255,0.04);
-	transform: translateY(0);
-}
-
-.scanline {
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
-	background-size: 100% 2.6rem;
-	mix-blend-mode: overlay;
-	opacity: 0.9;
-}
-
-.hud-panel {
-	border: 1px solid rgba(14,165,233,0.12);
-	background: linear-gradient(180deg, rgba(6,8,14,0.45), rgba(6,8,14,0.25));
-	box-shadow: 0 12px 40px rgba(11,78,120,0.12);
-	backdrop-filter: blur(10px);
-	padding: 1rem;
-	border-radius: 12px;
-}
-
-.hud-accent-text {
-	color: var(--hud-accent-1);
-	text-shadow: 0 4px 18px rgba(14,165,233,0.12);
-}
-
-.hud-chip {
-	display: inline-flex;
-	gap: 0.5rem;
-	align-items: center;
-	padding: 0.35rem 0.6rem;
-	border-radius: 9999px;
-	background: rgba(255,255,255,0.02);
-	border: 1px solid rgba(255,255,255,0.04);
-	font-size: 0.8rem;
-}
-
-/* When HUD is enabled, slightly tune accent glows and panel borders */
-.hud-enabled {
-	--accent: #0ea5e9;
-	--accent-2: #8b5cf6;
-}
-
-.hud-float {
-	position: fixed;
-	right: 20px;
-	bottom: 28px;
-	z-index: 60;
-}
-
-.hud-top-right {
-	position: fixed;
-	right: 18px;
-	top: 18px;
-	z-index: 70;
+@media (max-width: 1023px) {
+	.section-shell {
+		scroll-margin-top: 120px;
+	}
 }
 
 .no-scrollbar {
@@ -165,4 +87,16 @@ body::before {
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+.btn-primary {
+	@apply rounded-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-5 py-3 text-sm font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+	@apply rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/10;
+}
+
+.btn-sm-secondary {
+	@apply rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs tracking-[0.08em] text-white transition hover:border-cyan-400/40 hover:bg-white/10;
 }

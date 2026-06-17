@@ -1,28 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import ClickableImage from "@/components/ClickableImage";
 import AboutSection from "@/components/About";
+import SkillsSection from "@/components/Skills";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FaDownload, FaEye, FaShareAlt } from "react-icons/fa";
 import {
-  aboutStats,
   certifications,
-  cloudServices,
   experience,
   heroFocusAreas,
   heroRoles,
   heroStats,
   navigationItems,
-  philosophy,
   projectCards,
-  skillCategories,
   socials,
-  systemDesignTabs,
-  writings,
-  mlModels,
 } from "@/data/portfolio";
 
 const sectionVariants = {
@@ -81,7 +74,6 @@ function useTypewriter(words: string[]) {
 
   useEffect(() => {
     if (shouldReduceMotion) {
-      setText(words[0] ?? "");
       return;
     }
 
@@ -126,7 +118,7 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
             {navigationItems.slice(0, 6).map((item) => (
-              <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} whileHover={{ scale: 1.03 }} className={`rounded-full border px-3 py-2 text-xs tracking-[0.08em] transition ${active === item.href.slice(1) ? "border-indigo-400/60 bg-indigo-400/15 text-white" : "border-white/10 bg-white/5 text-slate-300 hover:border-indigo-400/40 hover:bg-white/10 hover:text-white"}`}>
+              <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} whileHover={{ scale: 1.03 }} className={`btn-sm-secondary ${active === item.href.slice(1) ? "border-indigo-400/60 bg-indigo-400/15" : ""}`}>
                 {item.label}
               </motion.a>
             ))}
@@ -134,7 +126,7 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
               <button
                 type="button"
                 onClick={onResumeClick}
-                className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-4 py-2 text-xs font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+                className="rounded-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-4 py-2 text-xs font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
               >
                 Resume
               </button>
@@ -164,7 +156,7 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
       <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/8 bg-[#050816]/80 px-3 py-3 backdrop-blur-xl lg:hidden">
         <div className="mx-auto grid max-w-7xl grid-cols-4 gap-2 sm:grid-cols-6">
           {navigationItems.slice(0, 12).map((item) => (
-            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} whileHover={{ scale: 1.02 }} className={`rounded-2xl px-2 py-2 text-center text-[10px] tracking-[0.08em] transition ${active === item.href.slice(1) ? "bg-indigo-400/20 text-white" : "text-slate-300/70 hover:bg-white/5 hover:text-white"}`}>
+            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} whileHover={{ scale: 1.02 }} className={`rounded-2xl px-2 py-2 text-center text-[10px] tracking-[0.08em] transition ${active === item.href.slice(1) ? "bg-indigo-400/20 text-white border border-indigo-400/30" : "text-slate-300/70 border border-white/10 hover:bg-white/5 hover:text-white"}`}>
               {item.label}
             </motion.a>
           ))}
@@ -179,59 +171,6 @@ function DiagramFrame({ children }: { children: React.ReactNode }) {
 }
 
 
-function CloudDiagram() {
-  return (
-    <svg viewBox="0 0 880 340" className="h-auto w-full" role="img" aria-label="Cloud deployment diagram">
-      <defs>
-        <marker id="cloudArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L7,3 z" fill="#22d3ee" />
-        </marker>
-      </defs>
-      <rect x="20" y="20" width="840" height="300" rx="28" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" />
-      <rect x="60" y="52" width="160" height="70" rx="18" fill="rgba(129,140,248,0.16)" stroke="rgba(129,140,248,0.6)" />
-      <text x="140" y="92" textAnchor="middle" fill="#f8fafc" fontSize="17">Route 53 + CDN</text>
-      <rect x="282" y="52" width="150" height="70" rx="18" fill="rgba(34,211,238,0.14)" stroke="rgba(34,211,238,0.56)" />
-      <text x="357" y="92" textAnchor="middle" fill="#f8fafc" fontSize="17">Public API</text>
-      <rect x="478" y="52" width="160" height="70" rx="18" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.56)" />
-      <text x="558" y="92" textAnchor="middle" fill="#f8fafc" fontSize="17">App Service</text>
-      <rect x="680" y="52" width="140" height="70" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.16)" />
-      <text x="750" y="92" textAnchor="middle" fill="#f8fafc" fontSize="17">RDS / Redis</text>
-      <path d="M220 87 H282" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#cloudArrow)" />
-      <path d="M432 87 H478" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#cloudArrow)" />
-      <path d="M638 87 H680" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#cloudArrow)" />
-      <rect x="110" y="170" width="640" height="92" rx="24" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" />
-      <text x="430" y="206" textAnchor="middle" fill="#e2e8f0" fontSize="18">CI/CD: push {'->'} build {'->'} test {'->'} containerize {'->'} deploy</text>
-      <text x="430" y="235" textAnchor="middle" fill="#94a3b8" fontSize="14">GitHub Actions · Docker · Environment promotion · Health checks</text>
-    </svg>
-  );
-}
-
-function MLPipeline() {
-  return (
-    <svg viewBox="0 0 880 330" className="h-auto w-full" role="img" aria-label="Machine learning pipeline">
-      <defs>
-        <marker id="mlArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L7,3 z" fill="#22d3ee" />
-        </marker>
-      </defs>
-      <rect x="20" y="20" width="840" height="290" rx="28" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" />
-      <rect x="52" y="76" width="134" height="70" rx="18" fill="rgba(129,140,248,0.15)" stroke="rgba(129,140,248,0.55)" />
-      <text x="119" y="118" textAnchor="middle" fill="#fff" fontSize="17">Data ingest</text>
-      <rect x="242" y="76" width="150" height="70" rx="18" fill="rgba(34,211,238,0.14)" stroke="rgba(34,211,238,0.55)" />
-      <text x="317" y="118" textAnchor="middle" fill="#fff" fontSize="17">Feature prep</text>
-      <rect x="448" y="76" width="150" height="70" rx="18" fill="rgba(192,132,252,0.12)" stroke="rgba(192,132,252,0.55)" />
-      <text x="523" y="118" textAnchor="middle" fill="#fff" fontSize="17">Training</text>
-      <rect x="656" y="76" width="150" height="70" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" />
-      <text x="731" y="118" textAnchor="middle" fill="#fff" fontSize="17">Inference API</text>
-      <path d="M186 111 H242" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#mlArrow)" />
-      <path d="M392 111 H448" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#mlArrow)" />
-      <path d="M598 111 H656" stroke="#22d3ee" strokeWidth="3" markerEnd="url(#mlArrow)" />
-      <rect x="138" y="186" width="600" height="64" rx="20" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" />
-      <text x="438" y="221" textAnchor="middle" fill="#e2e8f0" fontSize="18">Monitoring: drift checks, metrics, and user feedback loops</text>
-    </svg>
-  );
-}
-
 function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards)[number]; onSelectImage: (image: string) => void }) {
   const [open, setOpen] = useState(false);
 
@@ -245,10 +184,10 @@ function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards
             <h3 className="text-2xl font-semibold tracking-[-0.02em] text-white">{project.name}</h3>
           </div>
           <div className="flex flex-wrap gap-2">
-            <a className="rounded-full border border-white/10 px-3 py-2 text-xs text-slate-200 transition hover:border-cyan-400/40 hover:bg-white/10" href={project.links.github} target="_blank" rel="noreferrer">
+            <a className="btn-sm-secondary" href={project.links.github} target="_blank" rel="noreferrer">
               GitHub
             </a>
-            <a className="rounded-full border border-white/10 px-3 py-2 text-xs text-slate-200 transition hover:border-cyan-400/40 hover:bg-white/10" href={project.links.live} target="_blank" rel="noreferrer">
+            <a className="btn-sm-secondary" href={project.links.live} target="_blank" rel="noreferrer">
               Live / Demo
             </a>
           </div>
@@ -290,7 +229,7 @@ function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards
               ))}
             </div>
           </div>
-          <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-[0.08em] text-white transition hover:border-cyan-400/40 hover:bg-white/10">
+          <button type="button" onClick={() => setOpen((value) => !value)} className="btn-sm-secondary">
             {open ? "Hide details" : "Expand details"}
           </button>
         </div>
@@ -301,7 +240,7 @@ function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Engineering challenges</p>
                   <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-200/90">
-                    {project.challenges.map((challenge) => <li key={challenge}>• {challenge}</li>)}
+                    {project.challenges.map((challenge) => <li key={challenge}>- {challenge}</li>)}
                   </ul>
                 </div>
               </div>
@@ -336,11 +275,11 @@ function ContactForm() {
       if (!response.ok) throw new Error("Contact request failed");
 
       setState("success");
-      setMessage("Thanks. Your message was sent and a confirmation was queued if email delivery is configured.");
+      setMessage("Thanks. Your message was sent successfully.");
       event.currentTarget.reset();
     } catch {
       setState("error");
-      setMessage("The form could not be sent. Check the API route environment variables and try again.");
+      setMessage("The form could not be sent right now. Please email me directly.");
     }
   }
 
@@ -362,7 +301,7 @@ function ContactForm() {
           <textarea name="message" rows={5} required className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50" placeholder="Tell me what you are building or hiring for." />
         </label>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <button type="submit" disabled={state === "sending"} className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-5 py-3 text-sm font-medium text-white transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60">
+          <button type="submit" disabled={state === "sending"} className="btn-primary">
             {state === "sending" ? "Sending..." : "Send message"}
           </button>
           <p className={`text-sm ${state === "error" ? "text-rose-300" : "text-emerald-300"}`}>{message}</p>
@@ -376,8 +315,6 @@ export default function Portfolio() {
   const reducedMotion = useReducedMotion();
   const typewriter = useTypewriter(heroRoles);
   const [activeSection, setActiveSection] = useState("hero");
-  const [selectedSkillCategory, setSelectedSkillCategory] = useState(skillCategories[0].label);
-  const [selectedDesignTab, setSelectedDesignTab] = useState(systemDesignTabs[0].id);
   const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
   const [gallery, setGallery] = useState<string[]>([]);
@@ -411,9 +348,6 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, []);
 
-  const currentSkills = useMemo(() => skillCategories.find((item) => item.label === selectedSkillCategory) ?? skillCategories[0], [selectedSkillCategory]);
-  const activeDesignTab = useMemo(() => systemDesignTabs.find((item) => item.id === selectedDesignTab) ?? systemDesignTabs[0], [selectedDesignTab]);
-
   function viewResume() {
     window.open(RESUME_VIEW_URL, "_blank", "noopener,noreferrer");
     setResumeMenuOpen(false);
@@ -438,10 +372,9 @@ export default function Portfolio() {
         title: "Siddharth Kumar - Resume",
         text: "Check out my resume",
         url: CLOUDINARY_RESUME_URL,
-      }).catch((err) => console.log("Error sharing:", err));
+      }).catch(() => undefined);
     } else {
       navigator.clipboard.writeText(CLOUDINARY_RESUME_URL);
-      alert("Resume link copied to clipboard!");
     }
     setResumeMenuOpen(false);
   }
@@ -453,12 +386,6 @@ export default function Portfolio() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent text-white">
       <NavBar active={activeSection} resumeMenuOpen={resumeMenuOpen} onResumeClick={handleResumeClick} onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="mesh-orb absolute -left-30 -top-10 h-72 w-72 rounded-full bg-indigo-500/30 blur-3xl" />
-        <div className="mesh-orb absolute -right-20 top-35 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
-        <div className="mesh-orb absolute bottom-[18%] left-[22%] h-64 w-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
-      </div>
-
       <main className="relative z-10 pb-28 lg:pb-0">
         <SectionShell id="hero">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -468,20 +395,20 @@ export default function Portfolio() {
                 Open to opportunities
               </div>
               <div className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.32em] text-slate-300/60">Elite Personal Brand Website</p>
+                <p className="text-xs uppercase tracking-[0.32em] text-slate-300/60">Full Stack, AI/ML & Cloud Engineer</p>
                 <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl lg:text-[5rem]">Siddharth Kumar</h1>
                 <p className="text-2xl font-medium tracking-[-0.02em] text-slate-100 sm:text-3xl">
                   {typewriter}
                   <span className="ml-1 inline-block h-7 w-2 align-middle bg-cyan-300/80" />
                 </p>
                 <p className="max-w-2xl text-base leading-7 text-slate-300/85 sm:text-lg">
-                  Building things that scale with Python, FastAPI, Next.js, cloud infrastructure, and applied AI. This blueprint turns the portfolio into a product: clear signal, polished motion, and architecture-first storytelling.
+                  Passionate about developing AI-powered applications, scalable web platforms, and cloud-based solutions. I enjoy transforming complex problems into intelligent products through software engineering, data-driven decision making, and modern development practices.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <a href="#projects" className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-5 py-3 text-sm font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01]">View Projects</a>
+                <a href="#projects" className="btn-primary">Explore my Work</a>
                 <div className="relative">
-                  <button type="button" onClick={handleResumeClick} className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/10">Resume</button>
+                  <button type="button" onClick={handleResumeClick} className="btn-secondary">Resume</button>
                   <AnimatePresence>
                     {resumeMenuOpen && (
                       <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="absolute left-0 mt-2 w-48 rounded-2xl border border-white/10 bg-slate-900/95 backdrop-blur-xl overflow-hidden z-50">
@@ -520,82 +447,17 @@ export default function Portfolio() {
 
         <AboutSection />
 
-        <SectionShell id="philosophy">
-          <SectionHeading eyebrow="02. Engineering Philosophy" title="A small set of principles that keeps the work sharp." description="These pillars frame how I make decisions when code, product, and operations start pulling in different directions." />
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">{philosophy.map((item) => <GlassCard key={item.title} className="p-6"><p className="text-lg font-medium tracking-[-0.02em] text-white">{item.title}</p><p className="mt-3 text-sm leading-7 text-slate-300/85">{item.description}</p></GlassCard>)}</div>
-        </SectionShell>
 
-        <SectionShell id="skills">
-          <SectionHeading eyebrow="03. Skills" title="Categorized by discipline, not dumped into one wall of tags." description="The site uses tabs to group skills into frontend, backend, data, AI/ML, cloud, and DevOps, making the profile easier to scan and more credible." />
-          <div className="mt-8 grid gap-6 lg:grid-cols-[0.34fr_0.66fr]">
-            <GlassCard className="p-4">
-              <div className="grid gap-2">
-                {skillCategories.map((category) => (
-                  <button key={category.label} type="button" onClick={() => setSelectedSkillCategory(category.label)} className={`rounded-2xl px-4 py-3 text-left text-sm transition ${currentSkills.label === category.label ? "bg-white/10 text-white" : "text-slate-300/80 hover:bg-white/5 hover:text-white"}`}>
-                    <span className={`mb-2 block h-1.5 rounded-full bg-linear-to-r ${category.accent}`} />
-                    {category.label}
-                  </button>
-                ))}
-              </div>
-            </GlassCard>
-            <GlassCard className="p-6">
-              <div className="flex flex-wrap gap-2">{currentSkills.skills.map((skill) => <Pill key={skill}>{skill}</Pill>)}</div>
-              <div className="mt-6 rounded-3xl border border-white/8 bg-black/20 p-5">
-                <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Capability snapshot</p>
-                <p className="mt-3 text-sm leading-7 text-slate-200/90">Frontend polish, backend orchestration, storage design, ML prototypes, and cloud delivery are all represented in one consistent visual system. Each category can also support an optional proficiency meter if you want to make strengths more explicit.</p>
-              </div>
-            </GlassCard>
-          </div>
-        </SectionShell>
+        <SkillsSection />
 
         <SectionShell id="projects">
-          <SectionHeading eyebrow="04. Featured Projects" title="Every project card carries the full anatomy." description="Each card exposes the problem, architecture, stack, challenges, impact, and links, which is the kind of detail that makes a portfolio feel senior instead of decorative." />
+          <SectionHeading eyebrow="Featured Projects" title="Selected engineering work with clear outcomes." description="Production-minded projects spanning full-stack platforms, machine learning applications, and security automation." />
           <div className="mt-8 grid gap-6">{projectCards.map((project) => <ProjectCard key={project.name} project={project} onSelectImage={(image) => openGallery([image],0)} />)}</div>
         </SectionShell>
 
-        <SectionShell id="system-design">
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-            <SectionHeading eyebrow="05. System Design Showcase" title="Architecture thinking, trade-offs, and scalability in one view." description="A recruiter or hiring manager can switch from design intent to trade-offs to growth strategy without leaving the page." />
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-2">{systemDesignTabs.map((tab) => <button key={tab.id} type="button" onClick={() => setSelectedDesignTab(tab.id)} className={`rounded-full px-4 py-2 text-sm transition ${activeDesignTab.id === tab.id ? "bg-white/10 text-white" : "border border-white/10 bg-white/5 text-slate-300/80 hover:bg-white/10 hover:text-white"}`}>{tab.label}</button>)}</div>
-              <GlassCard className="p-6"><p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">{activeDesignTab.title}</p><p className="mt-3 text-sm leading-7 text-slate-200/90">{activeDesignTab.content}</p></GlassCard>
-            </div>
-          </div>
-        </SectionShell>
-
-        <SectionShell id="ai-showcase">
-          <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-            <SectionHeading eyebrow="06. AI/ML Showcase" title="Model cards and pipelines, not just a logo and a buzzword." description="This section gives the portfolio a concrete machine learning story: training data, inference, metrics, and a working demo path." />
-            <div className="space-y-4">
-              {mlModels.map((model) => (
-                <GlassCard key={model.name} className="p-5">
-                  <p className="text-lg font-medium text-white">{model.name}</p>
-                  <p className="mt-2 text-sm text-slate-300/80">Accuracy: {model.accuracy}</p>
-                  <p className="text-sm text-slate-300/80">Dataset: {model.dataset}</p>
-                  <a href={model.inference} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white transition hover:bg-white/10">Open inference demo</a>
-                </GlassCard>
-              ))}
-              <DiagramFrame><MLPipeline /></DiagramFrame>
-            </div>
-          </div>
-        </SectionShell>
-
-        <SectionShell id="cloud-architecture">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <SectionHeading eyebrow="07. Cloud Architecture" title="Service maps, delivery flow, and cost-aware deployment thinking." description="This area demonstrates how compute, storage, CI/CD, and edge delivery fit together in an engineer’s mental model." />
-            <div className="space-y-4">
-              <GlassCard className="p-6">
-                <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">AWS services panel</p>
-                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{cloudServices.map((service) => <div key={service} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-4 text-center text-sm text-slate-100/90">{service}</div>)}</div>
-                <p className="mt-4 text-sm leading-7 text-slate-300/80">The best cloud section is usually a story about how requests move through the system, where state lives, and what gets optimized first.</p>
-              </GlassCard>
-              <DiagramFrame><CloudDiagram /></DiagramFrame>
-            </div>
-          </div>
-        </SectionShell>
 
         <SectionShell id="certifications">
-          <SectionHeading eyebrow="08. Certifications" title="Credential cards that feel like part of the system, not an afterthought." description="Each certificate card can show issuer, date, credential ID, and a verification link, which keeps the section recruiter-friendly." />
+          <SectionHeading eyebrow="Certifications" title="Verified learning across AI, ML, and data systems." description="A compact certificate gallery with issuers, dates, credential IDs, and quick image previews." />
           <motion.div
   ref={certificateRef}
   drag="x"
@@ -660,20 +522,8 @@ export default function Portfolio() {
 </motion.div>
         </SectionShell>
 
-        <SectionShell id="writing">
-          <SectionHeading eyebrow="09. Technical Writing" title="Articles and blog previews that prove you can explain what you build." description="Writing cards reinforce that the portfolio is not just about output, but also about clarity and communication." />
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">{writings.map((post) => (
-            <GlassCard key={post.title} className="p-6">
-              <p className="text-lg font-medium text-white">{post.title}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs uppercase tracking-[0.18em] text-slate-300/70"><span>{post.platform}</span><span>{post.readTime}</span></div>
-              <div className="mt-4 flex flex-wrap gap-2">{post.tags.map((tag) => <Pill key={tag}>{tag}</Pill>)}</div>
-              <a href="#contact" className="mt-5 inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white transition hover:bg-white/10">Read more</a>
-            </GlassCard>
-          ))}</div>
-        </SectionShell>
-
         <SectionShell id="experience">
-          <SectionHeading eyebrow="10. Experience" title="A timeline that focuses on contributions and outcomes." description="Each milestone should read like a contribution summary, with enough specificity to show engineering judgment and momentum." />
+          <SectionHeading eyebrow="Experience" title="Experience focused on practical engineering delivery." description="Project, internship, and lab work summarized around contribution, ownership, and technical depth." />
           <div className="mt-8 space-y-4">{experience.map((item, index) => (
             <GlassCard key={`${item.role}-${index}`} className="p-6">
               <div className="grid gap-4 lg:grid-cols-[0.35fr_0.65fr]">
@@ -682,7 +532,7 @@ export default function Portfolio() {
                   <p className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{item.role}</p>
                   <p className="mt-1 text-sm text-slate-300/80">{item.org}</p>
                 </div>
-                <ul className="space-y-2 text-sm leading-7 text-slate-200/90">{item.bullets.map((bullet) => <li key={bullet}>• {bullet}</li>)}</ul>
+                <ul className="space-y-2 text-sm leading-7 text-slate-200/90">{item.bullets.map((bullet) => <li key={bullet}>- {bullet}</li>)}</ul>
               </div>
             </GlassCard>
           ))}</div>
@@ -690,14 +540,10 @@ export default function Portfolio() {
 
         <SectionShell id="contact">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <SectionHeading eyebrow="11. Contact" title="A final CTA with form, social links, and availability." description="The contact area closes the loop: it lets people reach you directly and keeps the call to action visible to recruiters and collaborators." />
+            <SectionHeading eyebrow="Contact" title="Let's build something useful." description="Reach out for opportunities in full-stack development, AI/ML, cloud engineering, and more." />
             <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-xs tracking-[0.18em] text-emerald-100">Open to opportunities</span>
-                <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-[0.18em] text-slate-200/90">Available for freelance and full-time roles</span>
-              </div>
               <ContactForm />
-              <GlassCard className="p-5"><div className="flex flex-wrap gap-3">{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("mailto:") ? "_self" : "_blank"} rel="noreferrer" className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-100/90 transition hover:border-cyan-400/40 hover:bg-white/10">{social.label}</a>)}</div></GlassCard>
+              <GlassCard className="p-5"><div className="flex flex-wrap gap-3">{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("mailto:") ? "_self" : "_blank"} rel="noreferrer" className="btn-sm-secondary">{social.label}</a>)}</div></GlassCard>
             </div>
           </div>
         </SectionShell>
@@ -725,7 +571,7 @@ export default function Portfolio() {
               }}
               className="absolute left-5 z-10 text-5xl text-white"
             >
-              ❮
+              ‹
             </button>
 
             <div
@@ -753,7 +599,7 @@ export default function Portfolio() {
               }}
               className="absolute right-5 z-10 text-5xl text-white"
             >
-              ❯
+              ›
             </button>
 
             <button

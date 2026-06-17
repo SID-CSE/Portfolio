@@ -1,16 +1,11 @@
 import { cloudinaryAssets } from "@/lib/cloudinary";
-import { cdn } from "@/lib/cloudinary";
+import { time } from "console";
 export const navigationItems = [
   { label: "Hero", href: "#hero" },
   { label: "About", href: "#about" },
-  { label: "Philosophy", href: "#philosophy" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "System", href: "#system-design" },
-  { label: "AI/ML", href: "#ai-showcase" },
-  { label: "Cloud", href: "#cloud-architecture" },
   { label: "Certs", href: "#certifications" },
-  { label: "Writing", href: "#writing" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
@@ -30,38 +25,9 @@ export const heroFocusAreas = [
 ];
 
 export const heroStats = [
-  { value: "5", label: "featured projects" },
-  { value: "4", label: "core disciplines" },
+  { value: "5+", label: "featured projects" },
+  { value: "10+", label: "certifications" },
   { value: "9.05", label: "CGPA" },
-];
-
-export const aboutStats = [
-  { value: "05", label: "projects completed" },
-  { value: "12+", label: "technologies" },
-  { value: "03", label: "internships & labs" },
-];
-
-export const philosophy = [
-  {
-    title: "Systems Thinking",
-    description:
-      "I design around data flow, failure modes, and operational simplicity instead of isolated features.",
-  },
-  {
-    title: "Reliability",
-    description:
-      "I prefer observability, clear boundaries, and graceful failure over clever but fragile shortcuts.",
-  },
-  {
-    title: "Iteration Speed",
-    description:
-      "I ship small, learn quickly, and keep the feedback loop short without sacrificing structure.",
-  },
-  {
-    title: "Documentation",
-    description:
-      "I write for the next engineer first: clean READMEs, diagrams, and implementation notes.",
-  },
 ];
 
 export const skillCategories = [
@@ -103,8 +69,9 @@ accent: "from-sky-500/80 to-blue-400/80",
 skills: [
 "MySQL",
 "PostgreSQL",
+"MongoDB",
+"InfluxDB",
 "Database Design",
-"SQL",
 "ER Modeling"
 ],
 },
@@ -135,22 +102,9 @@ skills: [
 "CI/CD",
 "Linux",
 "Vercel",
+"Azure",
 "Git",
 "GitHub"
-],
-},
-
-{
-label: "Cybersecurity",
-accent: "from-violet-500/80 to-purple-400/80",
-skills: [
-"Network Scanning",
-"Nmap",
-"OSINT",
-"Reconnaissance",
-"Security Automation",
-"Kali Linux",
-"Web Pentesting Fundamentals"
 ],
 },
 ];
@@ -160,7 +114,7 @@ export const projectCards = [
   {
     name: "Contify CMS",
     problem: "Developed an enterprise-grade Content Management System (CMS) that streamlines project requests, proposal management, task assignment, content review, stakeholder approvals, and team collaboration through a structured role-based workflow.",
-    architecture: "React Frontend → Spring Boot REST APIs → JWT Authentication → MySQL Database → Cloudinary Media Storage → Workflow & Notification Engine",
+    architecture: "React Frontend -> Spring Boot REST APIs -> JWT Authentication -> MySQL Database -> Cloudinary Media Storage -> Workflow & Notification Engine",
     stack: [
       "React",
       "Spring Boot",
@@ -195,7 +149,7 @@ export const projectCards = [
   {
     name: "Taskera (TalentLink)",
     problem: "Built a professional freelancing and talent matchmaking platform that connects clients with freelancers, enabling secure project proposals, contract management, communication, and project delivery workflows.",
-    architecture: "React Frontend → Django REST APIs → JWT/OAuth Authentication → PostgreSQL Database → Messaging & Notification Services",
+    architecture: "React Frontend -> Django REST APIs -> JWT/OAuth Authentication -> PostgreSQL Database -> Messaging & Notification Services",
     stack: [
       "React.js",
       "Django",
@@ -228,7 +182,7 @@ export const projectCards = [
   {
     name: "SmartPay4 - Employee Salary Prediction",
     problem: "Developed a machine learning-powered salary prediction platform that estimates employee salaries based on demographic, educational, and professional attributes using advanced regression models.",
-    architecture: "Streamlit Frontend → Data Processing Pipeline → Feature Engineering → XGBoost Regression Model → Prediction Engine",
+    architecture: "Streamlit Frontend -> Data Processing Pipeline -> Feature Engineering -> XGBoost Regression Model -> Prediction Engine",
     stack: [
       "Python",
       "XGBoost",
@@ -256,11 +210,42 @@ export const projectCards = [
     },
     image: cloudinaryAssets.architectures.smartpay4,
   },
-
+  {
+    name: "Game Arcade – Android Gaming & AI Assistant Platform",
+    problem: "Developed a multi-game Android application that combines classic logic puzzles, strategy games, and an AI-powered game assistant into a single interactive platform. The application provides users with entertainment, problem-solving challenges, and instant guidance through a domain-specific AI chatbot.",
+    architecture: "Game Selection Hub → Individual Game Modules → Custom Game Logic Engine → AI Chat Assistant (Groq API) → User Interaction Layer",
+    stack: [
+      "Android Studio",
+      "Android XML",
+      "Material Design",
+      "Java",
+      "OkHttp",
+      "Groq API",
+      "Mobile Game Development",
+      "AI Chatbots",
+    ],
+    challenges: [
+      "Designing and implementing multiple game engines within a single Android application.",  
+      "Developing efficient algorithms for puzzle solving, pathfinding, and game state management.",
+      "Integrating the Groq API and handling real-time AI interactions using OkHttp.",
+      "Restricting AI responses through domain-specific guardrails to ensure only game-related assistance."
+    ],
+    impact: [
+      "Integrated six classic puzzle and strategy games within a unified Android platform.",
+      "Implemented algorithm-based game logic including backtracking, recursion, and pathfinding techniques.",
+      "Developed a specialized AI assistant capable of providing game rules, hints, strategies, and explanations.",
+      "Demonstrated practical integration of mobile application development and artificial intelligence technologies."
+    ],
+    links: {
+      github: "https://github.com/SID-CSE/GameArcade.git",
+      live: "#",
+    },
+    image: cloudinaryAssets.architectures.gamearcade,
+  },
   {
     name: "Recon Automation for Web Pentesting",
     problem: "Developed a Python-based reconnaissance and automation toolkit to support ethical hacking, network scanning, information gathering, and penetration testing activities.",
-    architecture: "CLI Interface → Scanning & Enumeration Modules → Information Gathering Engine → Report Generation Utilities",
+    architecture: "CLI Interface -> Scanning & Enumeration Modules -> Information Gathering Engine -> Report Generation Utilities",
     stack: [
       "Python",
       "Nmap",
@@ -291,58 +276,29 @@ export const projectCards = [
 ];
 
 
-export const systemDesignTabs = [
-  {
-    id: "design",
-    label: "Design",
-    title: "Service topology",
-    content:
-      "A modular web front end calls a BFF layer, which fans out to application services, analytics jobs, and third-party APIs.",
-  },
-  {
-    id: "tradeoffs",
-    label: "Trade-offs",
-    title: "Reliability vs speed",
-    content:
-      "I keep the main path simple, move heavy work to background jobs, and cache the outputs that users read most often.",
-  },
-  {
-    id: "scalability",
-    label: "Scalability",
-    title: "Growth plan",
-    content:
-      "Scale writes with queues and partitioned tables, scale reads with edge caching, and keep diagrams versioned with code.",
-  },
-];
-
-export const mlModels = [
-  {
-    name: "Retrieval QA model",
-    accuracy: "92% citation precision",
-    dataset: "Internal docs + support transcripts",
-    inference: "https://streamlit.io",
-  },
-  {
-    name: "Churn signal classifier",
-    accuracy: "0.89 F1 on validation",
-    dataset: "Historical product activity",
-    inference: "https://huggingface.co",
-  },
-];
-
-export const cloudServices = [
-  "EC2",
-  "S3",
-  "Lambda",
-  "RDS",
-  "CloudFront",
-  "API Gateway",
-  "Docker",
-  "GitHub Actions",
-];
-
 export const certifications = [
-    {
+  {
+    title: "Software Engineering and Agile software development",
+    issuer: "Infosys Springboard",
+    date: "2025",
+    credentialId: "",
+    image: cloudinaryAssets.certificates.SoftwareEngineeringAgile,
+  },
+  {
+    title: "Python Foundation Certification",
+    issuer: "Infosys Springboard",
+    date: "2025",
+    credentialId: "",
+    image: cloudinaryAssets.certificates.PythonFoundation,
+  },
+  {
+    title: "Artificial Intelligence Fundamentals",
+    issuer: "IBM SkillsBuild",
+    date: "2025",
+    credentialId: "PLAN-7913EE1DB030",
+    image: cloudinaryAssets.certificates.IBMAIFundamentals,
+  },
+  {
     title: "Mathematical Foundation for Machine Learning",
     issuer: "NPTEL - IIsc Bangalore",
     date: "2026",
@@ -393,50 +349,38 @@ export const certifications = [
   },
 ];
 
-export const writings = [
-  {
-    title: "Designing a portfolio that behaves like a product",
-    platform: "Hashnode",
-    readTime: "6 min read",
-    tags: ["UX", "frontend", "systems"],
-  },
-  {
-    title: "From API calls to inference pipelines",
-    platform: "Medium",
-    readTime: "8 min read",
-    tags: ["AI/ML", "Python", "deployment"],
-  },
-  {
-    title: "The cloud diagram that actually helps teams ship",
-    platform: "Dev.to",
-    readTime: "5 min read",
-    tags: ["cloud", "DevOps", "architecture"],
-  },
-];
-
 export const experience = [
   {
-    role: "Cybersecurity Intern",
-    org: "Independent Internship",
-    dates: "2022",
+    role: "Full Stack Python Intern",
+    org: "Infosys Springboard",
+    dates: "November 2025 – January 2026",
     bullets: [
-      "Completed a cybersecurity internship and gained practical exposure to automation and reconnaissance.",
-      "Built small tooling for scanning and vulnerability verification.",
+      "Developed frontend and backend components of a full-stack web application using modern web technologies.",
+      "Led the team in integrating the final solution, managing deliverables, and successfully presenting the project.",
     ],
   },
   {
-    role: "Infosys Springboard Virtual Intern",
-    org: "Infosys Springboard",
-    dates: "2023",
+    role: "AI & ML Intern",
+    org: "AICTE – Edunet Foundation – IBM SkillsBuild",
+    dates: "June 2024 – August 2024",
     bullets: [
-      "Selected for and completed the Infosys Springboard virtual internship program.",
-      "Worked on guided assignments emphasizing software engineering fundamentals.",
+      "Applied machine learning techniques, data preprocessing, and feature engineering for predictive analytics.",
+      "Gained hands-on experience in model evaluation, optimization, and deployment workflows.",
+    ],
+  },
+  {
+    role: "Cybersecurity Mentee",
+    org: "1Stop.ai – E-Cell IIT Roorkee",
+    dates: "July 2025 – August 2025",
+    bullets: [
+      "Acquired practical experience in cybersecurity, ethical hacking, and network security fundamentals.",
+      "Worked with reconnaissance, vulnerability assessment, and security testing methodologies.",
     ],
   },
   {
     role: "Student Projects & Labs",
-    org: "University",
-    dates: "2021 - Present",
+    org: "Presidency University",
+    dates: "2023 - Present",
     bullets: [
       "Built full-stack projects, IoT demos, and ML prototypes as part of coursework and personal labs.",
       "Focused on deployable, testable deliverables with clear documentation.",
@@ -460,18 +404,14 @@ export const personal = {
 };
 
 export const aboutContent = {
-  heroHeadline: "AI/ML Enthusiast | Computer Science Engineer | Problem Solver",
-  heroDescription: "Building intelligent solutions through Artificial Intelligence, Machine Learning, Data Analytics, and Cloud Technologies. Passionate about transforming data into insights and developing scalable applications that solve real-world challenges.",
+  heroHeadline: "Engineer at the Intersection of Full Stack, Cloud & AI",
+  heroDescription: "Building intelligent solutions through Full Stack Development, Artificial Intelligence, Machine Learning, and Cloud Technologies. Passionate about transforming data into insights and developing scalable applications that solve real-world challenges.",
 
-  mainBio: "I'm Siddharth Kumar, a final-year Computer Science Engineering student with a strong passion for Artificial Intelligence, Machine Learning, Data Science, and Cloud Computing. I enjoy transforming complex problems into intelligent, scalable, and impactful solutions through technology.",
-
-  journeyDescription: "My academic journey and hands-on experience have equipped me with a solid foundation in Python, Machine Learning, Data Analytics, Database Management Systems, Operating Systems, Computer Networks, and Object-Oriented Programming. Through multiple internships and industry-oriented projects, I have gained practical experience in developing AI-powered applications, predictive models, web solutions, and cloud-based systems.",
-
-  achievements: "I have successfully completed AI/ML-focused internships and earned elite certifications in Machine Learning, Neural Networks, and Mathematical Foundations of AI. My project portfolio includes solutions in Employee Salary Prediction, Content Management Systems, IoT-based Monitoring Systems, Library Management Systems, and Intelligent Data Analytics Applications.",
-
-  vision: "I am continuously exploring emerging technologies, improving my problem-solving abilities through coding platforms, and building projects that create real-world impact. My goal is to contribute to innovative teams where I can leverage AI and software engineering to develop meaningful technology solutions while continuously learning and growing as an engineer.",
+  mainBio: "I am Siddharth Kumar, a final-year Computer Science Engineering student passionate about building intelligent systems that combine the power of Artificial Intelligence, Machine Learning, and Cloud Technologies. My journey in technology is driven by a commitment to solving complex problems through innovation, analytical thinking, and scalable software solutions.Through academic excellence, hands-on project development, professional internships, and continuous upskilling, I have cultivated a strong technical foundation and a growth-oriented mindset. I aspire to contribute to cutting-edge technology initiatives, creating impactful solutions that drive digital transformation and deliver meaningful real-world outcomes.",
+  vision: "I'm committed to continuous growth, exploring emerging technologies, sharpening my problem-solving skills through coding platforms, and building projects with tangible impact. My goal is to join an innovative team where I can apply AI and software engineering to create meaningful solutions, while constantly learning and evolving as an engineer.",
 
   specializations: [
+    "Full Stack Development",
     "Artificial Intelligence",
     "Machine Learning",
     "Data Science",
@@ -480,17 +420,19 @@ export const aboutContent = {
 
   coreSkills: [
     "Python",
+    "Java",
     "SQL",
-    "Machine Learning",
-    "Data Analytics",
+    "AI / ML",
+    "Cloud Services",
+    "Web Development",
     "DBMS",
     "Operating Systems",
     "Computer Networks",
     "Git & GitHub",
-    "Web Development"
+
   ],
 
   currentFocus: "Building AI-driven applications, strengthening Data Science expertise, and preparing for Software Engineering & AI/ML roles.",
 
-  photoUrl: "https://res.cloudinary.com/dn37tck9g/image/upload/v1781461279/Profile_Picture_wmrgtk.jpg", // User will replace with their Cloudinary URL
+  photoUrl: "https://res.cloudinary.com/dn37tck9g/image/upload/v1781461279/Profile_Picture_wmrgtk.jpg",
 };
