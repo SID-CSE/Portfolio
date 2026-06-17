@@ -1,36 +1,39 @@
-
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { JetBrains_Mono } from "next/font/google";
-import BootScreen from "@/components/HUD/BootScreen";
-import HUDRoot from "@/components/HUD/HUDRoot";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-});
 
 export const metadata: Metadata = {
   title: {
-    default: "Siddharth Kumar | Elite Personal Brand Website",
+    default: "Siddharth Kumar | Full Stack, AI/ML & Cloud Engineer",
     template: "%s | Siddharth Kumar",
   },
   description:
-    "Full stack, AI/ML, and cloud engineering portfolio with case studies, system design, certifications, and contact options.",
+    "Full stack, AI/ML, and cloud engineering portfolio with projects, case studies, certifications, and experience.",
   metadataBase: new URL("https://siddharthkumar.dev"),
+  keywords: [
+    "Full Stack Developer",
+    "AI/ML Engineer",
+    "Cloud Engineer",
+    "DevOps",
+    "Web Development",
+    "Machine Learning",
+  ],
+  creator: "Siddharth Kumar",
   openGraph: {
-    title: "Siddharth Kumar | Full Stack · AI/ML · Cloud Engineer",
+    title: "Siddharth Kumar | Full Stack, AI/ML & Cloud Engineer",
     description:
-      "A high-signal portfolio showcasing engineering projects, architecture thinking, and technical writing.",
+      "Full stack, AI/ML, and cloud engineering portfolio showcasing production-ready projects and technical expertise.",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Siddharth Kumar | Full Stack, AI/ML & Cloud Engineer",
+    description:
+      "Full stack, AI/ML, and cloud engineering portfolio with projects, certifications, and experience.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -41,9 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
-        <BootScreen />
-        <HUDRoot />
+      <body>
         {children}
       </body>
     </html>

@@ -41,7 +41,6 @@ export default function AboutSection() {
         transition={{ duration: 0.45, ease: "easeOut" }}
         className="space-y-12"
       >
-        {/* Hero Section */}
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <div className="space-y-3">
@@ -57,7 +56,6 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Photo Area */}
           <GlassCard className="overflow-hidden p-0">
             {photoAvailable ? (
               <div className="relative aspect-square overflow-hidden bg-black/20">
@@ -71,25 +69,12 @@ export default function AboutSection() {
               </div>
             ) : (
               <div className="aspect-square flex flex-col items-center justify-center bg-black/20 p-8">
-                <div className="text-center space-y-4">
-                  <p className="text-sm text-slate-300/70">
-                    Photo Placeholder
-                  </p>
-                  <p className="text-xs text-slate-400/60 leading-relaxed">
-                    To add your photo:
-                  </p>
-                  <ol className="text-xs text-slate-400/60 space-y-2 text-left">
-                    <li>1. Upload image to Cloudinary</li>
-                    <li>2. Copy the image URL</li>
-                    <li>3. Update photoUrl in data/portfolio.ts</li>
-                  </ol>
-                </div>
+                <p className="text-5xl font-semibold tracking-[-0.04em] text-white">SK</p>
               </div>
             )}
           </GlassCard>
         </div>
 
-        {/* Main Bio */}
         <GlassCard className="p-8">
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
@@ -101,32 +86,7 @@ export default function AboutSection() {
           </div>
         </GlassCard>
 
-        {/* Journey & Experience */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          <GlassCard className="p-6">
-            <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
-                Academic Journey
-              </p>
-              <p className="text-sm leading-7 text-slate-200/90">
-                {aboutContent.journeyDescription}
-              </p>
-            </div>
-          </GlassCard>
 
-          <GlassCard className="p-6">
-            <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
-                Achievements & Certifications
-              </p>
-              <p className="text-sm leading-7 text-slate-200/90">
-                {aboutContent.achievements}
-              </p>
-            </div>
-          </GlassCard>
-        </div>
-
-        {/* Vision & Goals */}
         <GlassCard className="p-8">
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
@@ -138,7 +98,6 @@ export default function AboutSection() {
           </div>
         </GlassCard>
 
-        {/* Specializations */}
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
             Specializations
@@ -150,7 +109,6 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Core Skills */}
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
             Core Skills
@@ -162,7 +120,6 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Current Focus */}
         <GlassCard className="p-6">
           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
@@ -174,26 +131,10 @@ export default function AboutSection() {
           </div>
         </GlassCard>
 
-        {/* CTA */}
         <div className="flex flex-wrap gap-3 pt-4">
-          <a
-            href="#projects"
-            className="rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01]"
-          >
-            View My Projects
-          </a>
-          <a
-            href="#experience"
-            className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/10"
-          >
-            See Experience
-          </a>
-          <a
-            href="#certifications"
-            className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/10"
-          >
-            Certifications
-          </a>
+          <a href="#projects" className="btn-primary">View My Projects</a>
+          <a href="#experience" className="btn-secondary">See Experience</a>
+          <a href="#certifications" className="btn-secondary">Certifications</a>
         </div>
       </motion.div>
     </section>

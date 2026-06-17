@@ -107,12 +107,22 @@ export const cloudinaryAssets = {
     taskera: cdn("taskera_wnaqi6.png"),
 
     smartpay4:
-      cdn("smartpay4_rk4aod.png"),
-
+      cdn("v1781515260/smartpay4_rk4aod.png"),
+    gamearcade:
+      cdn("gamearcade_tt9gzw.png"),
     recon:
-      cdn("recon_cz1iha.png"),
+      cdn("v1781515214/recon_cz1iha.png"),
   },
   certificates: {
+    PythonFoundation:
+      cdn("Python_Foundation_Certification_page-0001_lr3sid.jpg"),
+
+    SoftwareEngineeringAgile:
+      cdn("Software_Engineering_and_Agile_software_development_page-0001_eoshdl.jpg"),
+
+    IBMAIFundamentals:
+      cdn("artificial-intelligence-fundamentals_ovheyk.png"), 
+
     oracleGenerativeAI:
       cdn("AI-Genarative_AI_Professional_page-0001_z1unjy.jpg"),
 
