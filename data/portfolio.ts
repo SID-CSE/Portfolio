@@ -5,28 +5,29 @@ export const navigationItems = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Certs", href: "#certifications" },
+  { label: "Certifications", href: "#certifications" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
 
 export const heroRoles = [
   "Full Stack Developer",
-  "AI/ML Engineer",
-  "Cloud & DevOps Enthusiast",
+  "AI/ML Practitioner",
+  "Cloud & DevOps Explorer",
   "Product-minded Problem Solver",
 ];
 
 export const heroFocusAreas = [
-  "Shipping production-grade web applications",
-  "Designing and deploying cloud-native backends",
-  "Building ML prototypes and inference demos",
-  "End-to-end product engineering and deployment",
+  "Building scalable full-stack applications",
+  "Designing cloud-ready backend systems",
+  "Developing AI/ML solutions and intelligent applications",
+  "Delivering end-to-end software projects"
 ];
 
 export const heroStats = [
-  { value: "5+", label: "featured projects" },
-  { value: "10+", label: "certifications" },
+  { value: "15+", label: "Projects Developed" },
+  { value: "10+", label: "Certifications" },
+  { value: "3+", label: "Internship Experiences" },
   { value: "9.05", label: "CGPA" },
 ];
 
@@ -199,7 +200,7 @@ export const projectCards = [
       "Supporting both single-user and batch salary predictions"
     ],
     impact: [
-      "Achieved high prediction accuracy using XGBoost regression",
+      "Achieved an R² score of 0.89 using XGBoost Regression for salary prediction.",
       "Enabled bulk salary predictions through CSV uploads",
       "Provided visual analytics and model performance insights",
       "Successfully deployed as a live machine learning application"
@@ -272,7 +273,81 @@ export const projectCards = [
       live: "#",
     },
     image: cloudinaryAssets.architectures.recon,
-  }
+  },
+  {
+    name: "Raspberry Pi-Based IoT Remote Farm Animal Monitoring System",
+    problem:
+      "Developed an IoT-enabled livestock monitoring solution using Raspberry Pi Zero 2 W to remotely track farm animal health, activity, and environmental conditions in real time. The system was designed to reduce manual supervision, improve animal welfare, and provide farmers with actionable insights through continuous monitoring and automated alerts.",
+
+    architecture:
+      "Health & Activity Sensors → Raspberry Pi Zero 2 W → Data Processing Engine → Wi-Fi Connectivity → Storage & Analytics → Monitoring Dashboard → Real-Time Alerts & Notifications",
+
+    stack: [
+      "Raspberry Pi Zero 2 W",
+      "Python / Java",
+      "IoT Sensors",
+      "Wi-Fi Communication",
+      "Linux",
+      "MQTT / HTTP Protocols",
+      "Remote Monitoring Dashboard",
+      "Data Analytics",
+      "Smart Agriculture"
+    ],
+
+    challenges: [
+      "Collecting accurate sensor data in outdoor farm environments",
+      "Ensuring stable wireless connectivity across large farm areas",
+      "Processing real-time health and activity data efficiently",
+      "Detecting abnormal animal behavior and generating alerts",
+    ],
+
+    impact: [
+      "Enabled remote monitoring of livestock health and activity",
+      "Provided real-time insights through a centralized dashboard",
+      "Demonstrated practical application of smart agriculture technologies",
+      "Successfully showcased at Presidency University's Innovative Raspberry Pi Project Exhibition (January 2025)"
+    ],
+
+    links: {
+      github: "#",
+      live: "#",
+    },
+
+    image: cloudinaryAssets.architectures.raspberryPi,
+  },
+  {
+    name: "Arduino-Based IoT Wearable Health Monitoring System",
+    problem: "Developed a compact and affordable wearable health monitoring system that combines step counting, heart rate monitoring, calorie estimation, and distance tracking. The solution was designed to promote health awareness, encourage physical activity, and provide users with real-time fitness insights through wireless connectivity and mobile integration.",
+    architecture: "Motion & Heartbeat Sensors → Arduino Controller → Activity Processing Engine → Bluetooth Module → Mobile Application (ArduTooth) → Real-Time Health Dashboard",
+    stack: [
+      "Arduino Uno / Lilypad",
+      "Embedded C/C++",
+      "Bluetooth (HC-05)",
+      "Heartbeat Sensor",
+      "Motion Detection Sensor",
+      "Arduino IDE",    
+      "ArduTooth App",
+      "Wearable Electronics",
+      "IoT Communication"
+    ],
+    challenges: [
+      "Implementing accurate step detection from motion sensor data",
+      "Filtering false movement readings to improve counting accuracy",
+      "Designing a compact wearable prototype with low power consumption",
+      "Synchronizing multiple sensor inputs for real-time monitoring"
+    ],
+    impact: [
+      "Developed a functional wearable fitness tracking solution",
+      "Integrated wireless Bluetooth connectivity for mobile monitoring",
+      "Promoted health awareness through continuous activity tracking",
+      "Successfully showcased at Presidency University's Innovative Arduino Project Exhibition (June 2024)"
+    ],
+    links: {
+      github: "#",
+      live: "#",
+    },
+    image: cloudinaryAssets.architectures.arduino,
+  },
 ];
 
 
@@ -354,36 +429,65 @@ export const experience = [
     role: "Full Stack Python Intern",
     org: "Infosys Springboard",
     dates: "November 2025 – January 2026",
+    project: "Taskera (TalentLink) – Freelance Marketplace & Talent Matching Platform",
+    certificate: {
+      image: cloudinaryAssets.experience.infosysSpringboard.image,
+      title: cloudinaryAssets.experience.infosysSpringboard.title,
+    },
     bullets: [
-      "Developed frontend and backend components of a full-stack web application using modern web technologies.",
-      "Led the team in integrating the final solution, managing deliverables, and successfully presenting the project.",
+      "Developed responsive frontend interfaces, backend APIs, and database-integrated workflows for a full-stack web application.",
+      "Collaborated across the complete software development lifecycle, from design and implementation to testing and deployment.",
+      "Led project integration activities, coordinated team deliverables, and ensured successful solution completion.",
+      "Presented the final product to the evaluation panel, demonstrating technical functionality and project outcomes.",
     ],
   },
   {
     role: "AI & ML Intern",
     org: "AICTE – Edunet Foundation – IBM SkillsBuild",
     dates: "June 2024 – August 2024",
+    project: "Employee Salary Prediction & Classification System",
+    certificate: {
+      image: cloudinaryAssets.experience.ibmSkillsBuild.image,
+      title: cloudinaryAssets.experience.ibmSkillsBuild.title,
+    },
     bullets: [
-      "Applied machine learning techniques, data preprocessing, and feature engineering for predictive analytics.",
-      "Gained hands-on experience in model evaluation, optimization, and deployment workflows.",
+      "Applied machine learning algorithms to real-world datasets involving predictive analytics and decision-making tasks.",
+      "Performed data preprocessing, feature engineering, model training, and performance evaluation.",
+      "Worked with model optimization techniques and gained exposure to deployment workflows.",
+      "Developed practical understanding of the end-to-end machine learning lifecycle and data-driven solutions.",
     ],
   },
   {
     role: "Cybersecurity Mentee",
     org: "1Stop.ai – E-Cell IIT Roorkee",
     dates: "July 2025 – August 2025",
+    project: "Recon Automation for Web Pentesting",
+    certificate: {
+      image: cloudinaryAssets.experience.cybersecurityMentorship.image,
+      title: cloudinaryAssets.experience.cybersecurityMentorship.title,
+    },
     bullets: [
-      "Acquired practical experience in cybersecurity, ethical hacking, and network security fundamentals.",
-      "Worked with reconnaissance, vulnerability assessment, and security testing methodologies.",
+      "Built foundational and practical skills in cybersecurity, ethical hacking, and network security concepts.",
+      "Conducted reconnaissance and information-gathering activities for security assessments.",
+      "Worked with vulnerability assessment techniques and security testing methodologies.",
+      "Explored threat identification, risk analysis, and best practices for securing applications and systems.",
     ],
   },
   {
     role: "Student Projects & Labs",
     org: "Presidency University",
-    dates: "2023 - Present",
+    dates: "2023 – Present",
     bullets: [
-      "Built full-stack projects, IoT demos, and ML prototypes as part of coursework and personal labs.",
-      "Focused on deployable, testable deliverables with clear documentation.",
+      "Designed and developed full-stack applications, AI/ML solutions, IoT systems, and data-driven projects.",
+      "Applied software engineering principles to build scalable, testable, and well-documented solutions.",
+      "Worked extensively with Python, Java, SQL, React, Machine Learning, Raspberry Pi, and Arduino platforms.",
+      "Continuously explored emerging technologies including Cloud Computing, DevOps, Artificial Intelligence, and Intelligent Monitoring Systems.",
+    ],
+    projects: [
+      "Contify CMS – Enterprise Content Management System",
+      "Remote Farm Animal Monitoring System",
+      "Game Arcade",
+      "Arduino-Based IoT Wearable Health Monitoring System",
     ],
   },
 ];
@@ -392,6 +496,8 @@ export const socials = [
   { label: "GitHub", href: "https://github.com/SID-CSE" },
   { label: "LinkedIn", href: "https://linkedin.com/in/siddharthkumaryo" },
   { label: "Email", href: "mailto:siddharthkumaryo@gmail.com" },
+  { label: "Leetcode", href: "https://leetcode.com/u/SID_CSE/" },
+  { label: "HackerRank", href: "https://www.hackerrank.com/profile/siddharthkumaryo" },
 ];
 
 export const personal = {
@@ -414,8 +520,9 @@ export const aboutContent = {
     "Full Stack Development",
     "Artificial Intelligence",
     "Machine Learning",
-    "Data Science",
-    "Cloud Computing"
+    "Cloud Computing",
+    "DevOps & CI/CD",
+    "Software Engineering",
   ],
 
   coreSkills: [
@@ -432,7 +539,7 @@ export const aboutContent = {
 
   ],
 
-  currentFocus: "Building AI-driven applications, strengthening Data Science expertise, and preparing for Software Engineering & AI/ML roles.",
+  currentFocus: "Building intelligent, scalable, and cloud-ready applications through Full-Stack Development, Artificial Intelligence, Machine Learning, DevOps, and Software Engineering.",
 
   photoUrl: "https://res.cloudinary.com/dn37tck9g/image/upload/v1781461279/Profile_Picture_wmrgtk.jpg",
 };

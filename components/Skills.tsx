@@ -136,7 +136,7 @@ export default function SkillsSection() {
                     : currentCategory.label === "AI / ML"
                     ? "End-to-end machine learning pipelines, model training, evaluation, and deployment at production scale."
                     : currentCategory.label === "Cloud & DevOps"
-                    ? "Cloud infrastructure automation, CI/CD pipelines, containerization, and operational excellence."
+                    ? "Experience with cloud platforms, CI/CD workflows, containerization, and deployment practices."
                     : "Security-first reconnaissance, automated testing, vulnerability assessment, and ethical hacking practices."}
                 </p>
               </div>
@@ -153,13 +153,13 @@ export default function SkillsSection() {
         >
           {[
             {
-              count: "6",
+              count: "5",
               label: "Skill Categories",
               icon: FaLayerGroup,
             },
             {
               count: "50+",
-              label: "Technologies Mastered",
+              label: "Tools, Frameworks & Platforms",
               icon: FaBolt,
             },
             {

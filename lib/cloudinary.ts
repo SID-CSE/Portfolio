@@ -103,15 +103,20 @@ export const cdn = (path: string) => {
 
 export const cloudinaryAssets = {
   architectures: {
-    cms: cdn("cms_niblgs.png"),
-    taskera: cdn("taskera_wnaqi6.png"),
-
+    cms:
+      cdn("cms_niblgs.png"),
+    taskera:
+      cdn("taskera_wnaqi6.png"),
     smartpay4:
       cdn("v1781515260/smartpay4_rk4aod.png"),
     gamearcade:
       cdn("gamearcade_tt9gzw.png"),
     recon:
       cdn("v1781515214/recon_cz1iha.png"),
+    raspberryPi:
+      cdn("IOTrasberrypi_d1rlri.png"),
+    arduino:
+      cdn("IOTarduino_bhainm.png"),
   },
   certificates: {
     PythonFoundation:
@@ -121,7 +126,7 @@ export const cloudinaryAssets = {
       cdn("Software_Engineering_and_Agile_software_development_page-0001_eoshdl.jpg"),
 
     IBMAIFundamentals:
-      cdn("artificial-intelligence-fundamentals_ovheyk.png"), 
+      cdn("artificial-intelligence-fundamentals_ovheyk.png"),
 
     oracleGenerativeAI:
       cdn("AI-Genarative_AI_Professional_page-0001_z1unjy.jpg"),
@@ -131,7 +136,7 @@ export const cloudinaryAssets = {
 
     oracleDataScience:
       cdn("AI-Data-Science-Professional-eCertificate_page-0001_1_m3vrkw.jpg"),
-    
+
     oracleAIFoundation:
       cdn("AI-Foundation-Associate-eCertificate_page-0001_1_l9wdc2.jpg"),
 
@@ -143,6 +148,20 @@ export const cloudinaryAssets = {
 
     NPTELML:
       cdn("e-Certificate_Machine_Learning_for_Enginering_and_Science_Applications_page-0001_okj8zv.jpg"),
+  },
+  experience: {
+    infosysSpringboard: {
+      image: cdn("talentlink_llkumv.jpg"),
+      title: "Infosys Springboard Python Stack Internship Certificate",
+    },
+    ibmSkillsBuild: {
+      image: cdn("aicte_mw4eji.jpg"),
+      title: "AICTE IBM SkillsBuild AI/ML Internship Certificate",
+    },
+    cybersecurityMentorship: {
+      image: cdn("702eb10d-82e7-4b70-a787-c7c31f710a2e.png"),
+      title: "Cybersecurity Internship Certificate",
+    },
   },
 
 }

@@ -171,11 +171,11 @@ function DiagramFrame({ children }: { children: React.ReactNode }) {
 }
 
 
-function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards)[number]; onSelectImage: (image: string) => void }) {
+function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeof projectCards)[number]; projectIndex: number; onSelectImage: (projectIndex: number) => void }) {
   const [open, setOpen] = useState(false);
 
   return (
-    
+
     <GlassCard className="overflow-hidden p-6 transition hover:-translate-y-1">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
@@ -211,7 +211,7 @@ function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards
                 <ClickableImage
                   src={project.image}
                   alt={`${project.name} Architecture`}
-                  onClick={onSelectImage}
+                  onClick={() => onSelectImage(projectIndex)}
                 />
             ) : (
               <div className="flex items-center justify-center p-4">
@@ -251,60 +251,143 @@ function ProjectCard({ project, onSelectImage }: { project: (typeof projectCards
     </GlassCard>
   );
 }
-
 function ContactForm() {
-  const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  const [state, setState] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [statusMessage, setStatusMessage] = useState("");
+
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
     setState("sending");
+    setStatusMessage("");
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           name: String(formData.get("name") ?? ""),
           email: String(formData.get("email") ?? ""),
           message: String(formData.get("message") ?? ""),
+          website: String(formData.get("website") ?? ""),
         }),
       });
 
-      if (!response.ok) throw new Error("Contact request failed");
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Failed to send message"
+        );
+      }
 
       setState("success");
-      setMessage("Thanks. Your message was sent successfully.");
-      event.currentTarget.reset();
-    } catch {
+      setStatusMessage(
+        "Thank you for reaching out. Your message has been sent successfully."
+      );
+
+      form.reset();
+    } catch (error) {
       setState("error");
-      setMessage("The form could not be sent right now. Please email me directly.");
+
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to send message right now. Please contact me directly via email."
+      );
     }
   }
 
   return (
     <GlassCard className="p-6">
-      <form className="grid gap-4" onSubmit={handleSubmit}>
+      <form
+        className="grid gap-4"
+        onSubmit={handleSubmit}
+      >
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="website"
+          autoComplete="off"
+          className="hidden"
+          tabIndex={-1}
+        />
+
         <div className="grid gap-4 md:grid-cols-2">
           <label className="grid gap-2 text-sm text-slate-200/85">
             Name
-            <input name="name" required className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50" placeholder="Siddharth Kumar" />
+
+            <input
+              name="name"
+              required
+              maxLength={100}
+              disabled={state === "sending"}
+              placeholder="Siddharth Kumar"
+              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50 disabled:opacity-50"
+            />
           </label>
+
           <label className="grid gap-2 text-sm text-slate-200/85">
             Email
-            <input name="email" type="email" required className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50" placeholder="you@company.com" />
+
+            <input
+              name="email"
+              type="email"
+              required
+              maxLength={100}
+              disabled={state === "sending"}
+              placeholder="recruiter@example.com"
+              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50 disabled:opacity-50"
+            />
           </label>
         </div>
+
         <label className="grid gap-2 text-sm text-slate-200/85">
           Message
-          <textarea name="message" rows={5} required className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50" placeholder="Tell me what you are building or hiring for." />
+
+          <textarea
+            name="message"
+            rows={5}
+            required
+            maxLength={2000}
+            disabled={state === "sending"}
+            placeholder="Share details about the role, team, project, or hiring opportunity you'd like to discuss."
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50 disabled:opacity-50"
+          />
         </label>
+
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <button type="submit" disabled={state === "sending"} className="btn-primary">
-            {state === "sending" ? "Sending..." : "Send message"}
+          <button
+            type="submit"
+            disabled={state === "sending"}
+            className="btn-primary"
+          >
+            {state === "sending"
+              ? "Sending..."
+              : "Send Message"}
           </button>
-          <p className={`text-sm ${state === "error" ? "text-rose-300" : "text-emerald-300"}`}>{message}</p>
+
+          {statusMessage && (
+            <p
+              className={`text-sm ${
+                state === "error"
+                  ? "text-rose-400"
+                  : "text-emerald-400"
+              }`}
+            >
+              {statusMessage}
+            </p>
+          )}
         </div>
       </form>
     </GlassCard>
@@ -318,7 +401,9 @@ export default function Portfolio() {
   const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
   const [gallery, setGallery] = useState<string[]>([]);
+  const [galleryTitles, setGalleryTitles] = useState<string[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [gallerySection, setGallerySection] = useState<"certifications" | "experience" | "projects" | null>(null);
 
 
   useEffect(() => {
@@ -353,9 +438,11 @@ export default function Portfolio() {
     setResumeMenuOpen(false);
   }
 
-  function openGallery(images: string[], index: number) {
+  function openGallery(images: string[], index: number, section: "certifications" | "experience" | "projects", titles: string[] = []) {
   setGallery(images);
+  setGalleryTitles(titles);
   setActiveIndex(index);
+  setGallerySection(section);
   }
 
   function downloadResume() {
@@ -431,6 +518,24 @@ export default function Portfolio() {
               </div>
               <div className="flex flex-wrap gap-2">{heroFocusAreas.map((area) => <Pill key={area}>{area}</Pill>)}</div>
               <div className="grid gap-4 sm:grid-cols-3">{heroStats.map((stat) => <StatCard key={stat.label} value={stat.value} label={stat.label} />)}</div>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                {socials.map((social) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target={social.href.startsWith("mailto:") ? "_self" : "_blank"}
+                    rel="noreferrer"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    whileHover={{ scale: 1.05, translateY: -2 }}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
+                  >
+                    {social.label}
+                  </motion.a>
+                ))}
+              </div>
             </div>
 
             <GlassCard className="relative overflow-hidden p-6 lg:p-8">
@@ -445,6 +550,37 @@ export default function Portfolio() {
           </div>
         </SectionShell>
 
+        <motion.div
+          className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45 }}
+        >
+          <GlassCard className="overflow-hidden border-cyan-500/30 bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-fuchsia-500/10 p-6 lg:p-8">
+            <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1">
+                  <span className="h-2 w-2 rounded-full bg-cyan-400" />
+                  <p className="text-xs font-medium uppercase tracking-[0.12em] text-cyan-300">Currently Seeking</p>
+                </div>
+                <h3 className="text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+                  🎯 Open to Opportunities
+                </h3>
+                <p className="max-w-2xl text-base leading-7 text-slate-200/90">
+                  Software Engineering, AI/ML, Full-Stack Development, and Cloud Engineering roles
+                </p>
+                <p className="text-sm text-slate-300/70">
+                  <span className="font-medium">Expected Graduation:</span> 2027
+                </p>
+              </div>
+              <a href="#contact" className="btn-primary whitespace-nowrap">
+                Let's Talk
+              </a>
+            </div>
+          </GlassCard>
+        </motion.div>
+
         <AboutSection />
 
 
@@ -452,7 +588,7 @@ export default function Portfolio() {
 
         <SectionShell id="projects">
           <SectionHeading eyebrow="Featured Projects" title="Selected engineering work with clear outcomes." description="Production-minded projects spanning full-stack platforms, machine learning applications, and security automation." />
-          <div className="mt-8 grid gap-6">{projectCards.map((project) => <ProjectCard key={project.name} project={project} onSelectImage={(image) => openGallery([image],0)} />)}</div>
+          <div className="mt-8 grid gap-6">{projectCards.map((project, index) => <ProjectCard key={project.name} project={project} projectIndex={index} onSelectImage={(projectIndex) => openGallery(projectCards.map((p) => p.image), projectIndex, "projects", projectCards.map((p) => p.name))} />)}</div>
         </SectionShell>
 
 
@@ -491,7 +627,9 @@ export default function Portfolio() {
       onClick={() =>
         openGallery(
           certifications.map((c) => c.image),
-          index
+          index,
+          "certifications",
+          certifications.map((c) => c.title)
         )
       }
     >
@@ -523,20 +661,98 @@ export default function Portfolio() {
         </SectionShell>
 
         <SectionShell id="experience">
-          <SectionHeading eyebrow="Experience" title="Experience focused on practical engineering delivery." description="Project, internship, and lab work summarized around contribution, ownership, and technical depth." />
-          <div className="mt-8 space-y-4">{experience.map((item, index) => (
+        <SectionHeading
+          eyebrow="Experience"
+          title="Experience focused on practical engineering delivery."
+          description="Project, internship, and lab work summarized around contribution, ownership, and technical depth."
+        />
+
+        <div className="mt-8 space-y-4">
+          {experience.map((item, index) => (
             <GlassCard key={`${item.role}-${index}`} className="p-6">
-              <div className="grid gap-4 lg:grid-cols-[0.35fr_0.65fr]">
+              <div className="grid gap-6 lg:grid-cols-[0.35fr_0.65fr]">
+                
+                {/* Left Side */}
                 <div>
-                  <p className="text-sm uppercase tracking-[0.24em] text-slate-300/60">{item.dates}</p>
-                  <p className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{item.role}</p>
-                  <p className="mt-1 text-sm text-slate-300/80">{item.org}</p>
+                  <p className="text-sm uppercase tracking-[0.24em] text-slate-300/60">
+                    {item.dates}
+                  </p>
+
+                  <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">
+                    {item.role}
+                  </h3>
+
+                  <p className="mt-1 text-sm text-slate-300/80">
+                    {item.org}
+                  </p>
+
+                  {item.project && (
+                    <div className="mt-4">
+                      <p className="text-xs uppercase tracking-wider text-cyan-400">
+                        Project
+                      </p>
+                      <p className="mt-1 text-sm text-slate-200">
+                        {item.project}
+                      </p>
+                    </div>
+                  )}
+
+                  {item.projects && (
+                    <div className="mt-4">
+                      <p className="text-xs uppercase tracking-wider text-cyan-400">
+                        Key Projects
+                      </p>
+
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {item.projects.map((project) => (
+                          <span
+                            key={project}
+                            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200"
+                          >
+                            {project}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {item.certificate && (
+                    <button
+                      onClick={() =>
+                        openGallery(
+                          experience.filter((e) => e.certificate).map((e) => e.certificate!.image),
+                          experience.slice(0, index).filter((e) => e.certificate).length,
+                          "experience",
+                          experience.filter((e) => e.certificate).map((e) => e.certificate!.title)
+                        )
+                      }
+                      className="mt-5 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300 transition hover:bg-cyan-500/20"
+                    >
+                      View Certificate ↗
+                    </button>
+                  )}
                 </div>
-                <ul className="space-y-2 text-sm leading-7 text-slate-200/90">{item.bullets.map((bullet) => <li key={bullet}>- {bullet}</li>)}</ul>
+
+                {/* Right Side */}
+                <div>
+                  <ul className="space-y-3">
+                    {item.bullets.map((bullet) => (
+                      <li
+                        key={bullet}
+                        className="flex gap-3 text-sm leading-7 text-slate-200/90"
+                      >
+                        <span className="mt-2 h-2 w-2 rounded-full bg-cyan-400 flex-shrink-0" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
               </div>
             </GlassCard>
-          ))}</div>
-        </SectionShell>
+          ))}
+        </div>
+      </SectionShell>
 
         <SectionShell id="contact">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
@@ -550,13 +766,16 @@ export default function Portfolio() {
       </main>
 
       <AnimatePresence>
-        {activeIndex !== null && (
+        {activeIndex !== null && gallerySection && (
           <motion.div
-            className="fixed inset-0 z-[90] flex items-center justify-center bg-black/90"
+            className="fixed inset-0 z-[90] flex flex-col items-center justify-center bg-black/90 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActiveIndex(null)}
+            onClick={() => {
+              setActiveIndex(null);
+              setGallerySection(null);
+            }}
           >
             <button
               onClick={(e) => {
@@ -569,21 +788,33 @@ export default function Portfolio() {
                     : 0
                 );
               }}
-              className="absolute left-5 z-10 text-5xl text-white"
+              className="absolute left-5 top-1/2 -translate-y-1/2 z-10 text-5xl text-white hover:text-cyan-300 transition"
             >
               ‹
             </button>
 
-            <div
-              className="relative h-[85vh] w-[90vw]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={gallery[activeIndex]}
-                alt="Certificate"
-                fill
-                className="object-contain"
-              />
+            <div className="flex flex-col items-center gap-4 max-w-4xl w-full">
+              <div
+                className="relative h-[75vh] w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Image
+                  src={gallery[activeIndex]}
+                  alt={galleryTitles[activeIndex] || "Image"}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+
+              {galleryTitles[activeIndex] && (
+                <p className="text-center text-sm text-slate-200 max-w-2xl">
+                  {galleryTitles[activeIndex]}
+                </p>
+              )}
+
+              <p className="text-xs text-slate-400 mt-2">
+                {activeIndex + 1} / {gallery.length}
+              </p>
             </div>
 
             <button
@@ -597,14 +828,17 @@ export default function Portfolio() {
                     : 0
                 );
               }}
-              className="absolute right-5 z-10 text-5xl text-white"
+              className="absolute right-5 top-1/2 -translate-y-1/2 z-10 text-5xl text-white hover:text-cyan-300 transition"
             >
               ›
             </button>
 
             <button
-              onClick={() => setActiveIndex(null)}
-              className="absolute top-5 right-5 rounded-lg bg-white/10 px-4 py-2 text-white"
+              onClick={() => {
+                setActiveIndex(null);
+                setGallerySection(null);
+              }}
+              className="absolute top-5 right-5 rounded-lg bg-white/10 px-4 py-2 text-white hover:bg-white/20 transition"
             >
               Close
             </button>
