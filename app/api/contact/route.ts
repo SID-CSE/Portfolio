@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 type ContactPayload = {
+  type?: "contact" | "feedback";
   name?: string;
   email?: string;
   message?: string;
@@ -41,11 +42,20 @@ async function sendResendEmail({
   }
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json().catch(() => null)) as ContactPayload | null;
 
-    if (!body?.name || !body.email || !body.message) {
+    if (!body?.message) {
       return NextResponse.json(
         { error: "Missing required fields." },
         { status: 400 }
@@ -57,22 +67,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    // Trim values
-    const name = body.name.trim();
-    const email = body.email.trim();
+    const type = body.type === "feedback" ? "feedback" : "contact";
+    const isFeedback = type === "feedback";
+    const name = body.name?.trim() || (isFeedback ? "Anonymous visitor" : "");
+    const email = body.email?.trim() || "";
     const message = body.message.trim();
 
-    // Email validation
+    if (!isFeedback && (!name || !email)) {
+      return NextResponse.json(
+        { error: "Missing required fields." },
+        { status: 400 }
+      );
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(email)) {
+    if (email && !emailRegex.test(email)) {
       return NextResponse.json(
         { error: "Invalid email address." },
         { status: 400 }
       );
     }
 
-    // Length validation
     if (
       name.length > 100 ||
       email.length > 100 ||
@@ -111,20 +127,45 @@ export async function POST(request: Request) {
       );
     }
 
-    const escapedMessage = message.replace(/\n/g, "<br />");
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email || "Anonymous");
+    const escapedMessage = escapeHtml(message).replace(/\n/g, "<br />");
+
+    if (isFeedback) {
+      await sendResendEmail({
+        from: fromEmail,
+        to: ownerEmail,
+        subject: "Anonymous Portfolio Feedback",
+        html: `
+          <div style="font-family:Arial,sans-serif;line-height:1.6">
+            <h2>Anonymous Portfolio Feedback</h2>
+
+            <p><strong>Visitor:</strong> Anonymous</p>
+
+            <p><strong>Feedback:</strong></p>
+            <p>${escapedMessage}</p>
+          </div>
+        `,
+      });
+
+      return NextResponse.json({
+        ok: true,
+        mode: "resend",
+      });
+    }
 
     await Promise.all([
       // Email to you
       sendResendEmail({
         from: fromEmail,
         to: ownerEmail,
-        subject: `Portfolio Inquiry from ${name}`,
+        subject: `Portfolio Inquiry from ${safeName}`,
         html: `
           <div style="font-family:Arial,sans-serif;line-height:1.6">
             <h2>New Portfolio Inquiry</h2>
 
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Name:</strong> ${safeName}</p>
+            <p><strong>Email:</strong> ${safeEmail}</p>
 
             <p><strong>Message:</strong></p>
             <p>${escapedMessage}</p>
@@ -142,7 +183,7 @@ export async function POST(request: Request) {
           <div style="font-family:Arial,sans-serif;line-height:1.6">
             <h2>Thank You for Reaching Out</h2>
 
-            <p>Hello ${name},</p>
+            <p>Hello ${safeName},</p>
 
             <p>
               Thank you for contacting me through my portfolio website.

@@ -17,7 +17,7 @@ export default function ClickableImage({
       alt={alt}
       width={1600}
       height={900}
-      className="cursor-pointer rounded-2xl transition hover:scale-[1.02]"
+      className="cursor-pointer rounded-lg transition hover:scale-[1.02]"
       onClick={() => onClick(src)}
     />
   );

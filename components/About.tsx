@@ -13,7 +13,7 @@ function GlassCard({
 }) {
   return (
     <div
-      className={`glass-card rounded-3xl ${className}`}
+      className={`glass-card ${className}`}
       {...props}
     >
       {children}
@@ -23,7 +23,7 @@ function GlassCard({
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-[0.08em] text-slate-100/90">
+    <span className="chip">
       {children}
     </span>
   );
@@ -44,13 +44,13 @@ export default function AboutSection() {
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-[0.32em] text-slate-300/60">
+              <p className="eyebrow">
                 About Me
               </p>
-              <h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+              <h2 className="section-title">
                 {aboutContent.heroHeadline}
               </h2>
-              <p className="max-w-2xl text-base leading-7 text-slate-300/85 sm:text-lg">
+              <p className="body-copy max-w-2xl">
                 {aboutContent.heroDescription}
               </p>
             </div>
@@ -69,7 +69,7 @@ export default function AboutSection() {
               </div>
             ) : (
               <div className="aspect-square flex flex-col items-center justify-center bg-black/20 p-8">
-                <p className="text-5xl font-semibold tracking-[-0.04em] text-white">SK</p>
+                <p className="text-5xl font-semibold tracking-normal text-white">SK</p>
               </div>
             )}
           </GlassCard>
@@ -77,7 +77,7 @@ export default function AboutSection() {
 
         <GlassCard className="p-8">
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
+            <p className="eyebrow">
               Professional Background
             </p>
             <p className="text-lg leading-8 text-slate-100/90">
@@ -89,7 +89,7 @@ export default function AboutSection() {
 
         <GlassCard className="p-8">
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
+            <p className="eyebrow">
               Vision & Goals
             </p>
             <p className="text-base leading-8 text-slate-100/90">
@@ -99,7 +99,7 @@ export default function AboutSection() {
         </GlassCard>
 
         <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
+          <p className="eyebrow">
             Specializations
           </p>
           <div className="flex flex-wrap gap-3">
@@ -110,7 +110,7 @@ export default function AboutSection() {
         </div>
 
         <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
+          <p className="eyebrow">
             Core Skills
           </p>
           <div className="flex flex-wrap gap-3">
@@ -122,7 +122,7 @@ export default function AboutSection() {
 
         <GlassCard className="p-6">
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">
+            <p className="eyebrow">
               Current Focus
             </p>
             <p className="text-sm leading-7 text-slate-200/90">

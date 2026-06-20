@@ -1,5 +1,5 @@
 import { cloudinaryAssets } from "@/lib/cloudinary";
-import { time } from "console";
+
 export const navigationItems = [
   { label: "Hero", href: "#hero" },
   { label: "About", href: "#about" },

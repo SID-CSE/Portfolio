@@ -21,12 +21,11 @@ function SkillCard({
   return (
     <motion.button
       onClick={onClick}
-      className={`group relative overflow-hidden rounded-2xl px-6 py-4 text-left transition-all duration-300 ${
+      className={`group relative overflow-hidden rounded-lg border border-white/10 px-6 py-4 text-left transition-all duration-300 ${
         isActive
           ? "bg-white/10 shadow-xl shadow-cyan-500/20"
-          : "bg-white/5 hover:bg-white/8"
+          : "bg-white/5 hover:bg-white/10"
       }`}
-      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="relative z-10">
@@ -60,10 +59,10 @@ export default function SkillsSection() {
         className="space-y-12"
       >
         <div className="space-y-4">
-          <h2 className="text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">
+          <h2 className="section-title">
             Technical Expertise
           </h2>
-          <p className="max-w-2xl text-base leading-7 text-slate-300/85">
+          <p className="body-copy max-w-2xl">
             Full-stack capabilities across frontend, backend, data science, cloud infrastructure, and AI/ML systems.
           </p>
         </div>
@@ -107,7 +106,7 @@ export default function SkillsSection() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05, duration: 0.3 }}
-                  className="group relative overflow-hidden rounded-xl bg-white/5 p-4 backdrop-blur-sm transition hover:bg-white/10"
+                  className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition hover:bg-white/10"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
                   <div className="relative z-10">
@@ -122,7 +121,7 @@ export default function SkillsSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.3 }}
-              className={`overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent p-6`}
+              className="overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent p-6"
             >
               <div className="space-y-3">
                 <p className="text-sm uppercase tracking-[0.12em] text-slate-400">Expertise Level</p>
@@ -170,8 +169,8 @@ export default function SkillsSection() {
           ].map((stat) => (
             <motion.div
               key={stat.label}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
-              whileHover={{ scale: 1.05, borderColor: "rgba(34, 211, 238, 0.4)" }}
+              className="rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              whileHover={{ y: -4, borderColor: "rgba(34, 211, 238, 0.4)" }}
             >
               <stat.icon className="text-2xl text-cyan-300" />
               <p className="mt-3 text-2xl font-bold text-white">{stat.count}</p>
