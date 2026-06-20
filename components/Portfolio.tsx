@@ -26,6 +26,11 @@ const sectionVariants = {
 const CLOUDINARY_RESUME_URL = "https://res.cloudinary.com/dn37tck9g/raw/upload/Siddharth_Kumar_Resume_zi82vf.docx";
 const RESUME_FILE_NAME = "Siddharth-Kumar-Resume.docx";
 const RESUME_VIEW_URL = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(CLOUDINARY_RESUME_URL)}`;
+const resumeMenuItems = [
+  { label: "View Resume", icon: FaEye, action: "view" },
+  { label: "Share Resume", icon: FaShareAlt, action: "share" },
+  { label: "Download Resume", icon: FaDownload, action: "download" },
+] as const;
 
 function GlassCard({
   className = "",
@@ -36,7 +41,7 @@ function GlassCard({
 }) {
   return (
     <div
-      className={`glass-card rounded-3xl ${className}`}
+      className={`glass-card ${className}`}
       {...props}
     >
       {children}
@@ -47,21 +52,21 @@ function GlassCard({
 function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
   return (
     <div className="max-w-3xl space-y-3">
-      <p className="text-xs uppercase tracking-[0.28em] text-slate-300/70">{eyebrow}</p>
-      <h2 className="text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">{title}</h2>
-      <p className="max-w-2xl text-sm leading-7 text-slate-300/80 sm:text-base">{description}</p>
+      <p className="eyebrow">{eyebrow}</p>
+      <h2 className="section-title">{title}</h2>
+      <p className="body-copy max-w-2xl">{description}</p>
     </div>
   );
 }
 
 function Pill({ children }: { children: React.ReactNode }) {
-  return <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-[0.08em] text-slate-100/90">{children}</span>;
+  return <span className="chip">{children}</span>;
 }
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
     <GlassCard className="p-5">
-      <p className="text-3xl font-semibold tracking-[-0.04em] text-white">{value}</p>
+      <p className="text-3xl font-semibold tracking-normal text-white">{value}</p>
       <p className="mt-1 text-sm text-slate-300/80">{label}</p>
     </GlassCard>
   );
@@ -107,10 +112,53 @@ function SectionShell({ id, children }: { id: string; children: React.ReactNode 
   );
 }
 
+function ResumeMenu({
+  align = "right",
+  onViewResume,
+  onDownloadResume,
+  onShareResume,
+}: {
+  align?: "left" | "right";
+  onViewResume: () => void;
+  onDownloadResume: () => void;
+  onShareResume: () => void;
+}) {
+  const handlers = {
+    view: onViewResume,
+    share: onShareResume,
+    download: onDownloadResume,
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      className={`absolute ${align === "right" ? "right-0" : "left-0"} z-50 mt-2 w-52 overflow-hidden rounded-lg border border-white/10 bg-slate-900/95 shadow-2xl shadow-black/40 backdrop-blur-xl`}
+    >
+      {resumeMenuItems.map((item, index) => {
+        const Icon = item.icon;
+
+        return (
+          <button
+            key={item.action}
+            type="button"
+            onClick={handlers[item.action]}
+            className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 ${index < resumeMenuItems.length - 1 ? "border-b border-white/8" : ""}`}
+          >
+            <Icon className="text-cyan-300" />
+            {item.label}
+          </button>
+        );
+      })}
+    </motion.div>
+  );
+}
+
 function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloadResume, onShareResume }: { active: string; resumeMenuOpen: boolean; onResumeClick: () => void; onViewResume: () => void; onDownloadResume: () => void; onShareResume: () => void }) {
   return (
     <>
-      <header className="sticky top-0 z-50 hidden border-b border-white/8 bg-[#050816]/70 backdrop-blur-xl lg:block">
+      <header className="fixed inset-x-0 top-0 z-50 hidden border-b border-white/8 bg-[#050816]/85 backdrop-blur-xl lg:block">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-4">
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Siddharth Kumar</p>
@@ -118,7 +166,7 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
             {navigationItems.slice(0, 6).map((item) => (
-              <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} whileHover={{ scale: 1.03 }} className={`btn-sm-secondary ${active === item.href.slice(1) ? "border-indigo-400/60 bg-indigo-400/15" : ""}`}>
+              <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className={`btn-sm-secondary ${active === item.href.slice(1) ? "btn-sm-secondary-active" : ""}`} aria-current={active === item.href.slice(1) ? "page" : undefined}>
                 {item.label}
               </motion.a>
             ))}
@@ -126,37 +174,23 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
               <button
                 type="button"
                 onClick={onResumeClick}
-                className="rounded-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-fuchsia-500 px-4 py-2 text-xs font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+                className="btn-sm-secondary border-cyan-400/30 bg-cyan-400/10"
+                aria-expanded={resumeMenuOpen}
               >
                 Resume
               </button>
               <AnimatePresence>
-                {resumeMenuOpen && (
-                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="absolute right-0 mt-2 w-48 rounded-2xl border border-white/10 bg-slate-900/95 backdrop-blur-xl overflow-hidden">
-                    <button type="button" onClick={onViewResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
-                      <FaEye className="text-cyan-300" />
-                      View Resume
-                    </button>
-                    <button type="button" onClick={onShareResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
-                      <FaShareAlt className="text-cyan-300" />
-                      Share Resume
-                    </button>
-                    <button type="button" onClick={onDownloadResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10">
-                      <FaDownload className="text-cyan-300" />
-                      Download Resume
-                    </button>
-                  </motion.div>
-                )}
+                {resumeMenuOpen && <ResumeMenu onViewResume={onViewResume} onDownloadResume={onDownloadResume} onShareResume={onShareResume} />}
               </AnimatePresence>
             </div>
           </div>
         </nav>
       </header>
 
-      <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/8 bg-[#050816]/80 px-3 py-3 backdrop-blur-xl lg:hidden">
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#050816]/85 px-3 py-3 backdrop-blur-xl lg:hidden" aria-label="Primary navigation">
         <div className="mx-auto grid max-w-7xl grid-cols-4 gap-2 sm:grid-cols-6">
           {navigationItems.slice(0, 12).map((item) => (
-            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} whileHover={{ scale: 1.02 }} className={`rounded-2xl px-2 py-2 text-center text-[10px] tracking-[0.08em] transition ${active === item.href.slice(1) ? "bg-indigo-400/20 text-white border border-indigo-400/30" : "text-slate-300/70 border border-white/10 hover:bg-white/5 hover:text-white"}`}>
+            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className={`btn-sm-secondary px-2 py-2 text-center text-[10px] ${active === item.href.slice(1) ? "btn-sm-secondary-active" : "text-slate-300/70"}`} aria-current={active === item.href.slice(1) ? "page" : undefined}>
               {item.label}
             </motion.a>
           ))}
@@ -167,7 +201,7 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
 }
 
 function DiagramFrame({ children }: { children: React.ReactNode }) {
-  return <div className="glass-card overflow-hidden rounded-3xl p-4">{children}</div>;
+  return <div className="glass-card overflow-hidden p-4">{children}</div>;
 }
 
 
@@ -181,7 +215,7 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Featured Project</p>
-            <h3 className="text-2xl font-semibold tracking-[-0.02em] text-white">{project.name}</h3>
+            <h3 className="text-2xl font-semibold tracking-normal text-white">{project.name}</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             <a className="btn-sm-secondary" href={project.links.github} target="_blank" rel="noreferrer">
@@ -194,12 +228,12 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
         </div>
         <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Problem</p>
+            <div className="soft-panel">
+              <p className="eyebrow">Problem</p>
               <p className="mt-2 text-sm leading-7 text-slate-200/90">{project.problem}</p>
             </div>
-            <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Architecture</p>
+            <div className="soft-panel">
+              <p className="eyebrow">Architecture</p>
               <p className="mt-2 text-sm leading-7 text-slate-200/90">{project.architecture}</p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -333,7 +367,7 @@ function ContactForm() {
               maxLength={100}
               disabled={state === "sending"}
               placeholder="Siddharth Kumar"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50 disabled:opacity-50"
+              className="form-field"
             />
           </label>
 
@@ -347,7 +381,7 @@ function ContactForm() {
               maxLength={100}
               disabled={state === "sending"}
               placeholder="recruiter@example.com"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50 disabled:opacity-50"
+              className="form-field"
             />
           </label>
         </div>
@@ -362,7 +396,7 @@ function ContactForm() {
             maxLength={2000}
             disabled={state === "sending"}
             placeholder="Share details about the role, team, project, or hiring opportunity you'd like to discuss."
-            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-400/50 disabled:opacity-50"
+            className="form-field"
           />
         </label>
 
@@ -394,16 +428,99 @@ function ContactForm() {
   );
 }
 
+function FeedbackForm() {
+  const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setState("sending");
+    setStatusMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "feedback",
+          message: String(formData.get("feedback") ?? ""),
+          website: String(formData.get("website") ?? ""),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to send feedback");
+      }
+
+      setState("success");
+      setStatusMessage("Feedback sent anonymously. Thank you.");
+      form.reset();
+    } catch (error) {
+      setState("error");
+      setStatusMessage(error instanceof Error ? error.message : "Unable to send feedback right now.");
+    }
+  }
+
+  return (
+    <GlassCard className="p-6">
+      <form className="grid gap-4" onSubmit={handleSubmit}>
+        <input type="text" name="website" autoComplete="off" className="hidden" tabIndex={-1} />
+
+        <div className="space-y-2">
+          <p className="eyebrow">Anonymous Feedback</p>
+          <h3 className="text-xl font-semibold tracking-normal text-white">Help improve this portfolio.</h3>
+          <p className="body-copy">Share quick feedback about design, content, speed, or accessibility. No name or email is collected.</p>
+        </div>
+
+        <label className="grid gap-2 text-sm text-slate-200/85">
+          Feedback
+          <textarea
+            name="feedback"
+            rows={4}
+            required
+            maxLength={1200}
+            disabled={state === "sending"}
+            placeholder="What should be improved?"
+            className="form-field resize-y"
+          />
+        </label>
+
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <button type="submit" disabled={state === "sending"} className="btn-secondary">
+            {state === "sending" ? "Sending..." : "Send Anonymous Feedback"}
+          </button>
+
+          {statusMessage && (
+            <p className={`text-sm ${state === "error" ? "text-rose-400" : "text-emerald-400"}`}>
+              {statusMessage}
+            </p>
+          )}
+        </div>
+      </form>
+    </GlassCard>
+  );
+}
+
 export default function Portfolio() {
   const reducedMotion = useReducedMotion();
   const typewriter = useTypewriter(heroRoles);
   const [activeSection, setActiveSection] = useState("hero");
-  const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
+  const [navResumeMenuOpen, setNavResumeMenuOpen] = useState(false);
+  const [heroResumeMenuOpen, setHeroResumeMenuOpen] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
   const [gallery, setGallery] = useState<string[]>([]);
   const [galleryTitles, setGalleryTitles] = useState<string[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [gallerySection, setGallerySection] = useState<"certifications" | "experience" | "projects" | null>(null);
+  const [projectsExpanded, setProjectsExpanded] = useState(false);
 
 
   useEffect(() => {
@@ -435,7 +552,8 @@ export default function Portfolio() {
 
   function viewResume() {
     window.open(RESUME_VIEW_URL, "_blank", "noopener,noreferrer");
-    setResumeMenuOpen(false);
+    setNavResumeMenuOpen(false);
+    setHeroResumeMenuOpen(false);
   }
 
   function openGallery(images: string[], index: number, section: "certifications" | "experience" | "projects", titles: string[] = []) {
@@ -450,7 +568,8 @@ export default function Portfolio() {
     anchor.href = CLOUDINARY_RESUME_URL;
     anchor.download = RESUME_FILE_NAME;
     anchor.click();
-    setResumeMenuOpen(false);
+    setNavResumeMenuOpen(false);
+    setHeroResumeMenuOpen(false);
   }
 
   function shareResume() {
@@ -463,17 +582,24 @@ export default function Portfolio() {
     } else {
       navigator.clipboard.writeText(CLOUDINARY_RESUME_URL);
     }
-    setResumeMenuOpen(false);
+    setNavResumeMenuOpen(false);
+    setHeroResumeMenuOpen(false);
   }
 
-  function handleResumeClick() {
-    setResumeMenuOpen(!resumeMenuOpen);
+  function handleNavResumeClick() {
+    setNavResumeMenuOpen((open) => !open);
+    setHeroResumeMenuOpen(false);
+  }
+
+  function handleHeroResumeClick() {
+    setHeroResumeMenuOpen((open) => !open);
+    setNavResumeMenuOpen(false);
   }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent text-white">
-      <NavBar active={activeSection} resumeMenuOpen={resumeMenuOpen} onResumeClick={handleResumeClick} onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />
-      <main className="relative z-10 pb-28 lg:pb-0">
+      <NavBar active={activeSection} resumeMenuOpen={navResumeMenuOpen} onResumeClick={handleNavResumeClick} onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />
+      <main className="relative z-10 pb-12 pt-28 sm:pt-24 lg:pt-20">
         <SectionShell id="hero">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-6">
@@ -483,8 +609,8 @@ export default function Portfolio() {
               </div>
               <div className="space-y-4">
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-300/60">Full Stack, AI/ML & Cloud Engineer</p>
-                <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl lg:text-[5rem]">Siddharth Kumar</h1>
-                <p className="text-2xl font-medium tracking-[-0.02em] text-slate-100 sm:text-3xl">
+                <h1 className="max-w-4xl text-5xl font-semibold tracking-normal text-white sm:text-6xl lg:text-[5rem]">Siddharth Kumar</h1>
+                <p className="text-2xl font-medium tracking-normal text-slate-100 sm:text-3xl">
                   {typewriter}
                   <span className="ml-1 inline-block h-7 w-2 align-middle bg-cyan-300/80" />
                 </p>
@@ -495,24 +621,9 @@ export default function Portfolio() {
               <div className="flex flex-wrap gap-3">
                 <a href="#projects" className="btn-primary">Explore my Work</a>
                 <div className="relative">
-                  <button type="button" onClick={handleResumeClick} className="btn-secondary">Resume</button>
+                  <button type="button" onClick={handleHeroResumeClick} className="btn-secondary" aria-expanded={heroResumeMenuOpen}>Resume</button>
                   <AnimatePresence>
-                    {resumeMenuOpen && (
-                      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="absolute left-0 mt-2 w-48 rounded-2xl border border-white/10 bg-slate-900/95 backdrop-blur-xl overflow-hidden z-50">
-                        <button type="button" onClick={viewResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
-                          <FaEye className="text-cyan-300" />
-                          View Resume
-                        </button>
-                        <button type="button" onClick={shareResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10 border-b border-white/8">
-                          <FaShareAlt className="text-cyan-300" />
-                          Share Resume
-                        </button>
-                        <button type="button" onClick={downloadResume} className="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-white transition hover:bg-white/10">
-                          <FaDownload className="text-cyan-300" />
-                          Download Resume
-                        </button>
-                      </motion.div>
-                    )}
+                    {heroResumeMenuOpen && <ResumeMenu align="left" onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />}
                   </AnimatePresence>
                 </div>
               </div>
@@ -543,7 +654,7 @@ export default function Portfolio() {
               <div className="relative space-y-6">
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Focus areas</p>
-                  <div className="mt-4 grid gap-3">{heroFocusAreas.map((item) => <div key={item} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100/90">{item}</div>)}</div>
+                  <div className="mt-4 grid gap-3">{heroFocusAreas.map((item) => <div key={item} className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100/90">{item}</div>)}</div>
                 </div>
               </div>
             </GlassCard>
@@ -564,8 +675,8 @@ export default function Portfolio() {
                   <span className="h-2 w-2 rounded-full bg-cyan-400" />
                   <p className="text-xs font-medium uppercase tracking-[0.12em] text-cyan-300">Currently Seeking</p>
                 </div>
-                <h3 className="text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
-                  🎯 Open to Opportunities
+                <h3 className="text-2xl font-semibold tracking-normal text-white sm:text-3xl">
+                  Open to Opportunities
                 </h3>
                 <p className="max-w-2xl text-base leading-7 text-slate-200/90">
                   Software Engineering, AI/ML, Full-Stack Development, and Cloud Engineering roles
@@ -575,7 +686,7 @@ export default function Portfolio() {
                 </p>
               </div>
               <a href="#contact" className="btn-primary whitespace-nowrap">
-                Let's Talk
+                Let&apos;s Talk
               </a>
             </div>
           </GlassCard>
@@ -588,7 +699,76 @@ export default function Portfolio() {
 
         <SectionShell id="projects">
           <SectionHeading eyebrow="Featured Projects" title="Selected engineering work with clear outcomes." description="Production-minded projects spanning full-stack platforms, machine learning applications, and security automation." />
-          <div className="mt-8 grid gap-6">{projectCards.map((project, index) => <ProjectCard key={project.name} project={project} projectIndex={index} onSelectImage={(projectIndex) => openGallery(projectCards.map((p) => p.image), projectIndex, "projects", projectCards.map((p) => p.name))} />)}</div>
+          <div className="mt-8 space-y-6">
+            {projectCards.slice(0, 2).map((project, index) => (
+              <ProjectCard
+                key={project.name}
+                project={project}
+                projectIndex={index}
+                onSelectImage={(projectIndex) =>
+                  openGallery(
+                    projectCards.map((p) => p.image),
+                    projectIndex,
+                    "projects",
+                    projectCards.map((p) => p.name)
+                  )
+                }
+              />
+            ))}
+
+            <AnimatePresence initial={false}>
+              {projectsExpanded ? (
+                <motion.div
+                  id="additional-projects"
+                  key="additional-projects"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="space-y-6">
+                    {projectCards.slice(2).map((project, index) => (
+                      <ProjectCard
+                        key={project.name}
+                        project={project}
+                        projectIndex={index + 2}
+                        onSelectImage={(projectIndex) =>
+                          openGallery(
+                            projectCards.map((p) => p.image),
+                            projectIndex,
+                            "projects",
+                            projectCards.map((p) => p.name)
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+
+            {projectCards.length > 2 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex justify-center pt-4"
+              >
+                <button
+                  type="button"
+                  onClick={() => setProjectsExpanded(!projectsExpanded)}
+                  className="btn-secondary"
+                  aria-expanded={projectsExpanded}
+                  aria-controls="additional-projects"
+                >
+                  {projectsExpanded
+                    ? "Show Less Projects"
+                    : `View More Projects (${projectCards.length - 2})`}
+                </button>
+              </motion.div>
+            )}
+          </div>
         </SectionShell>
 
 
@@ -633,7 +813,7 @@ export default function Portfolio() {
         )
       }
     >
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-black/20">
         <Image
           src={cert.image}
           alt={cert.title}
@@ -678,7 +858,7 @@ export default function Portfolio() {
                     {item.dates}
                   </p>
 
-                  <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">
+                  <h3 className="mt-2 text-2xl font-semibold tracking-normal text-white">
                     {item.role}
                   </h3>
 
