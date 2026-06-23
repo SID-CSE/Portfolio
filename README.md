@@ -126,7 +126,3 @@ Most portfolio content lives in `data/portfolio.ts`:
 - Social links and About section copy
 
 Shared UI styling lives in `app/globals.css`, while section composition lives in `components/Portfolio.tsx`, `components/About.tsx`, and `components/Skills.tsx`.
-
-## Screenshots
-
-No committed screenshots are currently included. Add production screenshots under a tracked documentation or public assets folder if needed, and reference them here.
