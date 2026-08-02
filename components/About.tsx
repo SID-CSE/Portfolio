@@ -63,6 +63,7 @@ export default function AboutSection() {
                   src={aboutContent.photoUrl}
                   alt="Siddharth Kumar"
                   fill
+                  sizes="(max-width: 1023px) 100vw, 40vw"
                   className="object-cover"
                   priority
                 />

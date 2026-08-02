@@ -77,9 +77,10 @@ Common variables:
 - `CLOUDINARY_CLOUD_NAME`
 - `CLOUDINARY_API_KEY`
 - `CLOUDINARY_API_SECRET`
+- `CLOUDINARY_ADMIN_TOKEN` (required in the `x-admin-token` header for Cloudinary upload/delete API routes)
 - `RESEND_API_KEY`
-- `CONTACT_TO_EMAIL`
-- `CONTACT_FROM_EMAIL`
+- `RESEND_TO_EMAIL`
+- `RESEND_FROM_EMAIL`
 
 ### Run Locally
 

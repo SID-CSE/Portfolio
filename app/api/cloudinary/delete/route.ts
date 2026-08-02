@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 import { deleteFromCloudinary } from "@/lib/cloudinary";
+import { hasAdminToken } from "@/lib/api-auth";
 
 type DeletePayload = {
   publicId?: string;
 };
 
 export async function DELETE(request: Request) {
+  if (!hasAdminToken(request)) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+
   const body = (await request.json().catch(() => null)) as DeletePayload | null;
 
   if (!body?.publicId) {

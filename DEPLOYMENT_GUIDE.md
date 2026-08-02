@@ -15,8 +15,12 @@ Your portfolio is fully configured and ready for deployment. Follow the steps be
 Create a `.env.local` file with the following (optional but recommended):
 
 ```env
-# Cloudinary - for image optimization
+# Cloudinary - for image optimization and protected media administration
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_ADMIN_TOKEN=replace_with_a_long_random_token
 
 # Email - for contact form
 RESEND_API_KEY=your_resend_api_key
@@ -59,7 +63,7 @@ Your site will be live at a `vercel.app` domain. Configure a custom domain in pr
 ### 4. Self-Hosted (VPS)
 
 **Requirements:**
-- Node.js 18+
+- Node.js 20+
 - npm or yarn
 - PM2 (process manager)
 
@@ -102,10 +106,18 @@ server {
 
 ## Performance Optimization
 
-- Images are optimized via Cloudinary
+- Images are optimized via Cloudinary with responsive `sizes` hints
 - Next.js automatically handles code splitting
 - CSS is minified with Tailwind
 - Animations respect `prefers-reduced-motion`
+- Contact requests are limited to five per hour per detected client address
+
+## Security Checklist
+
+- Keep `CLOUDINARY_ADMIN_TOKEN` server-only and never expose it in client code
+- Send the `x-admin-token` header for Cloudinary upload/delete administration requests
+- Configure platform-level rate limiting or a WAF for durable contact-form protection
+- Run `npm audit --omit=dev` after dependency updates
 
 ## Monitoring & Maintenance
 
@@ -140,9 +152,10 @@ npm run build
 - Verify Cloudinary CDN is configured
 
 ### Contact Form Not Working
-- Verify Resend API key is correct
-- Check email addresses in environment variables
-- Test with a simple fetch request
+- Verify the Resend API key and sender address are correct
+- Check `RESEND_TO_EMAIL` and `RESEND_FROM_EMAIL`
+- Confirm the request has not exceeded the five-per-hour limit
+- Review the server logs for delivery errors
 
 ## Post-Deployment
 
@@ -162,4 +175,4 @@ For issues:
 
 ---
 
-Your portfolio is now deployment-ready! 🚀
+Your portfolio is ready for deployment after the production environment variables and security checklist are complete.

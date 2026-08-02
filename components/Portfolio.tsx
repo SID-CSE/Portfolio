@@ -112,6 +112,68 @@ function SectionShell({ id, children }: { id: string; children: React.ReactNode 
   );
 }
 
+const introStars = [
+  { x: -86, y: -42, delay: 0.04 },
+  { x: -58, y: 44, delay: 0.12 },
+  { x: -20, y: -72, delay: 0.2 },
+  { x: 18, y: 72, delay: 0.28 },
+  { x: 56, y: -48, delay: 0.36 },
+  { x: 88, y: 34, delay: 0.44 },
+  { x: -96, y: 10, delay: 0.52 },
+  { x: 96, y: -12, delay: 0.6 },
+];
+
+function IntroOverlay({ reducedMotion }: { reducedMotion: boolean | null }) {
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: reducedMotion ? 0.15 : 0.55, ease: "easeInOut" }}
+      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#050816]"
+      aria-label="Loading portfolio"
+      role="status"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(129,140,248,0.2),transparent_38%),radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.12),transparent_28%)]" />
+      <div className="relative flex flex-col items-center gap-6">
+        <div className="relative h-32 w-32">
+          <motion.div
+            animate={reducedMotion ? undefined : { rotate: 360 }}
+            transition={{ duration: 2.8, ease: "linear", repeat: Infinity }}
+            className="absolute inset-0 rounded-full border border-cyan-300/20 border-t-cyan-300/80 border-r-indigo-400/70"
+          />
+          {introStars.map((star) => (
+            <motion.span
+              key={`${star.x}-${star.y}`}
+              initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
+              animate={reducedMotion ? { x: star.x, y: star.y, opacity: 0.8, scale: 1 } : { x: star.x, y: star.y, opacity: [0, 1, 0.65], scale: [0, 1.2, 0.8] }}
+              transition={{ delay: reducedMotion ? 0 : star.delay, duration: reducedMotion ? 0.1 : 0.85, ease: "easeOut" }}
+              className="absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full bg-cyan-200 shadow-[0_0_12px_rgba(103,232,249,0.9)]"
+            />
+          ))}
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: reducedMotion ? 0.1 : 0.5, ease: "easeOut" }}
+            className="absolute inset-4 flex items-center justify-center rounded-3xl border border-white/15 bg-white/10 text-3xl font-semibold tracking-[0.12em] text-white shadow-2xl shadow-indigo-950/40 backdrop-blur-xl"
+          >
+            SK
+          </motion.div>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: reducedMotion ? 0 : 0.2, duration: reducedMotion ? 0.1 : 0.4 }}
+          className="text-center"
+        >
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">Siddharth Kumar</p>
+          <p className="mt-2 text-sm text-cyan-200/80">Building what&apos;s next</p>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
 function ResumeMenu({
   align = "right",
   onViewResume,
@@ -187,8 +249,8 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
         </nav>
       </header>
 
-      <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#050816]/85 px-3 py-3 backdrop-blur-xl lg:hidden" aria-label="Primary navigation">
-        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-2 sm:grid-cols-6">
+      <nav className="mobile-nav fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#050816]/85 px-3 py-3 backdrop-blur-xl lg:hidden" aria-label="Primary navigation">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-2 min-[390px]:grid-cols-4 sm:grid-cols-6">
           {navigationItems.slice(0, 12).map((item) => (
             <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className={`btn-sm-secondary px-2 py-2 text-center text-[10px] ${active === item.href.slice(1) ? "btn-sm-secondary-active" : "text-slate-300/70"}`} aria-current={active === item.href.slice(1) ? "page" : undefined}>
               {item.label}
@@ -218,12 +280,16 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
             <h3 className="text-2xl font-semibold tracking-normal text-white">{project.name}</h3>
           </div>
           <div className="flex flex-wrap gap-2">
-            <a className="btn-sm-secondary" href={project.links.github} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            <a className="btn-sm-secondary" href={project.links.live} target="_blank" rel="noreferrer">
-              Live / Demo
-            </a>
+            {project.links.github !== "#" && (
+              <a className="btn-sm-secondary" href={project.links.github} target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+            )}
+            {project.name.startsWith("SmartPay4") && project.links.live !== "#" && (
+              <a className="btn-sm-secondary" href={project.links.live} target="_blank" rel="noreferrer">
+                Live / Demo
+              </a>
+            )}
           </div>
         </div>
         <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
@@ -428,87 +494,6 @@ function ContactForm() {
   );
 }
 
-function FeedbackForm() {
-  const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [statusMessage, setStatusMessage] = useState("");
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-
-    setState("sending");
-    setStatusMessage("");
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "feedback",
-          message: String(formData.get("feedback") ?? ""),
-          website: String(formData.get("website") ?? ""),
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Failed to send feedback");
-      }
-
-      setState("success");
-      setStatusMessage("Feedback sent anonymously. Thank you.");
-      form.reset();
-    } catch (error) {
-      setState("error");
-      setStatusMessage(error instanceof Error ? error.message : "Unable to send feedback right now.");
-    }
-  }
-
-  return (
-    <GlassCard className="p-6">
-      <form className="grid gap-4" onSubmit={handleSubmit}>
-        <input type="text" name="website" autoComplete="off" className="hidden" tabIndex={-1} />
-
-        <div className="space-y-2">
-          <p className="eyebrow">Anonymous Feedback</p>
-          <h3 className="text-xl font-semibold tracking-normal text-white">Help improve this portfolio.</h3>
-          <p className="body-copy">Share quick feedback about design, content, speed, or accessibility. No name or email is collected.</p>
-        </div>
-
-        <label className="grid gap-2 text-sm text-slate-200/85">
-          Feedback
-          <textarea
-            name="feedback"
-            rows={4}
-            required
-            maxLength={1200}
-            disabled={state === "sending"}
-            placeholder="What should be improved?"
-            className="form-field resize-y"
-          />
-        </label>
-
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <button type="submit" disabled={state === "sending"} className="btn-secondary">
-            {state === "sending" ? "Sending..." : "Send Anonymous Feedback"}
-          </button>
-
-          {statusMessage && (
-            <p className={`text-sm ${state === "error" ? "text-rose-400" : "text-emerald-400"}`}>
-              {statusMessage}
-            </p>
-          )}
-        </div>
-      </form>
-    </GlassCard>
-  );
-}
-
 export default function Portfolio() {
   const reducedMotion = useReducedMotion();
   const typewriter = useTypewriter(heroRoles);
@@ -521,7 +506,35 @@ export default function Portfolio() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [gallerySection, setGallerySection] = useState<"certifications" | "experience" | "projects" | null>(null);
   const [projectsExpanded, setProjectsExpanded] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isIntroVisible, setIsIntroVisible] = useState(true);
+  const scrollProgressClass = `scroll-progress-${Math.round(scrollProgress / 10) * 10}`;
 
+  useEffect(() => {
+    const introDuration = reducedMotion ? 350 : 1250;
+    const introTimeout = window.setTimeout(() => setIsIntroVisible(false), introDuration);
+
+    return () => window.clearTimeout(introTimeout);
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    function updateScrollState() {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+      setScrollProgress(Math.min(progress, 100));
+      setShowScrollTop(window.scrollY > 600);
+    }
+
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, []);
 
   useEffect(() => {
   if (!certificateRef.current) return;
@@ -598,8 +611,12 @@ export default function Portfolio() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent text-white">
+      <AnimatePresence>
+        {isIntroVisible && <IntroOverlay reducedMotion={reducedMotion} />}
+      </AnimatePresence>
+
       <NavBar active={activeSection} resumeMenuOpen={navResumeMenuOpen} onResumeClick={handleNavResumeClick} onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />
-      <main className="relative z-10 pb-12 pt-28 sm:pt-24 lg:pt-20">
+      <main className="relative z-10 pb-12 pt-44 min-[390px]:pt-28 sm:pt-24 lg:pt-20">
         <SectionShell id="hero">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-6">
@@ -784,6 +801,8 @@ export default function Portfolio() {
     flex
     gap-6
     overflow-x-auto
+    snap-x
+    touch-pan-x
     scroll-smooth
     pb-4
     px-[30vw]
@@ -792,10 +811,9 @@ export default function Portfolio() {
 >
   {certifications.map((cert, index) => (
     <GlassCard
-      key={cert.credentialId}
+      key={`${cert.title}-${index}`}
       className="
-        min-w-[350px]
-        max-w-[350px]
+        certificate-card
         flex-shrink-0
         overflow-hidden
         p-4
@@ -804,6 +822,9 @@ export default function Portfolio() {
         transition
         hover:scale-[1.02]
       "
+      role="button"
+      tabIndex={0}
+      aria-label={`Open certificate preview for ${cert.title}`}
       onClick={() =>
         openGallery(
           certifications.map((c) => c.image),
@@ -812,12 +833,19 @@ export default function Portfolio() {
           certifications.map((c) => c.title)
         )
       }
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
+      }}
     >
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-black/20">
         <Image
           src={cert.image}
           alt={cert.title}
           fill
+          sizes="(max-width: 639px) calc(100vw - 2rem), 350px"
           className="object-cover transition duration-300 hover:scale-105"
         />
       </div>
@@ -968,20 +996,21 @@ export default function Portfolio() {
                     : 0
                 );
               }}
-              className="absolute left-5 top-1/2 -translate-y-1/2 z-10 text-5xl text-white hover:text-cyan-300 transition"
+              className="absolute left-2 top-1/2 z-10 -translate-y-1/2 text-4xl text-white transition hover:text-cyan-300 sm:left-5 sm:text-5xl"
             >
               ‹
             </button>
 
             <div className="flex flex-col items-center gap-4 max-w-4xl w-full">
               <div
-                className="relative h-[75vh] w-full"
+                className="relative h-[62vh] w-full sm:h-[75vh]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
                   src={gallery[activeIndex]}
                   alt={galleryTitles[activeIndex] || "Image"}
                   fill
+                  sizes="(max-width: 1023px) 100vw, 896px"
                   className="object-contain"
                 />
               </div>
@@ -1008,7 +1037,7 @@ export default function Portfolio() {
                     : 0
                 );
               }}
-              className="absolute right-5 top-1/2 -translate-y-1/2 z-10 text-5xl text-white hover:text-cyan-300 transition"
+              className="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-4xl text-white transition hover:text-cyan-300 sm:right-5 sm:text-5xl"
             >
               ›
             </button>
@@ -1018,13 +1047,29 @@ export default function Portfolio() {
                 setActiveIndex(null);
                 setGallerySection(null);
               }}
-              className="absolute top-5 right-5 rounded-lg bg-white/10 px-4 py-2 text-white hover:bg-white/20 transition"
+              className="absolute right-3 top-3 rounded-lg bg-white/10 px-3 py-2 text-sm text-white transition hover:bg-white/20 sm:right-5 sm:top-5 sm:px-4"
             >
               Close
             </button>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div
+        aria-hidden="true"
+        className={`scroll-progress-bar ${scrollProgressClass} pointer-events-none fixed inset-x-0 top-0 z-[70] h-0.5 origin-left bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400`}
+      />
+
+      {showScrollTop && (
+        <button
+          type="button"
+          aria-label="Back to top"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-5 right-5 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-400/15 text-lg text-cyan-50 shadow-lg shadow-cyan-950/30 transition hover:-translate-y-1 hover:bg-cyan-400/25 sm:bottom-8 sm:right-8"
+        >
+          ↑
+        </button>
+      )}
 
       {!reducedMotion ? <div aria-hidden className="pointer-events-none fixed inset-0 opacity-20 [background:radial-gradient(circle_at_center,transparent_0,transparent_58%,rgba(255,255,255,0.03)_100%)]" /> : null}
     </div>

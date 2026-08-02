@@ -8,6 +8,27 @@ type ContactPayload = {
   website?: string; // honeypot field
 };
 
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 5;
+const requestHistory = new Map<string, number[]>();
+
+function isRateLimited(request: Request) {
+  const address = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const now = Date.now();
+  const recentRequests = (requestHistory.get(address) ?? []).filter(
+    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS,
+  );
+
+  if (recentRequests.length >= MAX_REQUESTS_PER_WINDOW) {
+    requestHistory.set(address, recentRequests);
+    return true;
+  }
+
+  recentRequests.push(now);
+  requestHistory.set(address, recentRequests);
+  return false;
+}
+
 async function sendResendEmail({
   from,
   to,
@@ -52,6 +73,13 @@ function escapeHtml(value: string) {
 }
 
 export async function POST(request: Request) {
+  if (isRateLimited(request)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 },
+    );
+  }
+
   try {
     const body = (await request.json().catch(() => null)) as ContactPayload | null;
 
