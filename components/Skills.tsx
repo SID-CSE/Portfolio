@@ -21,11 +21,12 @@ function SkillCard({
   return (
     <motion.button
       onClick={onClick}
-      className={`group relative overflow-hidden rounded-lg border border-white/10 px-6 py-4 text-left transition-all duration-300 ${
+      className={`group relative overflow-hidden rounded-xl border border-white/10 px-6 py-4 text-left transition-all duration-300 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-950/20 ${
         isActive
           ? "bg-white/10 shadow-xl shadow-cyan-500/20"
           : "bg-white/5 hover:bg-white/10"
       }`}
+      whileHover={{ y: -3 }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="relative z-10">
@@ -106,11 +107,14 @@ export default function SkillsSection() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05, duration: 0.3 }}
-                  className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition hover:bg-white/10"
+                  className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition hover:border-cyan-400/30 hover:bg-white/10 hover:shadow-lg hover:shadow-cyan-950/20"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
                   <div className="relative z-10">
-                    <p className="font-medium text-white">{skill}</p>
+                    <p className="flex items-center gap-2 font-medium text-white">
+                      <span aria-hidden="true" className={`h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-r ${currentCategory.accent}`} />
+                      {skill}
+                    </p>
                     <div className={`mt-2 h-0.5 w-0 rounded-full bg-gradient-to-r ${currentCategory.accent} transition-all duration-300 group-hover:w-8`} />
                   </div>
                 </motion.div>

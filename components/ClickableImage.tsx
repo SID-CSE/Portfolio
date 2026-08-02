@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 export default function ClickableImage({
@@ -9,16 +7,22 @@ export default function ClickableImage({
 }: {
   src: string;
   alt: string;
-  onClick: (src: string) => void;
+  onClick: () => void;
 }) {
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={1600}
-      height={900}
-      className="cursor-pointer rounded-lg transition hover:scale-[1.02]"
-      onClick={() => onClick(src)}
-    />
+    <button
+      type="button"
+      aria-label={`Open ${alt}`}
+      onClick={onClick}
+      className="group block w-full border-0 bg-transparent p-0 text-left"
+    >
+      <Image
+        src={src}
+        alt={alt}
+        width={1600}
+        height={900}
+        className="rounded-lg transition group-hover:scale-[1.02]"
+      />
+    </button>
   );
 }
