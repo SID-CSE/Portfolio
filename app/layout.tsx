@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   description:
     "Full stack, AI/ML, and cloud engineering portfolio with projects, case studies, certifications, and experience.",
-  metadataBase: new URL("https://siddharthkumar.dev"),
+  metadataBase: new URL("https://portfolio-siddharth04.vercel.app"),
   keywords: [
     "Full Stack Developer",
     "AI/ML Engineer",

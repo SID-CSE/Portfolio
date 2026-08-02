@@ -60,6 +60,7 @@ Thumbs.db
 /public/uploads/
 
 # AI-generated and implementation helper files
+LINKEDIN_CAPTION.md
 NEXT_STEPS.txt
 COMPLETION_CHECKLIST.md
 PROJECT_SUMMARY.md
