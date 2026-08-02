@@ -1,21 +1,40 @@
 # Siddharth Kumar Portfolio
 
-A production-ready portfolio built with Next.js, React, Tailwind CSS, and Framer Motion. It presents featured projects, skills, certifications, experience, resume actions, and a contact form in a responsive single-page layout.
+A responsive personal portfolio for **Siddharth Kumar**, a final-year Computer Science Engineering student focused on full-stack development, AI/ML, cloud, and DevOps.
+
+## Live Site
+
+**[portfolio-siddharth04.vercel.app](https://portfolio-siddharth04.vercel.app)**
+
+## Overview
+
+This single-page portfolio presents technical strengths, featured work, certifications, internship experience, and ways to get in touch. It is designed with a polished glass-card interface, accessible interaction states, responsive layouts, and motion that respects user preferences.
+
+## Current Highlights
+
+- 15+ projects across full-stack development, AI/ML, cybersecurity, IoT, and Android
+- 10+ professional and academic certifications
+- 3+ internship experiences
+- 9.05 CGPA
+- Download, share, and view actions for the resume
+- Social links for GitHub, LinkedIn, LeetCode, HackerRank, and email
 
 ## Features
 
-- Fixed navigation with smooth section scrolling and active-section highlighting
-- Featured projects with image previews, expandable project details, and a collapsible "View More Projects" flow
-- Responsive sections for About, Skills, Projects, Certifications, Experience, and Contact
-- Consistent glass-card design system, shared button styles, focus states, and reduced-motion support
-- Interactive certificate and project image gallery
-- Resume view, share, and download actions
-- Contact API route with honeypot spam protection and optional Resend email delivery
-- Cloudinary-backed media helpers for optimized remote assets
+- Fixed navigation with smooth in-page scrolling and active-section highlighting
+- Animated introduction and typewriter hero roles, with reduced-motion support
+- About, skills, projects, certifications, experience, and contact sections
+- Expandable featured-project cards with technology stacks, architecture, challenges, impact, and project links
+- Clickable certificate and project-media previews
+- Responsive layouts for mobile, tablet, and desktop screens
+- Contact and feedback API with honeypot protection, input validation, rate limiting, HTML escaping, and optional Resend email delivery
+- Cloudinary-hosted images and resume assets optimized with `next/image`
+- Security headers for content type protection, referrer policy, permissions policy, HSTS, and uncached API responses
+- SEO metadata and Open Graph/Twitter card configuration for `portfolio-siddharth04.vercel.app`
 
 ## Tech Stack
 
-- Next.js 16 App Router
+- Next.js 16 with the App Router
 - React 19
 - TypeScript
 - Tailwind CSS 4
@@ -25,109 +44,108 @@ A production-ready portfolio built with Next.js, React, Tailwind CSS, and Framer
 - Resend
 - Vercel-ready deployment
 
+## Featured Projects
+
+| Project | Focus | Stack |
+| --- | --- | --- |
+| Contify CMS | Role-based content-management workflows | React, Spring Boot, MySQL, JWT, Cloudinary |
+| Taskera (TalentLink) | Freelance marketplace and talent matching | React, Django REST Framework, PostgreSQL, JWT/OAuth2 |
+| SmartPay4 | Employee salary prediction | Python, XGBoost, Scikit-Learn, Streamlit |
+| Game Arcade | Android games with an AI assistant | Java, Android, OkHttp, Groq API |
+| Recon Automation | Ethical security-assessment automation | Python, Nmap, OSINT, Kali Linux |
+| IoT Monitoring Systems | Remote livestock and wearable health monitoring | Raspberry Pi, Arduino, sensors, Bluetooth, MQTT/HTTP |
+
 ## Project Structure
 
 ```text
 app/
-  api/
-    cloudinary/      Cloudinary upload and delete routes
-    contact/         Contact form API route
-  globals.css        Design tokens and shared utility classes
-  layout.tsx         Metadata and root layout
+  api/contact/       Contact and feedback API endpoint
+  globals.css        Design tokens and shared styles
+  layout.tsx         Root layout and site metadata
   page.tsx           Portfolio page entry
 components/
   About.tsx          About section
-  ClickableImage.tsx Reusable image preview component
-  Portfolio.tsx      Main page composition and navigation
-  Skills.tsx         Interactive skills section
+  ClickableImage.tsx Image preview component
+  Portfolio.tsx      Main portfolio composition and navigation
+  Skills.tsx         Skills section
 data/
-  portfolio.ts       Portfolio copy, links, projects, certifications, and experience
+  portfolio.ts       Portfolio content, projects, credentials, and links
 lib/
-  cloudinary.ts      Cloudinary signing, upload/delete helpers, and asset URLs
-public/
-  favicon.ico
+  cloudinary.ts      Cloudinary asset URL helpers
 ```
-
-Generated files, local environment files, caches, build output, editor settings, prompt artifacts, and implementation helper notes are ignored by Git. Production source, assets, configuration, lockfiles, and documentation remain trackable.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 20 or newer recommended
+- Node.js 20 or newer
 - npm
 
-### Install
+### Install and Run
 
 ```bash
 npm install
-```
-
-### Configure Environment
-
-Copy the example environment file and fill in only the services you use:
-
-```bash
-cp .env.example .env.local
-```
-
-Common variables:
-
-- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
-- `CLOUDINARY_CLOUD_NAME`
-- `CLOUDINARY_API_KEY`
-- `CLOUDINARY_API_SECRET`
-- `CLOUDINARY_ADMIN_TOKEN` (required in the `x-admin-token` header for Cloudinary upload/delete API routes)
-- `RESEND_API_KEY`
-- `RESEND_TO_EMAIL`
-- `RESEND_FROM_EMAIL`
-
-### Run Locally
-
-```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
-
-### Validate
+### Verify
 
 ```bash
 npm run lint
 npm run build
 ```
 
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and only configure the services you use.
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Public Cloudinary cloud name for media URLs |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name for server-side configuration |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+| `CLOUDINARY_ADMIN_TOKEN` | Admin token reserved for Cloudinary administration workflows |
+| `RESEND_API_KEY` | Enables Resend email delivery |
+| `RESEND_FROM_EMAIL` | Verified Resend sender address |
+| `RESEND_TO_EMAIL` | Inbox that receives portfolio messages |
+
+When `RESEND_API_KEY` is not configured, the contact endpoint responds in demo mode without sending email.
+
 ## Deployment
 
-### Vercel
+The portfolio is deployed at **[portfolio-siddharth04.vercel.app](https://portfolio-siddharth04.vercel.app)** and is ready for Vercel deployment.
 
 1. Push the repository to GitHub.
-2. Import the repository in Vercel.
+2. Import the repository into Vercel.
 3. Add the required environment variables in the Vercel project settings.
-4. Deploy from the production branch.
+4. Deploy the production branch.
 
-### Other Node Hosts
+For another Node-compatible host, build and start the application with:
 
 ```bash
 npm run build
 npm start
 ```
 
-Ensure the host supports Next.js App Router and the required environment variables.
+## Updating Portfolio Content
 
-## Updating Content
+Most editable content is centralized in `data/portfolio.ts`:
 
-Most portfolio content lives in `data/portfolio.ts`:
-
-- Navigation labels and section links
-- Hero roles, focus areas, and stats
+- Hero roles, focus areas, and statistics
 - Skills and categories
-- Project cards, links, stack, impact, and architecture images
+- Project descriptions, links, architecture, stacks, challenges, and impact
 - Certifications and experience entries
-- Social links and About section copy
+- Social links and About-section copy
 
-Shared UI styling lives in `app/globals.css`, while section composition lives in `components/Portfolio.tsx`, `components/About.tsx`, and `components/Skills.tsx`.
+Shared visual styling lives in `app/globals.css`. Page layout and section composition are maintained in `components/Portfolio.tsx`, `components/About.tsx`, and `components/Skills.tsx`.
 
-## Screenshots
+## Contact
 
-No committed screenshots are currently included. Add production screenshots under a tracked documentation or public assets folder if needed, and reference them here.
+- LinkedIn: [linkedin.com/in/siddharthkumaryo](https://linkedin.com/in/siddharthkumaryo)
+- GitHub: [github.com/SID-CSE](https://github.com/SID-CSE)
+- Email: siddharthkumaryo@gmail.com
