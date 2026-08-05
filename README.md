@@ -4,7 +4,7 @@ A responsive personal portfolio for **Siddharth Kumar**, a final-year Computer S
 
 ## Live Site
 
-**[portfolio-siddharth04.vercel.app](https://portfolio-siddharth04.vercel.app)**
+Portfolio : **[portfolio-siddharth04.vercel.app](https://portfolio-siddharth04.vercel.app)**
 
 ## Overview
 
