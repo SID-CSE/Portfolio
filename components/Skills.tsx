@@ -21,7 +21,7 @@ function SkillCard({
   return (
     <motion.button
       onClick={onClick}
-      className={`group relative overflow-hidden rounded-xl border border-white/10 px-6 py-4 text-left transition-all duration-300 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-950/20 ${
+      className={`group relative min-w-[180px] overflow-hidden rounded-xl border border-white/10 px-4 py-4 text-left transition-all duration-300 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-950/20 sm:min-w-0 sm:px-6 ${
         isActive
           ? "bg-white/10 shadow-xl shadow-cyan-500/20"
           : "bg-white/5 hover:bg-white/10"
@@ -68,7 +68,7 @@ export default function SkillsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div className="skill-selector flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:snap-none sm:pb-0 lg:grid-cols-3 xl:grid-cols-6">
           {skillCategories.map((category) => (
             <SkillCard
               key={category.label}
