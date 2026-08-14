@@ -23,7 +23,8 @@ const sectionVariants = {
   show: { opacity: 1, y: 0 },
 };
 
-const CLOUDINARY_RESUME_URL = "https://res.cloudinary.com/dn37tck9g/raw/upload/Siddharth_Kumar_Resume_zi82vf.docx";
+const CLOUDINARY_RESUME_URL = "https://res.cloudinary.com/dn37tck9g/raw/upload/v1786729904/Siddharth_Kumar_Resume_Genral_q5xm4v.docx";
+
 const RESUME_FILE_NAME = "Siddharth-Kumar-Resume.docx";
 const RESUME_VIEW_URL = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(CLOUDINARY_RESUME_URL)}`;
 const resumeMenuItems = [
@@ -266,6 +267,27 @@ function DiagramFrame({ children }: { children: React.ReactNode }) {
   return <div className="glass-card overflow-hidden p-4">{children}</div>;
 }
 
+function ExpandableText({ text, className = "", maxLength = 220 }: { text: string; className?: string; maxLength?: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const shouldCollapse = text.length > maxLength;
+
+  if (!shouldCollapse) {
+    return <p className={className}>{text}</p>;
+  }
+
+  return (
+    <div className="space-y-2">
+      <p className={className + (expanded ? "" : " line-clamp-4")}>{text}</p>
+      <button
+        type="button"
+        onClick={() => setExpanded((value) => !value)}
+        className="text-xs font-medium uppercase tracking-[0.12em] text-cyan-300 transition hover:text-cyan-200"
+      >
+        {expanded ? "Read less" : "Read more"}
+      </button>
+    </div>
+  );
+}
 
 function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeof projectCards)[number]; projectIndex: number; onSelectImage: (projectIndex: number) => void }) {
   const [open, setOpen] = useState(false);
@@ -296,11 +318,15 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
           <div className="space-y-4">
             <div className="soft-panel">
               <p className="eyebrow">Problem</p>
-              <p className="mt-2 text-sm leading-7 text-slate-200/90">{project.problem}</p>
+              <div className="mt-2">
+                <ExpandableText text={project.problem} className="text-sm leading-7 text-slate-200/90" maxLength={220} />
+              </div>
             </div>
             <div className="soft-panel">
               <p className="eyebrow">Architecture</p>
-              <p className="mt-2 text-sm leading-7 text-slate-200/90">{project.architecture}</p>
+              <div className="mt-2">
+                <ExpandableText text={project.architecture} className="text-sm leading-7 text-slate-200/90" maxLength={180} />
+              </div>
             </div>
             <div className="flex flex-wrap gap-2">
               {project.stack.map((stack) => <Pill key={stack}>{stack}</Pill>)}
@@ -537,13 +563,32 @@ export default function Portfolio() {
   }, []);
 
   useEffect(() => {
-  if (!certificateRef.current) return;
+    if (!certificateRef.current) return;
 
-  const container = certificateRef.current;
+    const container = certificateRef.current;
 
-  container.scrollLeft =
-    (container.scrollWidth - container.clientWidth) / 2;
-}, []);
+    const centerCertificates = () => {
+      const firstCard = container.querySelector(".certificate-card") as HTMLElement | null;
+      if (!firstCard) return;
+
+      const maxScrollLeft = Math.max(container.scrollWidth - container.clientWidth, 0);
+      const cardWidth = firstCard.offsetWidth;
+      const preferredOffset = Math.max((container.clientWidth - cardWidth) / 2, 0);
+
+      container.scrollLeft = Math.min(preferredOffset, maxScrollLeft);
+    };
+
+    centerCertificates();
+
+    const resizeObserver = new ResizeObserver(centerCertificates);
+    resizeObserver.observe(container);
+    window.addEventListener("resize", centerCertificates);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", centerCertificates);
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -791,24 +836,10 @@ export default function Portfolio() {
 
         <SectionShell id="certifications">
           <SectionHeading eyebrow="Certifications" title="Verified learning across AI, ML, and data systems." description="A compact certificate gallery with issuers, dates, credential IDs, and quick image previews." />
-          <motion.div
-  ref={certificateRef}
-  drag="x"
-  dragConstraints={{ left: -2000, right: 0 }}
-  dragElastic={0.05}
-  className="
-    mt-8
-    flex
-    gap-6
-    overflow-x-auto
-    snap-x
-    touch-pan-x
-    scroll-smooth
-    pb-4
-    px-[30vw]
-    no-scrollbar
-  "
->
+          <div
+            ref={certificateRef}
+            className="certificate-track mt-8 flex gap-4 overflow-x-auto scroll-smooth pb-4 pl-2 pr-2 sm:gap-6 sm:pl-4 sm:pr-4 lg:pl-6 lg:pr-6 no-scrollbar"
+          >
   {certifications.map((cert, index) => (
     <GlassCard
       key={`${cert.title}-${index}`}
@@ -816,11 +847,12 @@ export default function Portfolio() {
         certificate-card
         flex-shrink-0
         overflow-hidden
-        p-4
+        p-3
         snap-center
         cursor-pointer
         transition
         hover:scale-[1.02]
+        sm:p-4
       "
       role="button"
       tabIndex={0}
@@ -865,7 +897,7 @@ export default function Portfolio() {
       </div>
     </GlassCard>
   ))}
-</motion.div>
+</div>
         </SectionShell>
 
         <SectionShell id="experience">

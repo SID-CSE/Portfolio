@@ -107,6 +107,13 @@ body::before {
 	@apply border-cyan-400/30 bg-white/[0.06];
 }
 
+.line-clamp-4 {
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
 .mono {
 	font-family: var(--font-mono), monospace;
 }
@@ -133,9 +140,37 @@ body::before {
 }
 
 .certificate-card {
-	width: min(350px, calc(100vw - 2rem));
-	min-width: min(350px, calc(100vw - 2rem));
+	width: min(300px, calc(100vw - 2.5rem));
+	min-width: min(300px, calc(100vw - 2.5rem));
 	max-width: 350px;
+}
+
+.certificate-track {
+	scroll-snap-type: x proximity;
+	-webkit-overflow-scrolling: touch;
+	padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+	justify-content: flex-start;
+}
+
+.certificate-track::-webkit-scrollbar {
+	display: none;
+}
+
+.skill-selector {
+	-webkit-overflow-scrolling: touch;
+	scroll-snap-type: x proximity;
+	padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+}
+
+.skill-selector > * {
+	scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+	.certificate-card {
+		width: min(340px, calc(100vw - 4rem));
+		min-width: min(340px, calc(100vw - 4rem));
+	}
 }
 
 .no-scrollbar {
