@@ -18,15 +18,17 @@ import {
   socials,
 } from "@/data/portfolio";
 
+type CertificateFilter = "All" | "NPTEL" | "Infosys Springboard" | "Oracle University" | "IBM SkillsBuild" | "HackerRank";
+
 const sectionVariants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0 },
 };
 
-const CLOUDINARY_RESUME_URL = "https://res.cloudinary.com/dn37tck9g/raw/upload/v1786729904/Siddharth_Kumar_Resume_Genral_q5xm4v.docx";
+const CLOUDINARY_RESUME_URL = "https://res.cloudinary.com/dn37tck9g/raw/upload/v1793040655/Siddharth_Kumar_Resume_New_gogqdz.docx";
 
-const RESUME_FILE_NAME = "Siddharth-Kumar-Resume.docx";
-const RESUME_VIEW_URL = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(CLOUDINARY_RESUME_URL)}`;
+const RESUME_FILE_NAME = "Siddharth_Kumar_Resume_New_gogqdz.docx";
+const RESUME_VIEW_URL = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(CLOUDINARY_RESUME_URL)}&wdAr=1`;
 const resumeMenuItems = [
   { label: "View Resume", icon: FaEye, action: "view" },
   { label: "Share Resume", icon: FaShareAlt, action: "share" },
@@ -66,9 +68,9 @@ function Pill({ children }: { children: React.ReactNode }) {
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <GlassCard className="p-5">
-      <p className="text-3xl font-semibold tracking-normal text-white">{value}</p>
-      <p className="mt-1 text-sm text-slate-300/80">{label}</p>
+    <GlassCard className="p-4 sm:p-5">
+      <p className="text-2xl font-semibold tracking-normal text-white sm:text-3xl">{value}</p>
+      <p className="mt-1 text-xs text-slate-300/80 sm:text-sm">{label}</p>
     </GlassCard>
   );
 }
@@ -107,7 +109,7 @@ function useTypewriter(words: string[]) {
 
 function SectionShell({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <motion.section id={id} className="section-shell mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20" variants={sectionVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.18 }} transition={{ duration: 0.45, ease: "easeOut" }}>
+    <motion.section id={id} className="section-shell mx-auto w-full max-w-7xl min-w-0 px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20" variants={sectionVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.18 }} transition={{ duration: 0.45, ease: "easeOut" }}>
       {children}
     </motion.section>
   );
@@ -250,10 +252,10 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
         </nav>
       </header>
 
-      <nav className="mobile-nav fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#050816]/85 px-3 py-3 backdrop-blur-xl lg:hidden" aria-label="Primary navigation">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-2 min-[390px]:grid-cols-4 sm:grid-cols-6">
+      <nav className="mobile-nav fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#050816]/85 px-3 py-2 backdrop-blur-xl lg:hidden" aria-label="Primary navigation">
+        <div className="mx-auto flex w-max min-w-full gap-2">
           {navigationItems.slice(0, 12).map((item) => (
-            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className={`btn-sm-secondary px-2 py-2 text-center text-[10px] ${active === item.href.slice(1) ? "btn-sm-secondary-active" : "text-slate-300/70"}`} aria-current={active === item.href.slice(1) ? "page" : undefined}>
+            <motion.a key={item.href} href={item.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className={`btn-sm-secondary shrink-0 px-3 py-2 text-center text-[10px] ${active === item.href.slice(1) ? "btn-sm-secondary-active" : "text-slate-300/70"}`} aria-current={active === item.href.slice(1) ? "page" : undefined}>
               {item.label}
             </motion.a>
           ))}
@@ -263,8 +265,16 @@ function NavBar({ active, resumeMenuOpen, onResumeClick, onViewResume, onDownloa
   );
 }
 
-function DiagramFrame({ children }: { children: React.ReactNode }) {
-  return <div className="glass-card overflow-hidden p-4">{children}</div>;
+function DiagramFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`glass-card w-full min-w-0 overflow-hidden p-3 sm:p-4 ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function isCanvasCroppedDiagram(projectName: string) {
+  return ["ActionFlow AI", "Game Arcade – Android Gaming & AI Assistant Platform", "Raspberry Pi-Based IoT Remote Farm Animal Monitoring System", "Arduino-Based IoT Wearable Health Monitoring System"].includes(projectName);
 }
 
 function ExpandableText({ text, className = "", maxLength = 220 }: { text: string; className?: string; maxLength?: number }) {
@@ -294,7 +304,7 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
 
   return (
 
-    <GlassCard className="overflow-hidden p-6 transition hover:-translate-y-1">
+    <GlassCard className="overflow-hidden p-4 transition hover:-translate-y-1 sm:p-6">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-3">
@@ -307,7 +317,7 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
                 GitHub
               </a>
             )}
-            {project.name.startsWith("SmartPay4") && project.links.live !== "#" && (
+            {project.links.live !== "#" && (
               <a className="btn-sm-secondary" href={project.links.live} target="_blank" rel="noreferrer">
                 Live / Demo
               </a>
@@ -315,7 +325,7 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
           </div>
         </div>
         <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="soft-panel">
               <p className="eyebrow">Problem</p>
               <div className="mt-2">
@@ -332,11 +342,12 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
               {project.stack.map((stack) => <Pill key={stack}>{stack}</Pill>)}
             </div>
           </div>
-          <DiagramFrame>
+          <DiagramFrame className={isCanvasCroppedDiagram(project.name) ? "aspect-[16/9]" : ""}>
             {project.image ? (
                 <ClickableImage
                   src={project.image}
                   alt={`${project.name} Architecture`}
+                  crop={isCanvasCroppedDiagram(project.name)}
                   onClick={() => onSelectImage(projectIndex)}
                 />
             ) : (
@@ -362,11 +373,11 @@ function ProjectCard({ project, projectIndex, onSelectImage }: { project: (typeo
         <AnimatePresence initial={false}>
           {open ? (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35 }} className="overflow-hidden">
-              <div className="grid gap-4 border-t border-white/8 pt-4 lg:grid-cols-2">
-                <div>
+              <div className="grid gap-4 border-t border-white/8 pt-4">
+                <div className="min-w-0">
                   <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Engineering challenges</p>
                   <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-200/90">
-                    {project.challenges.map((challenge) => <li key={challenge}>- {challenge}</li>)}
+                    {project.challenges.map((challenge) => <li key={challenge} className="break-words">- {challenge}</li>)}
                   </ul>
                 </div>
               </div>
@@ -531,11 +542,20 @@ export default function Portfolio() {
   const [galleryTitles, setGalleryTitles] = useState<string[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [gallerySection, setGallerySection] = useState<"certifications" | "experience" | "projects" | null>(null);
+  const [certificateFilter, setCertificateFilter] = useState<CertificateFilter>("All");
   const [projectsExpanded, setProjectsExpanded] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isIntroVisible, setIsIntroVisible] = useState(true);
   const scrollProgressClass = `scroll-progress-${Math.round(scrollProgress / 10) * 10}`;
+  const visibleCertificates = certificateFilter === "All"
+    ? certifications
+    : certifications.filter((certificate) => certificate.issuer.includes(certificateFilter));
+  const certificateFilters: CertificateFilter[] = ["All", "NPTEL", "Infosys Springboard", "Oracle University", "IBM SkillsBuild", "HackerRank"];
+  const certificateCount = (filter: CertificateFilter) =>
+    filter === "All"
+      ? certifications.length
+      : certifications.filter((certificate) => certificate.issuer.includes(filter)).length;
 
   useEffect(() => {
     const introDuration = reducedMotion ? 350 : 1250;
@@ -588,7 +608,7 @@ export default function Portfolio() {
       resizeObserver.disconnect();
       window.removeEventListener("resize", centerCertificates);
     };
-  }, []);
+  }, [certificateFilter]);
 
 
   useEffect(() => {
@@ -661,15 +681,15 @@ export default function Portfolio() {
       </AnimatePresence>
 
       <NavBar active={activeSection} resumeMenuOpen={navResumeMenuOpen} onResumeClick={handleNavResumeClick} onViewResume={viewResume} onDownloadResume={downloadResume} onShareResume={shareResume} />
-      <main className="relative z-10 pb-12 pt-44 min-[390px]:pt-28 sm:pt-24 lg:pt-20">
+      <main className="relative z-10 min-w-0 pb-8 pt-20 sm:pb-12 sm:pt-24 lg:pt-20">
         <SectionShell id="hero">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div className="space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-[0.08em] text-slate-200/90">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
                 Open to opportunities
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-300/60">Full Stack, AI/ML & Cloud Engineer</p>
                 <h1 className="max-w-4xl text-5xl font-semibold tracking-normal text-white sm:text-6xl lg:text-[5rem]">Siddharth Kumar</h1>
                 <p className="text-2xl font-medium tracking-normal text-slate-100 sm:text-3xl">
@@ -689,37 +709,37 @@ export default function Portfolio() {
                   </AnimatePresence>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2">{heroFocusAreas.map((area) => <Pill key={area}>{area}</Pill>)}</div>
-              <div className="grid gap-4 sm:grid-cols-3">{heroStats.map((stat) => <StatCard key={stat.label} value={stat.value} label={stat.label} />)}</div>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                {socials.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target={social.href.startsWith("mailto:") ? "_self" : "_blank"}
-                    rel="noreferrer"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    whileHover={{ scale: 1.05, translateY: -2 }}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
-                  >
-                    {social.label}
-                  </motion.a>
-                ))}
-              </div>
             </div>
 
-            <GlassCard className="relative overflow-hidden p-6 lg:p-8">
+            <GlassCard className="relative mt-2 overflow-hidden p-4 sm:p-6 lg:mt-20 lg:p-7">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(129,140,248,0.2),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.14),transparent_28%)]" />
-              <div className="relative space-y-6">
+              <div className="relative">
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-slate-300/60">Focus areas</p>
-                  <div className="mt-4 grid gap-3">{heroFocusAreas.map((item) => <div key={item} className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100/90">{item}</div>)}</div>
+                  <div className="mt-3 grid gap-2">{heroFocusAreas.map((item) => <div key={item} className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-slate-100/90">{item}</div>)}</div>
                 </div>
               </div>
             </GlassCard>
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {heroStats.map((stat) => <StatCard key={stat.label} value={stat.value} label={stat.label} />)}
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {socials.map((social) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target={social.href.startsWith("mailto:") ? "_self" : "_blank"}
+                rel="noreferrer"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                whileHover={{ scale: 1.05, translateY: -2 }}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-100 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300 sm:px-4 sm:text-sm"
+              >
+                {social.label}
+              </motion.a>
+            ))}
           </div>
         </SectionShell>
 
@@ -756,8 +776,6 @@ export default function Portfolio() {
 
         <AboutSection />
 
-
-        <SkillsSection />
 
         <SectionShell id="projects">
           <SectionHeading eyebrow="Featured Projects" title="Selected engineering work with clear outcomes." description="Production-minded projects spanning full-stack platforms, machine learning applications, and security automation." />
@@ -835,12 +853,31 @@ export default function Portfolio() {
 
 
         <SectionShell id="certifications">
-          <SectionHeading eyebrow="Certifications" title="Verified learning across AI, ML, and data systems." description="A compact certificate gallery with issuers, dates, credential IDs, and quick image previews." />
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <SectionHeading eyebrow="Certifications" title="Verified learning across AI, ML, and data systems." description="A compact certificate gallery with issuers, dates, credential IDs, and quick image previews." />
+            <span className="chip whitespace-nowrap">
+              {certifications.length} {certifications.length === 1 ? "certificate" : "certificates"}
+            </span>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2" role="tablist" aria-label="Filter certificates by issuer">
+            {certificateFilters.map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                role="tab"
+                aria-selected={certificateFilter === filter}
+                onClick={() => setCertificateFilter(filter)}
+                className={`btn-sm-secondary ${certificateFilter === filter ? "btn-sm-secondary-active" : ""}`}
+              >
+                {filter} ({certificateCount(filter)})
+              </button>
+            ))}
+          </div>
           <div
             ref={certificateRef}
             className="certificate-track mt-8 flex gap-4 overflow-x-auto scroll-smooth pb-4 pl-2 pr-2 sm:gap-6 sm:pl-4 sm:pr-4 lg:pl-6 lg:pr-6 no-scrollbar"
           >
-  {certifications.map((cert, index) => (
+  {visibleCertificates.map((cert, index) => (
     <GlassCard
       key={`${cert.title}-${index}`}
       className="
@@ -859,10 +896,10 @@ export default function Portfolio() {
       aria-label={`Open certificate preview for ${cert.title}`}
       onClick={() =>
         openGallery(
-          certifications.map((c) => c.image),
+          visibleCertificates.map((c) => c.image),
           index,
           "certifications",
-          certifications.map((c) => c.title)
+          visibleCertificates.map((c) => c.title)
         )
       }
       onKeyDown={(event) => {
@@ -993,6 +1030,8 @@ export default function Portfolio() {
           ))}
         </div>
       </SectionShell>
+
+        <SkillsSection />
 
         <SectionShell id="contact">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
