@@ -12,8 +12,8 @@ This single-page portfolio presents technical strengths, featured work, certific
 
 ## Current Highlights
 
-- 15+ projects across full-stack development, AI/ML, cybersecurity, IoT, and Android
-- 10+ professional and academic certifications
+- 10+ projects across full-stack development, AI/ML, cybersecurity, IoT, and Android
+- 15+ professional and academic certifications
 - 3+ internship experiences
 - 9.05 CGPA
 - Download, share, and view actions for the resume
