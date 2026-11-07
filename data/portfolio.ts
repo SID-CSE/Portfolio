@@ -25,8 +25,8 @@ export const heroFocusAreas = [
 ];
 
 export const heroStats = [
-  { value: "15+", label: "Projects Developed" },
-  { value: "10+", label: "Certifications" },
+  { value: "10+", label: "Projects Developed" },
+  { value: "15+", label: "Certifications" },
   { value: "3+", label: "Internship Experiences" },
   { value: "9.05", label: "CGPA" },
 ];
@@ -505,6 +505,13 @@ export const certifications = [
     image: cloudinaryAssets.certificates.model,
   },
   {
+    title: "Programming with Generative AI",
+    issuer: "NPTEL - IIsc Bangalore",
+    date: "2026",
+    credentialId: "NOC26CS188S252106174",
+    image: cloudinaryAssets.certificates.NPTELGenAI,
+  },
+  {
     title: "Mathematical Foundation for Machine Learning",
     issuer: "NPTEL - IIsc Bangalore",
     date: "2026",
@@ -524,6 +531,20 @@ export const certifications = [
     date: "2026",
     credentialId: "NPTEL26CS76S450205504",
     image: cloudinaryAssets.certificates.NPTELML,
+  },
+  {
+    title: "Introduction to Graph Algorithms",
+    issuer: "NPTEL - IIsc Bangalore",
+    date: "2026",
+    credentialId: "NOC26CS108S352200215",
+    image: cloudinaryAssets.certificates.NPTELGraphAlgorithms,
+  },
+  {
+    title: "Distributed Systems",
+    issuer: "NPTEL - IIT Kanpur",
+    date: "2026",
+    credentialId: "NOC26CS115S452202927",
+    image: cloudinaryAssets.certificates.NPTELds,
   },
   {
     title: "AI-Foundation Associate",

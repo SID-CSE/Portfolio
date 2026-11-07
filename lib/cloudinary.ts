@@ -176,6 +176,9 @@ export const cloudinaryAssets = {
     oracleAIFoundation:
       cdn("AI-Foundation-Associate-eCertificate_page-0001_1_l9wdc2.jpg"),
 
+    NPTELGenAI:
+      cdn("NOC26CS188S252106174_page-0001_lumy35.jpg"),
+    
     NPTELFoundationML:
       cdn("e-Certificate_Mathematical_Foundation_for_Machine_Learning_page-0001_hjiq55.jpg"),
 
@@ -184,6 +187,12 @@ export const cloudinaryAssets = {
 
     NPTELML:
       cdn("e-Certificate_Machine_Learning_for_Enginering_and_Science_Applications_page-0001_okj8zv.jpg"),
+    
+    NPTELGraphAlgorithms:
+      cdn("NOC26CS108S352200215_page-0001_uqa56t.jpg"),
+    
+    NPTELds:
+      cdn("NOC26CS115S452202927_page-0001_bcooaf.jpg"),
     
     javaBasic:
       cdn("java_basic_certificate_page-0001_uht0m1.jpg"),
